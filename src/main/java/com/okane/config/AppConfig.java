@@ -17,9 +17,12 @@ public class AppConfig {
     @Bean
     public DataSource dataSource() {
         HikariDataSource ds = new HikariDataSource();
-        ds.setJdbcUrl("jdbc:postgresql://localhost:5432/hellodb");
-        ds.setUsername("postgres");
-        ds.setPassword("password");
+        ds.setJdbcUrl(System.getenv().getOrDefault(
+                "SPRING_DATASOURCE_URL", "jdbc:postgresql://localhost:5432/okane"));
+        ds.setUsername(System.getenv().getOrDefault(
+                "SPRING_DATASOURCE_USERNAME", "postgres"));
+        ds.setPassword(System.getenv().getOrDefault(
+                "SPRING_DATASOURCE_PASSWORD", "password"));
         ds.setDriverClassName("org.postgresql.Driver");
         return ds;
     }
