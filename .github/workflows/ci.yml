@@ -21,6 +21,9 @@ jobs:
     name: Build and Tests
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+
     services:
       postgres:
         image: postgres:15-alpine
@@ -63,6 +66,46 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET_TEST }}
           AES_KEY: ${{ secrets.AES_KEY_TEST }}
 
+      - name: Print test results summary
+        if: always()
+        run: |
+          echo "=============================="
+          echo "       TEST RESULTS"
+          echo "=============================="
+          if [ -d "target/surefire-reports" ]; then
+            TOTAL=0
+            FAILED=0
+            ERRORS=0
+            SKIPPED=0
+            for f in target/surefire-reports/*.xml; do
+              [ -f "$f" ] || continue
+              t=$(grep -oP 'tests="\K[0-9]+' "$f" | head -1)
+              fa=$(grep -oP 'failures="\K[0-9]+' "$f" | head -1)
+              e=$(grep -oP 'errors="\K[0-9]+' "$f" | head -1)
+              s=$(grep -oP 'skipped="\K[0-9]+' "$f" | head -1)
+              TOTAL=$((TOTAL   + ${t:-0}))
+              FAILED=$((FAILED + ${fa:-0}))
+              ERRORS=$((ERRORS + ${e:-0}))
+              SKIPPED=$((SKIPPED + ${s:-0}))
+            done
+            PASSED=$((TOTAL - FAILED - ERRORS - SKIPPED))
+            echo "Total   : $TOTAL"
+            echo "Passed  : $PASSED"
+            echo "Failed  : $FAILED"
+            echo "Errors  : $ERRORS"
+            echo "Skipped : $SKIPPED"
+            echo "=============================="
+            if [ "$FAILED" -gt 0 ] || [ "$ERRORS" -gt 0 ]; then
+              echo "RESULT  : FAILED"
+              exit 1
+            else
+              echo "RESULT  : PASSED"
+            fi
+          else
+            echo "WARNING: no surefire-reports found."
+            echo "Make sure tests exist and mvn verify ran successfully."
+          fi
+
       - name: Upload Surefire test reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -84,7 +127,7 @@ jobs:
 
           path = "target/site/jacoco/jacoco.xml"
           if not os.path.exists(path):
-              print("ERROR: jacoco.xml not found -- add JaCoCo plugin to pom.xml")
+              print("ERROR: jacoco.xml not found -- make sure JaCoCo plugin is in pom.xml")
               sys.exit(1)
 
           tree = ET.parse(path)
@@ -111,12 +154,6 @@ jobs:
           print("PASSED -- coverage requirement met")
           PYEOF
 
-      - name: Publish test results on PR
-        if: always()
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        with:
-          files: target/surefire-reports/*.xml
-
   # ──────────────────────────────────────────────────────
   # JOB 2 : Docker -- Build check (no push)
   # ──────────────────────────────────────────────────────
@@ -124,6 +161,9 @@ jobs:
     name: Docker -- Build check
     runs-on: ubuntu-latest
     needs: backend-build
+
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout code
