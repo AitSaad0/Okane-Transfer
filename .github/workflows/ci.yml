@@ -1,29 +1,132 @@
-name: CI
+name: CI -- Backend Build and Test
 
 on:
+  push:
+    branches:
+      - "**"
   pull_request:
     branches:
       - main
-      - develop
+
+env:
+  JAVA_VERSION: "17"
 
 jobs:
-  build:
-    name: Build & Test
+
+  # ──────────────────────────────────────────────────────
+  # JOB 1 : Build + Tests + JaCoCo coverage
+  # ──────────────────────────────────────────────────────
+  backend-build:
+    name: Build and Tests
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: okane_test
+          POSTGRES_USER: okane
+          POSTGRES_PASSWORD: okane_test_pass
+        ports:
+          - "5432:5432"
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Java 21
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
-          distribution: 'temurin'
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: temurin
           cache: maven
 
-      - name: Build
-        run: mvn clean package -DskipTests -q
+      - name: Cache Maven local repository
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ hashFiles('pom.xml') }}
+          restore-keys: maven-
 
-      - name: Test
-        run: mvn test -q
+      - name: Build and run all tests
+        run: mvn clean verify -B
+        env:
+          DB_URL: jdbc:postgresql://localhost:5432/okane_test
+          DB_USERNAME: okane
+          DB_PASSWORD: okane_test_pass
+          JWT_SECRET: ${{ secrets.JWT_SECRET_TEST }}
+          AES_KEY: ${{ secrets.AES_KEY_TEST }}
+
+      - name: Upload Surefire test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: target/surefire-reports/
+
+      - name: Upload JaCoCo HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: target/site/jacoco/
+
+      - name: Verify coverage >= 70%
+        run: |
+          python3 - << 'PYEOF'
+          import xml.etree.ElementTree as ET, sys, os
+
+          path = "target/site/jacoco/jacoco.xml"
+          if not os.path.exists(path):
+              print("ERROR: jacoco.xml not found -- add JaCoCo plugin to pom.xml")
+              sys.exit(1)
+
+          tree = ET.parse(path)
+          root = tree.getroot()
+          counters = [c for c in root.findall(".//counter")
+                      if c.get("type") == "INSTRUCTION"]
+          if not counters:
+              print("ERROR: no INSTRUCTION counter found in jacoco.xml")
+              sys.exit(1)
+
+          c       = counters[0]
+          missed  = int(c.get("missed"))
+          covered = int(c.get("covered"))
+          total   = missed + covered
+          pct     = covered / total * 100
+
+          print(f"Lines covered : {covered}/{total}")
+          print(f"Coverage      : {pct:.1f}%")
+
+          if pct < 70:
+              print(f"FAILED -- {pct:.1f}% is below the required 70%")
+              sys.exit(1)
+
+          print("PASSED -- coverage requirement met")
+          PYEOF
+
+      - name: Publish test results on PR
+        if: always()
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          files: target/surefire-reports/*.xml
+
+  # ──────────────────────────────────────────────────────
+  # JOB 2 : Docker -- Build check (no push)
+  # ──────────────────────────────────────────────────────
+  docker-build-check:
+    name: Docker -- Build check
+    runs-on: ubuntu-latest
+    needs: backend-build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image (no push)
+        run: docker build -t okanetransfer:ci-check .
