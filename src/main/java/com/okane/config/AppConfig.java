@@ -31,7 +31,7 @@ public class AppConfig {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sf = new LocalSessionFactoryBean();
         sf.setDataSource(dataSource());
-        sf.setPackagesToScan("com.example.entity");
+        sf.setPackagesToScan("com.okane.entity");
         Properties props = new Properties();
         props.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         props.setProperty("hibernate.hbm2ddl.auto", "update");
