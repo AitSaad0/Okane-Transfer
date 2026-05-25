@@ -1,0 +1,48 @@
+okane_app  | 25-May-2026 15:45:49.302 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/10.1.55
+okane_app  | 25-May-2026 15:45:49.314 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          May 5 2026 13:33:02 UTC
+okane_app  | 25-May-2026 15:45:49.316 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 10.1.55.0
+okane_app  | 25-May-2026 15:45:49.316 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Linux
+okane_app  | 25-May-2026 15:45:49.316 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            6.6.114.1-microsoft-standard-WSL2
+okane_app  | 25-May-2026 15:45:49.317 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+okane_app  | 25-May-2026 15:45:49.317 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /opt/java/openjdk
+okane_app  | 25-May-2026 15:45:49.317 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           21.0.11+10-LTS
+okane_app  | 25-May-2026 15:45:49.318 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Eclipse Adoptium
+okane_app  | 25-May-2026 15:45:49.318 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /usr/local/tomcat
+okane_app  | 25-May-2026 15:45:49.318 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /usr/local/tomcat
+okane_app  | 25-May-2026 15:45:49.341 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/usr/local/tomcat/conf/logging.properties
+okane_app  | 25-May-2026 15:45:49.341 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+okane_app  | 25-May-2026 15:45:49.341 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+okane_app  | 25-May-2026 15:45:49.342 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+okane_app  | 25-May-2026 15:45:49.342 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dsun.io.useCanonCaches=false
+okane_app  | 25-May-2026 15:45:49.344 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
+okane_app  | 25-May-2026 15:45:49.344 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+okane_app  | 25-May-2026 15:45:49.345 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+okane_app  | 25-May-2026 15:45:49.345 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+okane_app  | 25-May-2026 15:45:49.345 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+okane_app  | 25-May-2026 15:45:49.345 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+okane_app  | 25-May-2026 15:45:49.345 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+okane_app  | 25-May-2026 15:45:49.346 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/usr/local/tomcat
+okane_app  | 25-May-2026 15:45:49.350 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/usr/local/tomcat
+okane_app  | 25-May-2026 15:45:49.351 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/usr/local/tomcat/temp
+okane_app  | 25-May-2026 15:45:49.356 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded Apache Tomcat Native library [2.0.14] using APR version [1.7.0].
+okane_app  | 25-May-2026 15:45:49.365 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 3.0.2 15 Mar 2022]
+okane_app  | 25-May-2026 15:45:49.956 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+okane_app  | 25-May-2026 15:45:50.001 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [1040] milliseconds
+okane_app  | 25-May-2026 15:45:50.095 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+okane_app  | 25-May-2026 15:45:50.096 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/10.1.55]
+okane_app  | 25-May-2026 15:45:50.142 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [/usr/local/tomcat/webapps/ROOT.war]
+okane_app  | 25-May-2026 15:45:53.408 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+okane_app  | SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+okane_app  | SLF4J: Defaulting to no-operation (NOP) logger implementation
+okane_app  | SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+okane_app  | 25-May-2026 15:45:55.158 INFO [main] org.hibernate.Version.logVersion HHH000412: Hibernate ORM core version 6.4.4.Final
+okane_app  | 25-May-2026 15:45:55.325 INFO [main] org.hibernate.cache.internal.RegionFactoryInitiator.initiateService HHH000026: Second-level cache disabled
+okane_app  | 25-May-2026 15:45:56.063 WARN [main] org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.constructDialect HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+okane_app  | 25-May-2026 15:45:57.527 INFO [main] org.hibernate.validator.internal.util.Version.<clinit> HV000001: Hibernate Validator 8.0.1.Final
+okane_app  | 25-May-2026 15:45:59.741 INFO [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator.initiateService HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+okane_app  | 25-May-2026 15:46:00.638 SEVERE [main] org.apache.catalina.core.StandardContext.startInternal One or more listeners failed to start. Full details will be found in the appropriate container log file
+okane_app  | 25-May-2026 15:46:00.651 SEVERE [main] org.apache.catalina.core.StandardContext.startInternal Context [] startup failed due to previous errors
+okane_app  | 25-May-2026 15:46:00.664 WARNING [main] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesJdbc The web application [ROOT] registered the JDBC driver [org.postgresql.Driver] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
+okane_app  | 25-May-2026 15:46:00.677 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [/usr/local/tomcat/webapps/ROOT.war] has finished in [10,536] ms
+okane_app  | 25-May-2026 15:46:00.684 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+okane_app  | 25-May-2026 15:46:00.705 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [10701] milliseconds

@@ -1,7 +1,10 @@
 package com.okane.config;
 
 import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.context.annotation.*;
+import org.hibernate.SessionFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -18,7 +21,7 @@ public class AppConfig {
     public DataSource dataSource() {
         HikariDataSource ds = new HikariDataSource();
         ds.setJdbcUrl(System.getenv().getOrDefault(
-                "SPRING_DATASOURCE_URL", "jdbc:postgresql://localhost:5432/okane"));
+                "SPRING_DATASOURCE_URL", "jdbc:postgresql://localhost:5432/okane_db"));
         ds.setUsername(System.getenv().getOrDefault(
                 "SPRING_DATASOURCE_USERNAME", "postgres"));
         ds.setPassword(System.getenv().getOrDefault(
@@ -36,12 +39,15 @@ public class AppConfig {
         props.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         props.setProperty("hibernate.hbm2ddl.auto", "update");
         props.setProperty("hibernate.show_sql", "true");
+        props.setProperty("hibernate.format_sql", "true");
         sf.setHibernateProperties(props);
         return sf;
     }
 
     @Bean
     public HibernateTransactionManager transactionManager() {
-        return new HibernateTransactionManager(sessionFactory().getObject());
+        HibernateTransactionManager txManager = new HibernateTransactionManager();
+        txManager.setSessionFactory(sessionFactory().getObject());
+        return txManager;
     }
 }
