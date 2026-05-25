@@ -1,9 +1,12 @@
-package com.okane.reports.service.impl;
+package com.okane.service.reports.impl;
 
+import com.okane.dto.reports.AlertDto;
+import com.okane.dto.reports.CorridorPerformanceDto;
+import com.okane.dto.reports.DailyReportDto;
+import com.okane.dto.reports.MonthlyReportDto;
 import com.okane.entity.Transfert;
-import com.okane.reports.dto.*;
-import com.okane.reports.repository.TransfertRepository;
-import com.okane.reports.service.AdminReportService;
+import com.okane.repository.reports.TransfertRepository;
+import com.okane.service.reports.AdminReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

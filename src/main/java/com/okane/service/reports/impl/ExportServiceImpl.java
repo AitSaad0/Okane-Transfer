@@ -1,7 +1,7 @@
-package com.okane.reports.service.impl;
+package com.okane.service.reports.impl;
 
-import com.okane.reports.dto.DailyReportDto;
-import com.okane.reports.service.ExportService;
+import com.okane.dto.reports.DailyReportDto;
+import com.okane.service.reports.ExportService;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;

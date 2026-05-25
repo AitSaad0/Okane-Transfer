@@ -1,6 +1,9 @@
-package com.okane.reports.service;
+package com.okane.service.reports;
 
-import com.okane.reports.dto.*;
+import com.okane.dto.reports.AlertDto;
+import com.okane.dto.reports.CorridorPerformanceDto;
+import com.okane.dto.reports.DailyReportDto;
+import com.okane.dto.reports.MonthlyReportDto;
 
 import java.time.LocalDate;
 import java.util.List;

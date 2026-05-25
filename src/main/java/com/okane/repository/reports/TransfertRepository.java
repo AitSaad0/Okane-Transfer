@@ -1,4 +1,4 @@
-package com.okane.reports.repository;
+package com.okane.repository.reports;
 
 import com.okane.entity.Transfert;
 import jakarta.persistence.EntityManager;

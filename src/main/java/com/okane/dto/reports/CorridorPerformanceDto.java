@@ -1,4 +1,4 @@
-package com.okane.reports.dto;
+package com.okane.dto.reports;
 
 import lombok.*;
 

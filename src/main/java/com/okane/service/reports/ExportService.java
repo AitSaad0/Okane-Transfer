@@ -1,6 +1,6 @@
-package com.okane.reports.service;
+package com.okane.service.reports;
 
-import com.okane.reports.dto.DailyReportDto;
+import com.okane.dto.reports.DailyReportDto;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;

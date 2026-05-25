@@ -1,13 +1,15 @@
-package com.okane.reports.controller;
+package com.okane.controller.reports;
 
-import com.okane.reports.dto.*;
-import com.okane.reports.service.AdminReportService;
-import com.okane.reports.service.ExportService;
+import com.okane.dto.reports.AlertDto;
+import com.okane.dto.reports.CorridorPerformanceDto;
+import com.okane.dto.reports.DailyReportDto;
+import com.okane.dto.reports.MonthlyReportDto;
+import com.okane.service.reports.AdminReportService;
+import com.okane.service.reports.ExportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import java.io.ByteArrayInputStream;
