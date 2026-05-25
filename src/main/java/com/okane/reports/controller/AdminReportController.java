@@ -2,11 +2,16 @@ package com.okane.reports.controller;
 
 import com.okane.reports.dto.*;
 import com.okane.reports.service.AdminReportService;
+import com.okane.reports.service.ExportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -17,6 +22,7 @@ import java.util.UUID;
 public class AdminReportController {
 
     private final AdminReportService adminReportService;
+    private final ExportService exportService;
 
     @GetMapping("/daily")
     public ResponseEntity<List<DailyReportDto>> getDailyReport(
@@ -80,16 +86,63 @@ public class AdminReportController {
         );
     }
     @GetMapping("/export")
-    public ResponseEntity<String> exportReport(
-            @RequestParam String format,
-            @RequestParam String period
-    ) {
+    public ResponseEntity<byte[]> exportReport(
 
-        return ResponseEntity.ok(
-                "Export generated in format: "
-                        + format
-                        + " for period: "
-                        + period
-        );
+            @RequestParam String format,
+
+            @RequestParam
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate date,
+
+            @RequestParam(required = false)
+            UUID corridorId
+
+    ) throws IOException {
+
+        List<DailyReportDto> reports =
+                adminReportService.getDailyReport(
+                        date,
+                        corridorId,
+                        null
+                );
+
+        ByteArrayInputStream file;
+
+        String filename;
+
+        String contentType;
+
+        if (format.equalsIgnoreCase("csv")) {
+
+            file = exportService.exportDailyCsv(reports);
+
+            filename = "daily-report.csv";
+
+            contentType = "text/csv";
+
+        } else if (format.equalsIgnoreCase("pdf")) {
+
+            file = exportService.exportDailyPdf(reports);
+
+            filename = "daily-report.pdf";
+
+            contentType = "application/pdf";
+
+        } else {
+
+            throw new RuntimeException(
+                    "Unsupported format: " + format
+            );
+        }
+
+        byte[] bytes = file.readAllBytes();
+
+        return ResponseEntity.ok()
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=" + filename
+                )
+                .contentType(MediaType.parseMediaType(contentType))
+                .body(bytes);
     }
 }
