@@ -119,7 +119,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- H2 pour les tests (pas besoin de PostgreSQL en local) -->
+        <!-- H2 pour les tests -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -127,12 +127,14 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.32</version>
             <scope>provided</scope>
         </dependency>
+
         <!-- Jackson for JSON -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -146,12 +148,23 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>2.17.0</version>
         </dependency>
+
+        <!-- Hamcrest -->
         <dependency>
-        <groupId>org.hamcrest</groupId>
-        <artifactId>hamcrest</artifactId>
-        <version>2.2</version>
-        <scope>test</scope>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>2.2</version>
+            <scope>test</scope>
         </dependency>
+
+        <!-- JSON Path for MockMvc jsonPath assertions -->
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>2.9.0</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -166,6 +179,9 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <encoding>UTF-8</encoding>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
 
@@ -186,23 +202,18 @@
                 </configuration>
             </plugin>
 
-
             <!-- JaCoCo : mesure la couverture -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.12</version>
                 <executions>
-
-                    <!-- Demarre l'agent avant les tests -->
                     <execution>
                         <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
-
-                    <!-- Genere jacoco.xml + rapport HTML -->
                     <execution>
                         <id>report</id>
                         <phase>verify</phase>
@@ -210,13 +221,8 @@
                             <goal>report</goal>
                         </goals>
                     </execution>
-
-                    <!-- CHECK SUPPRIME : gere par le CI uniquement -->
-                    <!-- Sera reactive quand les vrais tests seront ecrits -->
-
                 </executions>
             </plugin>
-
 
         </plugins>
     </build>
