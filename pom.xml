@@ -20,6 +20,7 @@
         <spring.version>6.1.6</spring.version>
         <spring.security.version>6.2.4</spring.security.version>
         <hibernate.version>6.4.4.Final</hibernate.version>
+        <spring.data.version>3.2.6</spring.data.version>
     </properties>
 
     <dependencies>
@@ -41,6 +42,13 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
             <version>${spring.security.version}</version>
+        </dependency>
+
+        <!-- Spring Data JPA -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>${spring.data.version}</version>
         </dependency>
 
         <!-- Hibernate + JPA -->
