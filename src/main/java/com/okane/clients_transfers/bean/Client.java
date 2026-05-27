@@ -18,20 +18,20 @@ import java.util.UUID;
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @UuidGenerator
     @Column(name = "id", updatable = false, nullable = false)
-    private Long id;
+    private UUID id;
 
-    @Column(name = "nom",nullable = false)
+    @Column(name = "nom", nullable = false)
     private String nom;
 
-    @Column(name = "prenom",nullable = false)
+    @Column(name = "prenom", nullable = false)
     private String prenom;
 
     @Column(name = "num_piece_identite", nullable = false, unique = true)
     private String numPieceIdentite;
 
-    @Column(name = "telephone",nullable = false)
+    @Column(name = "telephone", nullable = false)
     private String telephone;
 
     @Column(name = "est_sur_liste_surveillance", nullable = false)

@@ -22,9 +22,9 @@ import java.util.UUID;
 public class Transfert {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @UuidGenerator
     @Column(name = "id", updatable = false, nullable = false)
-    private Long id;
+    private UUID id;
 
     @Column(name = "code_retrait", nullable = false, unique = true)
     private String codeRetrait;
@@ -32,7 +32,7 @@ public class Transfert {
     @Column(name = "montant_envoye", nullable = false, precision = 19, scale = 2)
     private BigDecimal montantEnvoye;
 
-    @Column(name = "frais",nullable = false, precision = 19, scale = 2)
+    @Column(name = "frais", nullable = false, precision = 19, scale = 2)
     private BigDecimal frais;
 
     @Column(name = "montant_net", nullable = false, precision = 19, scale = 2)

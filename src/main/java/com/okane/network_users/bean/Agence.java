@@ -1,15 +1,13 @@
 package com.okane.network_users.bean;
 
-
 import com.okane.geographic_monetary_reference.bean.Pays;
 import com.okane.shared.StatutAgence;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 import java.util.List;
-
 import java.math.BigDecimal;
-
+import java.util.UUID;
 
 @Entity
 @Table(name = "agence")
@@ -21,10 +19,9 @@ import java.math.BigDecimal;
 public class Agence {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @UuidGenerator
     @Column(name = "id", updatable = false, nullable = false)
-    private Long id;
+    private UUID id;
 
     @Column(nullable = false)
     private String nom;

@@ -21,7 +21,7 @@ public class DocumentValidator {
         // France Passport: 2 letters + 7 digits (e.g. AB1234567)
         FORMATS.put("FRA_PASSPORT", new DocumentFormat(Pattern.compile("^[A-Z]{2}\\d{7}$"), null));
         // Maroc CIN: 1-2 letters + 5-7 digits (e.g. AB123456)
-        FORMATS.put("MAR_CIN",      new DocumentFormat(Pattern.compile("^[A-Z]{1,2}\\d{5,7}$"), null));
+        FORMATS.put("MAR_CNN",      new DocumentFormat(Pattern.compile("^[A-Z]{1,2}\\d{5,7}$"), null));
         // Maroc Passport: [A-Z]\d{6} (e.g. A123456)
         FORMATS.put("MAR_PASSPORT", new DocumentFormat(Pattern.compile("^[A-Z]\\d{6}$"), null));
         // Sénégal CNI: 13 digits

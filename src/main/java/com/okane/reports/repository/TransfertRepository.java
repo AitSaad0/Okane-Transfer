@@ -34,4 +34,31 @@ public class TransfertRepository {
 
         return query.getResultList();
     }
+    public long countByEstSuspectTrue() {
+
+        return entityManager.createQuery("""
+            SELECT COUNT(t)
+            FROM Transfert t
+            WHERE t.estSuspect = true
+        """, Long.class).getSingleResult();
+    }
+
+    public Transfert save(Transfert transfert) {
+
+        if (transfert.getId() == null) {
+            entityManager.persist(transfert);
+            return transfert;
+        }
+
+        return entityManager.merge(transfert);
+    }
+    public long count() {
+
+        return entityManager.createQuery("""
+            SELECT COUNT(t)
+            FROM Transfert t
+        """, Long.class).getSingleResult();
+    }
+
+
 }
