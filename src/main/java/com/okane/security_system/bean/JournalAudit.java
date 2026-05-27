@@ -4,10 +4,8 @@ import com.okane.clients_transfers.bean.Transfert;
 import com.okane.network_users.bean.User;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(name = "journal_audit")

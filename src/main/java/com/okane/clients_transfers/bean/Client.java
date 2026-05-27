@@ -45,4 +45,6 @@ public class Client {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pays_id", nullable = false)
     private Pays pays;
+    @Column(nullable = false)
+    private String email;
 }

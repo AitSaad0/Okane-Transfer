@@ -3,9 +3,6 @@ package com.okane.network_users.bean;
 import com.okane.shared.Role;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.UuidGenerator;
-
-import java.util.UUID;
 
 @Entity
 @Table(name = "users")
