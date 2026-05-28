@@ -12,7 +12,7 @@ FROM tomcat:10.1-jre21-temurin-jammy
 
 RUN rm -rf /usr/local/tomcat/webapps/ROOT
 
-COPY --from=builder /app/target/okane-transfer.war /usr/local/tomcat/webapps/ROOT.war
+COPY --from=builder /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
 
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
   CMD curl -f http://localhost:8080/ || exit 1
