@@ -1,14 +1,12 @@
 package com.okane.entity;
 
-
 import com.okane.entity.enums.StatutAgence;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.UuidGenerator;
+// import org.hibernate.annotations.UuidGenerator;
 import java.util.List;
 
 import java.math.BigDecimal;
-
 
 @Entity
 @Table(name = "agence")
@@ -21,7 +19,6 @@ public class Agence {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @UuidGenerator
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
