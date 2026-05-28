@@ -1,12 +1,16 @@
 package com.okane.service.impl;
 
 import com.okane.dto.requestDto.AuthRequestDTO;
-import com.okane.dto.responseDto.AuthResponseDTO;
+import com.okane.dto.requestDto.RefreshRequestDTO;
 import com.okane.dto.requestDto.RegisterRequestDTO;
+import com.okane.dto.responseDto.AuthResponseDTO;
+import com.okane.dto.responseDto.UserResponseDTO;
 import com.okane.entity.User;
 import com.okane.entity.enums.Role;
-import com.okane.exception.ResourceNotFoundException;
+import com.okane.exception.BadCredentialsException;
+import com.okane.exception.InvalidTokenException;
 import com.okane.exception.UnauthorizedAccessException;
+import com.okane.exception.UserAlreadyExistsException;
 import com.okane.repository.UserRepository;
 import com.okane.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +22,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthServiceImpl {
 
     @Autowired private UserRepository userRepository;
-    @Autowired private JwtUtil jwtUtil;
+    @Autowired private JwtUtil        jwtUtil;
     @Autowired private PasswordEncoder passwordEncoder;
 
     @Transactional
     public AuthResponseDTO register(RegisterRequestDTO dto) {
         if (dto.getRole() != Role.CLIENT)
             throw new UnauthorizedAccessException("Public registration is for clients only");
+
+        if (userRepository.existsByEmail(dto.getEmail()))
+            throw new UserAlreadyExistsException("Email already in use: " + dto.getEmail());
 
         User user = User.builder()
                 .email(dto.getEmail())
@@ -37,20 +44,61 @@ public class AuthServiceImpl {
                 .build();
 
         userRepository.save(user);
-        return new AuthResponseDTO(jwtUtil.generateToken(user.getEmail()));
+        return buildTokens(user);
     }
+
 
     @Transactional(readOnly = true)
     public AuthResponseDTO login(AuthRequestDTO dto) {
         User user = userRepository.findByEmail(dto.getEmail())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+                .orElseThrow(() -> new BadCredentialsException("Invalid email or password"));
 
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword()))
-            throw new ResourceNotFoundException("Invalid credentials");
+            throw new BadCredentialsException("Invalid email or password");
 
         if (!user.isEnabled())
-            throw new ResourceNotFoundException("Account is disabled");
+            throw new BadCredentialsException("Account is disabled");
 
-        return new AuthResponseDTO(jwtUtil.generateToken(user.getEmail()));
+        return buildTokens(user);
+    }
+
+    @Transactional(readOnly = true)
+    public AuthResponseDTO refresh(RefreshRequestDTO dto) {
+        String token = dto.getRefreshToken();
+
+        if (!jwtUtil.isRefreshToken(token))
+            throw new InvalidTokenException("Invalid or expired refresh token");
+
+        String email = jwtUtil.extractEmail(token);
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new InvalidTokenException("User not found for this token"));
+
+        if (!user.isEnabled())
+            throw new BadCredentialsException("Account is disabled");
+
+        return buildTokens(user);
+    }
+
+    @Transactional(readOnly = true)
+    public UserResponseDTO me(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new InvalidTokenException("User not found"));
+
+        return UserResponseDTO.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .nom(user.getNom())
+                .prenom(user.getPrenom())
+                .telephone(user.getTelephone())
+                .role(user.getRole())
+                .active(user.getActive())
+                .build();
+    }
+
+    private AuthResponseDTO buildTokens(User user) {
+        return AuthResponseDTO.builder()
+                .accessToken(jwtUtil.generateAccessToken(user.getEmail()))
+                .refreshToken(jwtUtil.generateRefreshToken(user.getEmail()))
+                .build();
     }
 }

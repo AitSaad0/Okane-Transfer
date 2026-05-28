@@ -1,10 +1,11 @@
-// dto/AuthResponseDTO.java
 package com.okane.dto.responseDto;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
-@Getter @AllArgsConstructor
+@Getter
+@Builder
 public class AuthResponseDTO {
-    private String token;
+    private String accessToken;
+    private String refreshToken;
 }
