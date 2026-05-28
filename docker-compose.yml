@@ -16,6 +16,8 @@ services:
       - "${DB_PORT}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - okane_net
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
@@ -29,14 +31,26 @@ services:
     env_file:
       - .env
     environment:
-      SPRING_DATASOURCE_URL:      jdbc:postgresql://${DB_HOST}:5432/${POSTGRES_DB}
-      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
-      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      SPRING_DATASOURCE_URL:            jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME:       ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD:       ${POSTGRES_PASSWORD}
+      SPRING_JPA_HIBERNATE_DDL_AUTO:    update
     ports:
       - "${APP_PORT}:8080"
     depends_on:
       postgres:
         condition: service_healthy
+    networks:
+      - okane_net
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/ || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
 volumes:
   postgres_data:
+
+networks:
+  okane_net:
+    driver: bridge

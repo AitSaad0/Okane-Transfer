@@ -1,11 +1,11 @@
 package com.okane.geographic_monetary_reference.service;
 
-import com.okane.geographic_monetary_reference.bean.Devise;
-import com.okane.geographic_monetary_reference.controller.dto.requestDto.DeviseRequestDTO;
-import com.okane.geographic_monetary_reference.controller.dto.responseDto.DeviseResponseDTO;
-import com.okane.geographic_monetary_reference.controller.converter.DeviseConverter;
-import com.okane.geographic_monetary_reference.service.impl.DeviseServiceImpl;
-import com.okane.geographic_monetary_reference.repository.DeviseRepository;
+import com.okane.entity.Devise;
+import com.okane.dto.requestDto.DeviseRequestDTO;
+import com.okane.dto.responseDto.DeviseResponseDTO;
+import com.okane.dto.converter.DeviseConverter;
+import com.okane.service.impl.DeviseServiceImpl;
+import com.okane.repository.DeviseRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
