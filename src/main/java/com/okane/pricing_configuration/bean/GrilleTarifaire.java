@@ -2,7 +2,7 @@ package com.okane.pricing_configuration.bean;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.UuidGenerator;
+
 
 import java.math.BigDecimal;
 import java.util.UUID;

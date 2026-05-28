@@ -1,6 +1,5 @@
 package com.okane.network_users.bean;
 
-
 import com.okane.shared.StatutCaisse;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,14 +19,14 @@ import java.util.UUID;
 public class Caisse {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @UuidGenerator
     @Column(name = "id", updatable = false, nullable = false)
-    private Long id;
+    private UUID id;
 
     @Column(name = "solde_courant", nullable = false, precision = 19, scale = 2)
     private BigDecimal soldeCourant;
 
-    @Column(name = "date_ouverture",nullable = false)
+    @Column(name = "date_ouverture", nullable = false)
     private LocalDateTime dateOuverture;
 
     @Column(name = "date_cloture")

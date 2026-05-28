@@ -3,9 +3,8 @@ package com.okane.network_users.bean;
 import com.okane.shared.Role;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.UuidGenerator;
 
-import java.util.UUID;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -46,7 +45,26 @@ public class User {
     @Column(name = "two_factor_secret")
     private String twoFactorSecret;
 
+    @Column(nullable = false)
+    private Boolean deleted = false;
+
+    @Column(name = "deleted_at")
+    private java.time.LocalDateTime deletedAt;
+
+    @Column(name = "notification_email", nullable = false)
+    private Boolean notificationEmail = true;
+
+    @Column(name = "notification_sms", nullable = false)
+    private Boolean notificationSms = true;
+
+    @Column(name = "notification_push", nullable = false)
+    private Boolean notificationPush = false;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "agence_id")
     private Agence agence;
+
+    @OneToMany(mappedBy = "agent", fetch = FetchType.LAZY)
+    private List<Caisse> caisses;
+
 }

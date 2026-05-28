@@ -4,7 +4,7 @@ import com.okane.geographic_monetary_reference.bean.Devise;
 import com.okane.geographic_monetary_reference.bean.Pays;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.UuidGenerator;
+
 
 import java.math.BigDecimal;
 import java.util.List;

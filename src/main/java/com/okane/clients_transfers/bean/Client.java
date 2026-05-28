@@ -18,24 +18,33 @@ import java.util.UUID;
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @UuidGenerator
     @Column(name = "id", updatable = false, nullable = false)
-    private Long id;
+    private UUID id;
 
-    @Column(name = "nom",nullable = false)
+    @Column(name = "nom", nullable = false)
     private String nom;
 
-    @Column(name = "prenom",nullable = false)
+    @Column(name = "prenom", nullable = false)
     private String prenom;
 
     @Column(name = "num_piece_identite", nullable = false, unique = true)
     private String numPieceIdentite;
 
-    @Column(name = "telephone",nullable = false)
+    @Column(name = "telephone", nullable = false)
     private String telephone;
 
     @Column(name = "est_sur_liste_surveillance", nullable = false)
     private Boolean estSurListeSurveillance = false;
+
+    @Column(name = "date_naissance")
+    private java.time.LocalDate dateNaissance;
+
+    @Column(nullable = false)
+    private Boolean deleted = false;
+
+    @Column(name = "deleted_at")
+    private java.time.LocalDateTime deletedAt;
 
     // compte en ligne : relation vers User
     @OneToOne(fetch = FetchType.LAZY)
@@ -45,4 +54,6 @@ public class Client {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pays_id", nullable = false)
     private Pays pays;
+    @Column(nullable = false)
+    private String email;
 }

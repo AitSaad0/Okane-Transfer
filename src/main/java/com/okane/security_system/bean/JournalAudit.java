@@ -4,7 +4,7 @@ import com.okane.clients_transfers.bean.Transfert;
 import com.okane.network_users.bean.User;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.UuidGenerator;
+
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -32,7 +32,7 @@ public class JournalAudit {
     @Column(name = "type", nullable = false)
     private String type;
 
-    @Column(name = "ip_address",nullable = false)
+    @Column(nullable = false)
     private LocalDateTime timestamp;
 
     @Column(name = "ip_address", length = 45)
