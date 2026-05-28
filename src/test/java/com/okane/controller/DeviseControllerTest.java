@@ -1,9 +1,8 @@
-package com.okane.geographic_monetary_reference.controller;
+package com.okane.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.okane.dto.requestDto.DeviseRequestDTO;
 import com.okane.dto.responseDto.DeviseResponseDTO;
-import com.okane.controller.DeviseController;
 import com.okane.service.impl.DeviseServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

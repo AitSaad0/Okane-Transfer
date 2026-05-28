@@ -1,4 +1,4 @@
-package com.okane.geographic_monetary_reference.service;
+package com.okane.service;
 
 import com.okane.entity.Devise;
 import com.okane.dto.requestDto.DeviseRequestDTO;
