@@ -1,5 +1,8 @@
 package com.okane.entity;
 
+
+import com.okane.entity.Transfert;
+import com.okane.entity.User;
 import com.okane.entity.enums.CanalNotification;
 import com.okane.entity.enums.TypeNotification;
 import jakarta.persistence.*;
@@ -35,6 +38,9 @@ public class Notification {
     @Column(name = "date_envoi", nullable = false)
     private LocalDateTime dateEnvoi;
 
+    @Column(name = "lu", nullable = false)
+    private Boolean lu = false;
+
     // N notifications → 1 utilisateur
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "utilisateur_id", nullable = false)
@@ -42,7 +48,7 @@ public class Notification {
 
     // N notifications → 1 transfert (concerne)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "transfert_id", nullable = false)
+    @JoinColumn(name = "transfert_id")
     private Transfert transfert;
 
 }

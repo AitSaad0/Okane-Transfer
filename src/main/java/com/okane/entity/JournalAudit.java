@@ -28,7 +28,7 @@ public class JournalAudit {
     @Column(name = "type", nullable = false)
     private String type;
 
-    @Column(name = "timestamp",nullable = false)
+    @Column(name = "time",nullable = false)
     private LocalDateTime timestamp;
 
     @Column(name = "ip_address", length = 45)
