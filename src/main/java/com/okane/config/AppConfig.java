@@ -53,15 +53,15 @@ public class AppConfig {
 
         ds.setJdbcUrl(System.getenv().getOrDefault(
                 "SPRING_DATASOURCE_URL",
-                "jdbc:mysql://localhost:3306/okane_db"        // 👈 local dev fallback
+                "jdbc:mysql://localhost:3306/okane_db"
         ));
         ds.setUsername(System.getenv().getOrDefault(
                 "SPRING_DATASOURCE_USERNAME",
-                "root"                                        // 👈 local dev fallback
+                "root"
         ));
         ds.setPassword(System.getenv().getOrDefault(
                 "SPRING_DATASOURCE_PASSWORD",
-                "Saad1234"                              // 👈 local dev fallback
+                ""   // 👈 set SPRING_DATASOURCE_PASSWORD in your .env or OS env
         ));
 
         ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
