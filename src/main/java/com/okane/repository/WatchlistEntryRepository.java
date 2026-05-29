@@ -1,8 +1,9 @@
 package com.okane.repository;
 
 import com.okane.entity.WatchlistEntry;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,42 +11,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class WatchlistEntryRepository {
+public interface WatchlistEntryRepository extends JpaRepository<WatchlistEntry, UUID> {
 
-    @PersistenceContext
-    private EntityManager em;
-
-    public WatchlistEntry save(WatchlistEntry entry) {
-        if (entry.getId() == null) {
-            em.persist(entry);
-            return entry;
-        }
-        return em.merge(entry);
-    }
-
-    public List<WatchlistEntry> findAll() {
-        return em.createQuery("SELECT w FROM WatchlistEntry w ORDER BY w.addedAt DESC",
-                WatchlistEntry.class).getResultList();
-    }
-
-    public Optional<WatchlistEntry> findByIdNumber(String idNumber) {
-        return em.createQuery(
-                        "SELECT w FROM WatchlistEntry w WHERE w.idNumber = :id",
-                        WatchlistEntry.class)
-                .setParameter("id", idNumber)
-                .getResultStream().findFirst();
-    }
-
-    // Fuzzy name match: case-insensitive contains
-    public List<WatchlistEntry> findByNameContaining(String name) {
-        return em.createQuery(
-                        "SELECT w FROM WatchlistEntry w WHERE LOWER(w.fullName) LIKE :name",
-                        WatchlistEntry.class)
-                .setParameter("name", "%" + name.toLowerCase() + "%")
-                .getResultList();
-    }
-
-    public Optional<WatchlistEntry> findById(UUID id) {
-        return Optional.ofNullable(em.find(WatchlistEntry.class, id));
-    }
+    Optional<WatchlistEntry> findByIdNumber(String idNumber);
+    @Query("SELECT w FROM WatchlistEntry w WHERE LOWER(w.fullName) LIKE LOWER(CONCAT('%', :name, '%'))")
+    List<WatchlistEntry> findByNameContaining(@Param("name") String name);
 }
