@@ -15,75 +15,56 @@ import java.util.Properties;
 
 @Configuration
 @ComponentScan(basePackages = "com.okane")
-@EnableJpaRepositories(basePackages = "com.okane")
+@EnableJpaRepositories(basePackages = "com.okane.repository")
 @EnableTransactionManagement
 public class AppConfig {
 
     @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-
         LocalContainerEntityManagerFactoryBean emf =
                 new LocalContainerEntityManagerFactoryBean();
 
         emf.setDataSource(dataSource());
-        emf.setPackagesToScan("com.okane");
-
-        HibernateJpaVendorAdapter vendorAdapter =
-                new HibernateJpaVendorAdapter();
-
-        emf.setJpaVendorAdapter(vendorAdapter);
+        emf.setPackagesToScan("com.okane.entity");
+        emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 
         Properties props = new Properties();
-
+        props.setProperty("hibernate.dialect",      "org.hibernate.dialect.MySQLDialect");
         props.setProperty("hibernate.hbm2ddl.auto", "update");
-        props.setProperty("hibernate.show_sql", "true");
-        props.setProperty("hibernate.format_sql", "true");
-
+        props.setProperty("hibernate.show_sql",     "true");
+        props.setProperty("hibernate.format_sql",   "true");
         emf.setJpaProperties(props);
 
         return emf;
     }
 
     @Bean
-    public JpaTransactionManager transactionManager() {
+    public JpaTransactionManager transactionManager(
+            LocalContainerEntityManagerFactoryBean entityManagerFactory) {
 
-        JpaTransactionManager txManager =
-                new JpaTransactionManager();
-
-        txManager.setEntityManagerFactory(
-                entityManagerFactory().getObject());
-
-        return txManager;
+        JpaTransactionManager tx = new JpaTransactionManager();
+        tx.setEntityManagerFactory(entityManagerFactory.getObject());
+        return tx;
     }
 
     @Bean
     public DataSource dataSource() {
-
         HikariDataSource ds = new HikariDataSource();
 
-        ds.setJdbcUrl(
-                System.getenv().getOrDefault(
-                        "SPRING_DATASOURCE_URL",
-                        "jdbc:mysql://localhost:3310/okane_db?useSSL=false&serverTimezone=UTC"
-                )
-        );
-
-        ds.setUsername(
-                System.getenv().getOrDefault(
-                        "SPRING_DATASOURCE_USERNAME",
-                        "root"
-                )
-        );
-
-        ds.setPassword(
-                System.getenv().getOrDefault(
-                        "SPRING_DATASOURCE_PASSWORD",
-                        ""
-                )
-        );
+        ds.setJdbcUrl(System.getenv().getOrDefault(
+                "SPRING_DATASOURCE_URL",
+                "jdbc:mysql://localhost:3306/okane_db"        // 👈 local dev fallback
+        ));
+        ds.setUsername(System.getenv().getOrDefault(
+                "SPRING_DATASOURCE_USERNAME",
+                "root"                                        // 👈 local dev fallback
+        ));
+        ds.setPassword(System.getenv().getOrDefault(
+                "SPRING_DATASOURCE_PASSWORD",
+                "Saad1234"                              // 👈 local dev fallback
+        ));
 
         ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-
         return ds;
     }
 }
