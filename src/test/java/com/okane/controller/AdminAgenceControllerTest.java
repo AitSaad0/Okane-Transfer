@@ -1,5 +1,6 @@
 package com.okane.controller;
 
+import static org.mockito.Mockito.isNull;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.okane.dto.requestDto.CreateAgenceRequestDto;
 import com.okane.dto.requestDto.UpdateAgenceRequestDto;
@@ -20,6 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -45,9 +47,13 @@ class AdminAgenceControllerTest {
 
     @BeforeEach
     void setUp() {
+        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+        validator.afterPropertiesSet();
+
         mockMvc = MockMvcBuilders
                 .standaloneSetup(adminAgenceController)
                 .setControllerAdvice(new GlobalExceptionHandler())
+                .setValidator(validator)
                 .build();
 
         sampleAgence = AgenceResponseDto.builder()
@@ -111,7 +117,7 @@ class AdminAgenceControllerTest {
                 List.of(sampleAgence), 0, 20, 1L, 1, true
         );
 
-        when(agenceService.getAllAgences(null, eq(StatutAgence.SUSPENDUE), eq(0), eq(20), eq("id")))
+        when(agenceService.getAllAgences(isNull(), eq(StatutAgence.SUSPENDUE), eq(0), eq(20), eq("id")))
                 .thenReturn(page);
 
         mockMvc.perform(get("/api/v1/admin/agencies")

@@ -1,5 +1,6 @@
 package com.okane.controller;
 
+import static org.mockito.Mockito.isNull;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.okane.dto.requestDto.CreateUserRequestDto;
 import com.okane.dto.requestDto.UpdateUserRequestDto;
@@ -19,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import java.util.List;
 
@@ -43,9 +45,13 @@ class AdminUserControllerTest {
 
     @BeforeEach
     void setUp() {
+        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+        validator.afterPropertiesSet();
+
         mockMvc = MockMvcBuilders
                 .standaloneSetup(adminUserController)
                 .setControllerAdvice(new GlobalExceptionHandler())
+                .setValidator(validator)
                 .build();
 
         sampleUser = UserResponseDTO.builder()
@@ -88,7 +94,8 @@ class AdminUserControllerTest {
                 List.of(sampleUser), 0, 20, 1L, 1, true
         );
 
-        when(userService.getAllUsers(eq(Role.AGENT), null, null, 0, 20, "id")).thenReturn(page);
+        when(userService.getAllUsers(eq(Role.AGENT), isNull(), isNull(), eq(0), eq(20), eq("id")))
+                .thenReturn(page);
 
         mockMvc.perform(get("/api/v1/admin/users")
                         .param("role", "AGENT"))
@@ -102,7 +109,7 @@ class AdminUserControllerTest {
                 List.of(sampleUser), 0, 20, 1L, 1, true
         );
 
-        when(userService.getAllUsers(null, eq(true), eq(10L), eq(0), eq(20), eq("id")))
+        when(userService.getAllUsers(isNull(), eq(true), eq(10L), eq(0), eq(20), eq("id")))
                 .thenReturn(page);
 
         mockMvc.perform(get("/api/v1/admin/users")
