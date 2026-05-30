@@ -90,7 +90,7 @@ class UserServiceImplTest {
         @DisplayName("retourne une page de users sans filtres")
         void shouldReturnPageOfUsers() {
             Page<User> page = new PageImpl<>(List.of(user), PageRequest.of(0, 10), 1);
-            when(userRepository.findAllWithFilters(null, null, null, any(Pageable.class)))
+            when(userRepository.findAllWithFilters(isNull(), isNull(), isNull(), any(Pageable.class)))
                     .thenReturn(page);
             when(userConverter.toResponseDto(user)).thenReturn(responseDTO);
 
@@ -108,7 +108,7 @@ class UserServiceImplTest {
         @DisplayName("filtre par role, active et agenceId")
         void shouldFilterByRoleActiveAndAgence() {
             Page<User> page = new PageImpl<>(List.of(user));
-            when(userRepository.findAllWithFilters(eq(Role.AGENT), eq(true), eq(1L), any()))
+            when(userRepository.findAllWithFilters(eq(Role.AGENT), eq(true), eq(1L), any(Pageable.class)))
                     .thenReturn(page);
             when(userConverter.toResponseDto(user)).thenReturn(responseDTO);
 
@@ -116,13 +116,13 @@ class UserServiceImplTest {
                     userService.getAllUsers(Role.AGENT, true, 1L, 0, 10, "nom");
 
             assertEquals(1, result.getContent().size());
-            verify(userRepository).findAllWithFilters(Role.AGENT, true, 1L, any(Pageable.class));
+            verify(userRepository).findAllWithFilters(eq(Role.AGENT), eq(true), eq(1L), any(Pageable.class));
         }
 
         @Test
         @DisplayName("retourne page vide quand aucun user ne correspond")
         void shouldReturnEmptyPage() {
-            when(userRepository.findAllWithFilters(any(), any(), any(), any()))
+            when(userRepository.findAllWithFilters(any(), any(), any(), any(Pageable.class)))
                     .thenReturn(Page.empty());
 
             PageResponseDto<UserResponseDTO> result =

@@ -310,16 +310,16 @@ class ClientProfileServiceImplTest {
         @DisplayName("applique bien la pagination — page 1 size 5")
         void shouldApplyPagination() {
             Page<JournalAudit> page = new PageImpl<>(
-                    List.of(audit), PageRequest.of(1, 5), 6);
+                    List.of(audit), PageRequest.of(1, 5), 11); // 11 > (1+1)*5 → isLast=false
             when(journalAuditRepository.findByUtilisateurId(eq(1L), any(Pageable.class)))
                     .thenReturn(page);
 
             PageResponseDto<ClientActivityResponseDto> result =
                     clientProfileService.getMyActivity(1L, 1, 5);
 
-            assertEquals(1,  result.getPage());
-            assertEquals(5,  result.getSize());
-            assertEquals(6L, result.getTotalElements());
+            assertEquals(1,   result.getPage());
+            assertEquals(5,   result.getSize());
+            assertEquals(11L, result.getTotalElements());
             assertFalse(result.isLast());
         }
 
