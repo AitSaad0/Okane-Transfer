@@ -35,6 +35,12 @@ public class Agence {
     @Column(nullable = false)
     private StatutAgence statut;
 
+    @Column(name = "ville")
+    private String ville;
+
+    @Column(name = "code_postal")
+    private String codePostal;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pays_id", nullable = false)
     private Pays pays;

@@ -3,6 +3,9 @@ package com.okane.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "client")
 @Getter
@@ -32,6 +35,17 @@ public class Client {
     @Column(name = "est_sur_liste_surveillance", nullable = false)
     private Boolean estSurListeSurveillance = false;
 
+    @Column(nullable = false)
+    private Boolean deleted = false;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+
+    private LocalDate dateNaissance;
+
+    @Column(nullable = false)
+    private String email;
+
     // compte en ligne : relation vers User
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", unique = true)
@@ -40,4 +54,5 @@ public class Client {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pays_id", nullable = false)
     private Pays pays;
+
 }
