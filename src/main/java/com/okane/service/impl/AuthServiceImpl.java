@@ -27,11 +27,11 @@ public class AuthServiceImpl {
 
     @Transactional
     public AuthResponseDTO register(RegisterRequestDTO dto) {
-        if (dto.getRole() != Role.CLIENT)
-            throw new UnauthorizedAccessException("Public registration is for clients only");
 
         if (userRepository.existsByEmail(dto.getEmail()))
-            throw new UserAlreadyExistsException("Email already in use: " + dto.getEmail());
+            throw new UserAlreadyExistsException(
+                    "Email already in use: " + dto.getEmail()
+            );
 
         User user = User.builder()
                 .email(dto.getEmail())
