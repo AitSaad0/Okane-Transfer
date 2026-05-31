@@ -10,5 +10,5 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
     void deleteByUtilisateurIdAndType(Long userId, TypeToken typeToken);
     Optional<Token> findTokenByValeur(String valeur);
     Optional<Token> findByValeurAndUtilisateurId(String valeur, Long utilisateurId);
-
+    Optional<Token> findByValeurAndType(String valeur, TypeToken type);
 }
