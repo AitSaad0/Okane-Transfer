@@ -36,6 +36,8 @@
                             .requestMatchers("/api/auth/login").permitAll()
                             .requestMatchers("/api/auth/refresh").permitAll()
                             .requestMatchers("/api/auth/logout").permitAll()
+                            .requestMatchers("/api/auth/password/forgot").permitAll()
+                            .requestMatchers("/api/auth/password/reset").permitAll()
                             .anyRequest().authenticated()
                     )
                     .authenticationProvider(authenticationProvider())
