@@ -1,6 +1,7 @@
-package com.okane.controller;
+package com.okane.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.okane.controller.DeviseController;
 import com.okane.dto.requestDto.DeviseRequestDTO;
 import com.okane.dto.responseDto.DeviseResponseDTO;
 import com.okane.service.impl.DeviseServiceImpl;
@@ -11,9 +12,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -28,7 +31,6 @@ class DeviseControllerTest {
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
 
-    // interface et non l'implémentation
     @Mock
     private DeviseServiceImpl deviseService;
 
@@ -41,8 +43,15 @@ class DeviseControllerTest {
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(deviseController).build();
         objectMapper = new ObjectMapper();
+
+        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+        converter.setDefaultCharset(StandardCharsets.UTF_8);
+
+        mockMvc = MockMvcBuilders
+                .standaloneSetup(deviseController)
+                .setMessageConverters(converter)
+                .build();
 
         madId = 1L;
 
@@ -65,9 +74,10 @@ class DeviseControllerTest {
     void getAll_ShouldReturnListOfDevises() throws Exception {
         when(deviseService.findAll()).thenReturn(Arrays.asList(madDTO, eurDTO));
 
-        mockMvc.perform(get("/api/v1/admin/currencies"))
+        mockMvc.perform(get("/api/v1/admin/currencies")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$[0].code").value("MAD"))
                 .andExpect(jsonPath("$[0].symbole").value("DH"))
                 .andExpect(jsonPath("$[1].code").value("EUR"));
@@ -79,7 +89,8 @@ class DeviseControllerTest {
     void getById_ShouldReturnDevise() throws Exception {
         when(deviseService.findById(madId)).thenReturn(madDTO);
 
-        mockMvc.perform(get("/api/v1/admin/currencies/{id}", madId))
+        mockMvc.perform(get("/api/v1/admin/currencies/{id}", madId)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value("MAD"))
                 .andExpect(jsonPath("$.symbole").value("DH"));

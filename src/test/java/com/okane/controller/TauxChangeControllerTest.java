@@ -12,10 +12,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -36,14 +39,24 @@ class TauxChangeControllerTest {
     private TauxChangeController tauxChangeController;
 
     private ObjectMapper objectMapper;
-
     private TauxChangeResponseDTO responseDTO;
     private TauxChangeRequestDTO requestDTO;
 
     @BeforeEach
     void setUp() {
         objectMapper = new ObjectMapper();
-        mockMvc = MockMvcBuilders.standaloneSetup(tauxChangeController).build();
+
+        MappingJackson2HttpMessageConverter jsonConverter =
+                new MappingJackson2HttpMessageConverter();
+        jsonConverter.setDefaultCharset(StandardCharsets.UTF_8);
+
+        StringHttpMessageConverter stringConverter =
+                new StringHttpMessageConverter(StandardCharsets.UTF_8);
+
+        mockMvc = MockMvcBuilders
+                .standaloneSetup(tauxChangeController)
+                .setMessageConverters(jsonConverter, stringConverter)
+                .build();
 
         responseDTO = TauxChangeResponseDTO.builder()
                 .id(1L)
@@ -65,7 +78,8 @@ class TauxChangeControllerTest {
     void getCurrentRates_shouldReturn200() throws Exception {
         when(tauxChangeService.findAllCurrentRates()).thenReturn(Arrays.asList(responseDTO));
 
-        mockMvc.perform(get("/api/v1/exchange-rates"))
+        mockMvc.perform(get("/api/v1/exchange-rates")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].paysOrigineNom").value("Sénégal"));
     }
@@ -81,9 +95,11 @@ class TauxChangeControllerTest {
                 .message("Taux figé")
                 .build();
 
-        when(tauxChangeService.convert("XOF", "EUR", new BigDecimal("10000"))).thenReturn(conversion);
+        when(tauxChangeService.convert("XOF", "EUR", new BigDecimal("10000")))
+                .thenReturn(conversion);
 
         mockMvc.perform(get("/api/v1/exchange-rates/convert")
+                        .accept(MediaType.APPLICATION_JSON)
                         .param("from", "XOF")
                         .param("to", "EUR")
                         .param("amount", "10000"))
@@ -108,14 +124,15 @@ class TauxChangeControllerTest {
 
         mockMvc.perform(post("/api/v1/admin/exchange-rates/sync"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Synchronisation terminée"));
+                .andExpect(content().string("\"Synchronisation terminée\""));  // JSON-quoted
     }
 
     @Test
     void getHistory_shouldReturn200() throws Exception {
         when(tauxChangeService.getHistory(1L)).thenReturn(Arrays.asList(responseDTO));
 
-        mockMvc.perform(get("/api/v1/admin/exchange-rates/history/1"))
+        mockMvc.perform(get("/api/v1/admin/exchange-rates/history/1")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].source").value("ACTUEL"));
     }
