@@ -67,6 +67,21 @@ public class GlobalExceptionHandler {
                 .body(body(HttpStatus.UNAUTHORIZED, ex.getMessage(), req));
     }
 
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<Map<String, Object>> handleUnauthorized(
+            UnauthorizedException ex, HttpServletRequest req) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(body(HttpStatus.UNAUTHORIZED, ex.getMessage(), req));
+    }
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<Map<String, Object>> handleBadRequest(
+            BadRequestException ex, HttpServletRequest req) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(body(HttpStatus.BAD_REQUEST, ex.getMessage(), req));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidation(
             MethodArgumentNotValidException ex, HttpServletRequest req) {
@@ -79,6 +94,8 @@ public class GlobalExceptionHandler {
         body.put("errors", errors);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
+
+
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGeneric(
