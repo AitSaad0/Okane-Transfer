@@ -60,7 +60,7 @@ class AuthServiceTest {
     }
 
     @Test
-    void register_shouldThrowUnauthorizedWhenRoleIsNotClient() {
+    void register_shouldIgnoreRoleAndAlwaysCreateClient() {
         RegisterRequestDTO dto = new RegisterRequestDTO();
         dto.setEmail("admin@okane.com");
         dto.setPassword("password123");
@@ -68,8 +68,15 @@ class AuthServiceTest {
         dto.setPrenom("User");
         dto.setRole(Role.ADMIN);
 
-        assertThrows(UnauthorizedAccessException.class, () -> authService.register(dto));
-        verify(userRepository, never()).save(any());
+        when(userRepository.existsByEmail("admin@okane.com")).thenReturn(false);
+        when(passwordEncoder.encode(any())).thenReturn("encoded");
+        when(jwtUtil.generateAccessToken(any())).thenReturn("access-token");
+        when(jwtUtil.generateRefreshToken(any())).thenReturn("refresh-token");
+
+        AuthResponseDTO response = authService.register(dto);
+
+        assertNotNull(response.getAccessToken());
+        verify(userRepository, times(1)).save(any(User.class));
     }
 
     @Test

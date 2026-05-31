@@ -1,5 +1,6 @@
 package com.okane.controller;
 
+import com.okane.controller.CorridorController;
 import com.okane.dto.requestDto.CorridorRequestDTO;
 import com.okane.dto.responseDto.CorridorResponseDTO;
 import com.okane.service.CorridorService;
@@ -11,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -35,14 +37,16 @@ class CorridorControllerTest {
     private CorridorController corridorController;
 
     private ObjectMapper objectMapper;
-
     private CorridorResponseDTO responseDTO;
     private CorridorRequestDTO requestDTO;
 
     @BeforeEach
     void setUp() {
         objectMapper = new ObjectMapper();
-        mockMvc = MockMvcBuilders.standaloneSetup(corridorController).build();
+        mockMvc = MockMvcBuilders
+                .standaloneSetup(corridorController)
+                .setMessageConverters(new MappingJackson2HttpMessageConverter())
+                .build();
 
         responseDTO = CorridorResponseDTO.builder()
                 .id(1L)
@@ -68,7 +72,8 @@ class CorridorControllerTest {
     void getAll_shouldReturn200() throws Exception {
         when(corridorService.findAll()).thenReturn(Arrays.asList(responseDTO));
 
-        mockMvc.perform(get("/api/v1/admin/corridors"))
+        mockMvc.perform(get("/api/v1/admin/corridors")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].paysOrigineNom").value("Sénégal"));
     }
@@ -77,7 +82,8 @@ class CorridorControllerTest {
     void getActive_shouldReturn200() throws Exception {
         when(corridorService.findActive()).thenReturn(Arrays.asList(responseDTO));
 
-        mockMvc.perform(get("/api/v1/admin/corridors/active"))
+        mockMvc.perform(get("/api/v1/admin/corridors/active")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
@@ -85,7 +91,8 @@ class CorridorControllerTest {
     void getById_shouldReturn200() throws Exception {
         when(corridorService.findById(1L)).thenReturn(responseDTO);
 
-        mockMvc.perform(get("/api/v1/admin/corridors/1"))
+        mockMvc.perform(get("/api/v1/admin/corridors/1")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1));
     }
@@ -124,7 +131,8 @@ class CorridorControllerTest {
         doNothing().when(corridorService).toggleStatus(1L);
         when(corridorService.findById(1L)).thenReturn(responseDTO);
 
-        mockMvc.perform(patch("/api/v1/admin/corridors/1/status"))
+        mockMvc.perform(patch("/api/v1/admin/corridors/1/status")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 }
