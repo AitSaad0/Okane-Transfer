@@ -45,13 +45,20 @@ class AdminUserControllerTest {
 
     @BeforeEach
     void setUp() {
-        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
-        validator.afterPropertiesSet();
+        jakarta.validation.Validator validator = jakarta.validation.Validation
+                .byDefaultProvider()
+                .configure()
+                .messageInterpolator(new org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator())
+                .buildValidatorFactory()
+                .getValidator();
+
+        org.springframework.validation.beanvalidation.SpringValidatorAdapter springValidator =
+                new org.springframework.validation.beanvalidation.SpringValidatorAdapter(validator);
 
         mockMvc = MockMvcBuilders
                 .standaloneSetup(adminUserController)
                 .setControllerAdvice(new GlobalExceptionHandler())
-                .setValidator(validator)
+                .setValidator(springValidator)
                 .build();
 
         sampleUser = UserResponseDTO.builder()
