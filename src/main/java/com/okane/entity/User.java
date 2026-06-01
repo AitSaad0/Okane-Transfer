@@ -7,6 +7,7 @@
     import org.springframework.security.core.authority.SimpleGrantedAuthority;
     import org.springframework.security.core.userdetails.UserDetails;
 
+    import java.time.LocalDateTime;
     import java.util.Collection;
     import java.util.List;
 
@@ -48,6 +49,16 @@
 
         @Column(name = "two_factor_secret")
         private String twoFactorSecret;
+
+        private Boolean deleted = false;
+        private LocalDateTime deletedAt;
+
+        private Boolean notificationEmail = true;
+        private Boolean notificationSms = true;
+        private Boolean notificationPush = false;
+
+        @OneToMany(mappedBy = "agent")
+        private List<Caisse> caisses;
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "agence_id")
