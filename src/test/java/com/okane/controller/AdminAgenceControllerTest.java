@@ -61,6 +61,8 @@ class AdminAgenceControllerTest {
                 .standaloneSetup(adminAgenceController)
                 .setControllerAdvice(new GlobalExceptionHandler())
                 .setValidator(springValidator)
+                .defaultRequest(org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+                        .get("/").accept(org.springframework.http.MediaType.APPLICATION_JSON))
                 .build();
 
         sampleAgence = AgenceResponseDto.builder()

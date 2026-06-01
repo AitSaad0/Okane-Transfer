@@ -59,6 +59,8 @@ class AgencyAgentControllerTest {
                 .standaloneSetup(agencyAgentController)
                 .setControllerAdvice(new GlobalExceptionHandler())
                 .setValidator(springValidator)
+                .defaultRequest(org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+                        .get("/").accept(org.springframework.http.MediaType.APPLICATION_JSON))
                 .build();
 
         sampleAgent = AgentDetailResponseDto.builder()
