@@ -123,7 +123,7 @@ class AdminAgenceControllerTest {
                 .build();
 
         PageResponseDto<AgenceResponseDto> page = new PageResponseDto<>(
-                List.of(sampleAgence), 0, 20, 1L, 1, true
+                List.of(suspendue), 0, 20, 1L, 1, true  // ← List.of(suspendue) pas List.of(sampleAgence)
         );
 
         when(agenceService.getAllAgences(isNull(), eq(StatutAgence.SUSPENDUE), eq(0), eq(20), eq("id")))
