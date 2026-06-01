@@ -1,15 +1,17 @@
 package com.okane.service;
 
-import com.okane.dto.requestDto.AuthRequestDTO;
-import com.okane.dto.requestDto.RefreshRequestDTO;
-import com.okane.dto.requestDto.RegisterRequestDTO;
+import com.okane.dto.requestDto.*;
 import com.okane.dto.responseDto.AuthResponseDTO;
 import com.okane.dto.responseDto.UserResponseDTO;
+import com.okane.entity.Token;
 import com.okane.entity.User;
 import com.okane.entity.enums.Role;
+import com.okane.entity.enums.TypeToken;
 import com.okane.exception.*;
+import com.okane.repository.TokenRepository;
 import com.okane.repository.UserRepository;
 import com.okane.security.JwtUtil;
+import com.okane.service.EmailService;
 import com.okane.service.impl.AuthServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,19 +20,23 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class AuthServiceTest {
 
     @Mock private UserRepository  userRepository;
+    @Mock private TokenRepository tokenRepository;
     @Mock private JwtUtil         jwtUtil;
     @Mock private PasswordEncoder passwordEncoder;
+    @Mock private EmailService    emailService;
 
     @InjectMocks private AuthServiceImpl authService;
 
@@ -60,7 +66,7 @@ class AuthServiceTest {
     }
 
     @Test
-    void register_shouldThrowUnauthorizedWhenRoleIsNotClient() {
+    void register_shouldIgnoreRoleAndAlwaysCreateClient() {
         RegisterRequestDTO dto = new RegisterRequestDTO();
         dto.setEmail("admin@okane.com");
         dto.setPassword("password123");
@@ -68,8 +74,15 @@ class AuthServiceTest {
         dto.setPrenom("User");
         dto.setRole(Role.ADMIN);
 
-        assertThrows(UnauthorizedAccessException.class, () -> authService.register(dto));
-        verify(userRepository, never()).save(any());
+        when(userRepository.existsByEmail("admin@okane.com")).thenReturn(false);
+        when(passwordEncoder.encode(any())).thenReturn("encoded");
+        when(jwtUtil.generateAccessToken(any())).thenReturn("access-token");
+        when(jwtUtil.generateRefreshToken(any())).thenReturn("refresh-token");
+
+        AuthResponseDTO response = authService.register(dto);
+
+        assertNotNull(response.getAccessToken());
+        verify(userRepository, times(1)).save(any(User.class));
     }
 
     @Test
@@ -264,5 +277,184 @@ class AuthServiceTest {
         when(userRepository.findByEmail("ghost@okane.com")).thenReturn(Optional.empty());
 
         assertThrows(InvalidTokenException.class, () -> authService.me("ghost@okane.com"));
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // forgotPassword()
+    // ─────────────────────────────────────────────────────────────
+
+    @Test
+    void forgotPassword_shouldSaveTokenAndSendEmail() {
+        User user = User.builder()
+                .id(1L)
+                .email("client@okane.com")
+                .role(Role.CLIENT)
+                .active(true)
+                .build();
+
+        when(userRepository.findByEmail("client@okane.com")).thenReturn(Optional.of(user));
+        doNothing().when(tokenRepository).deleteByUtilisateurIdAndType(1L, TypeToken.PASSWORD_RESET);
+        when(tokenRepository.save(any())).thenReturn(mock(Token.class));
+
+        authService.forgotPassword("client@okane.com");
+
+        verify(tokenRepository).deleteByUtilisateurIdAndType(1L, TypeToken.PASSWORD_RESET);
+        verify(tokenRepository).save(any(Token.class));
+        verify(emailService).send(
+                eq("client@okane.com"),
+                eq("Okane Transfer — Réinitialisation de mot de passe"),
+                any(String.class)
+        );
+    }
+
+    @Test
+    void forgotPassword_shouldThrow_whenEmailNotFound() {
+        when(userRepository.findByEmail("unknown@okane.com")).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class,
+                () -> authService.forgotPassword("unknown@okane.com"));
+
+        verify(emailService, never()).send(any(), any(), any());
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // resetPassword()
+    // ─────────────────────────────────────────────────────────────
+
+    @Test
+    void resetPassword_shouldUpdatePassword_whenTokenValid() {
+        User user = User.builder()
+                .id(1L)
+                .email("client@okane.com")
+                .password("encodedOld")
+                .role(Role.CLIENT)
+                .active(true)
+                .build();
+
+        Token token = Token.builder()
+                .valeur("123456")
+                .type(TypeToken.PASSWORD_RESET)
+                .dateExpiration(LocalDateTime.now().plusMinutes(10))
+                .utilisateur(user)
+                .build();
+
+        ResetPasswordRequestDTO dto = new ResetPasswordRequestDTO();
+        dto.setToken("123456");
+        dto.setNewPassword("newPass");
+
+        when(tokenRepository.findByValeurAndType("123456", TypeToken.PASSWORD_RESET))
+                .thenReturn(Optional.of(token));
+        when(passwordEncoder.encode("newPass")).thenReturn("encodedNew");
+
+        authService.resetPassword(dto);
+
+        verify(userRepository).save(user);
+        verify(tokenRepository).delete(token);
+        assertEquals("encodedNew", user.getPassword());
+    }
+
+    @Test
+    void resetPassword_shouldThrow_whenTokenNotFound() {
+        ResetPasswordRequestDTO dto = new ResetPasswordRequestDTO();
+        dto.setToken("invalid");
+        dto.setNewPassword("newPass");
+
+        when(tokenRepository.findByValeurAndType("invalid", TypeToken.PASSWORD_RESET))
+                .thenReturn(Optional.empty());
+
+        assertThrows(BadRequestException.class, () -> authService.resetPassword(dto));
+        verify(userRepository, never()).save(any());
+    }
+
+    @Test
+    void resetPassword_shouldThrow_whenTokenExpired() {
+        User user = User.builder()
+                .id(1L)
+                .email("client@okane.com")
+                .password("encodedOld")
+                .role(Role.CLIENT)
+                .active(true)
+                .build();
+
+        Token token = Token.builder()
+                .valeur("123456")
+                .type(TypeToken.PASSWORD_RESET)
+                .dateExpiration(LocalDateTime.now().minusMinutes(5))
+                .utilisateur(user)
+                .build();
+
+        ResetPasswordRequestDTO dto = new ResetPasswordRequestDTO();
+        dto.setToken("123456");
+        dto.setNewPassword("newPass");
+
+        when(tokenRepository.findByValeurAndType("123456", TypeToken.PASSWORD_RESET))
+                .thenReturn(Optional.of(token));
+
+        assertThrows(BadRequestException.class, () -> authService.resetPassword(dto));
+        verify(tokenRepository).delete(token);
+        verify(userRepository, never()).save(any());
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // changePassword()
+    // ─────────────────────────────────────────────────────────────
+
+    @Test
+    void changePassword_shouldUpdatePassword_whenCurrentPasswordCorrect() {
+        User user = User.builder()
+                .id(1L)
+                .email("client@okane.com")
+                .password("encodedOld")
+                .role(Role.CLIENT)
+                .active(true)
+                .build();
+
+        ChangePasswordRequestDTO dto = new ChangePasswordRequestDTO();
+        dto.setCurrentPassword("rawOld");
+        dto.setNewPassword("newPass");
+
+        when(userRepository.findByEmail("client@okane.com")).thenReturn(Optional.of(user));
+        when(passwordEncoder.matches("rawOld", "encodedOld")).thenReturn(true);
+        when(passwordEncoder.encode("newPass")).thenReturn("encodedNew");
+
+        authService.changePassword("client@okane.com", dto);
+
+        verify(userRepository).save(user);
+        assertEquals("encodedNew", user.getPassword());
+    }
+
+    @Test
+    void changePassword_shouldThrow_whenCurrentPasswordWrong() {
+        User user = User.builder()
+                .id(1L)
+                .email("client@okane.com")
+                .password("encodedOld")
+                .role(Role.CLIENT)
+                .active(true)
+                .build();
+
+        ChangePasswordRequestDTO dto = new ChangePasswordRequestDTO();
+        dto.setCurrentPassword("wrong");
+        dto.setNewPassword("newPass");
+
+        when(userRepository.findByEmail("client@okane.com")).thenReturn(Optional.of(user));
+        when(passwordEncoder.matches("wrong", "encodedOld")).thenReturn(false);
+
+        assertThrows(BadCredentialsException.class,
+                () -> authService.changePassword("client@okane.com", dto));
+
+        verify(userRepository, never()).save(any());
+    }
+
+    @Test
+    void changePassword_shouldThrow_whenUserNotFound() {
+        ChangePasswordRequestDTO dto = new ChangePasswordRequestDTO();
+        dto.setCurrentPassword("pass");
+        dto.setNewPassword("newPass");
+
+        when(userRepository.findByEmail("unknown@okane.com")).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class,
+                () -> authService.changePassword("unknown@okane.com", dto));
     }
 }

@@ -31,7 +31,13 @@
                     .csrf(csrf -> csrf.disable())
                     .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                     .authorizeHttpRequests(auth -> auth
-                            .requestMatchers("/api/auth/**").permitAll()
+
+                            .requestMatchers("/api/auth/register").permitAll()
+                            .requestMatchers("/api/auth/login").permitAll()
+                            .requestMatchers("/api/auth/refresh").permitAll()
+                            .requestMatchers("/api/auth/logout").permitAll()
+                            .requestMatchers("/api/auth/password/forgot").permitAll()
+                            .requestMatchers("/api/auth/password/reset").permitAll()
                             .anyRequest().authenticated()
                     )
                     .authenticationProvider(authenticationProvider())

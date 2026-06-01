@@ -17,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -40,12 +41,9 @@ class AuthControllerTest {
         mockMvc = MockMvcBuilders
                 .standaloneSetup(authController)
                 .setControllerAdvice(new GlobalExceptionHandler())
+                .setMessageConverters(new MappingJackson2HttpMessageConverter())
                 .build();
     }
-
-    // ─────────────────────────────────────────────────────────────
-    // POST /api/auth/register
-    // ─────────────────────────────────────────────────────────────
 
     @Test
     void register_shouldReturn201WithBothTokens() throws Exception {
@@ -103,10 +101,6 @@ class AuthControllerTest {
                 .andExpect(status().isConflict());
     }
 
-    // ─────────────────────────────────────────────────────────────
-    // POST /api/auth/login
-    // ─────────────────────────────────────────────────────────────
-
     @Test
     void login_shouldReturn200WithBothTokens() throws Exception {
         AuthRequestDTO dto = new AuthRequestDTO();
@@ -154,10 +148,6 @@ class AuthControllerTest {
                 .andExpect(status().isUnauthorized());
     }
 
-    // ─────────────────────────────────────────────────────────────
-    // POST /api/auth/refresh
-    // ─────────────────────────────────────────────────────────────
-
     @Test
     void refresh_shouldReturn200WithNewTokens() throws Exception {
         RefreshRequestDTO dto = new RefreshRequestDTO();
@@ -202,19 +192,11 @@ class AuthControllerTest {
                 .andExpect(status().isUnauthorized());
     }
 
-    // ─────────────────────────────────────────────────────────────
-    // POST /api/auth/logout
-    // ─────────────────────────────────────────────────────────────
-
     @Test
     void logout_shouldReturn204() throws Exception {
         mockMvc.perform(post("/api/auth/logout"))
                 .andExpect(status().isNoContent());
     }
-
-    // ─────────────────────────────────────────────────────────────
-    // GET /api/auth/me
-    // ─────────────────────────────────────────────────────────────
 
     @Test
     void me_shouldReturn200WithUserDetails() throws Exception {
@@ -230,6 +212,7 @@ class AuthControllerTest {
         when(authService.me("client@okane.com")).thenReturn(response);
 
         mockMvc.perform(get("/api/auth/me")
+                        .accept(MediaType.APPLICATION_JSON)
                         .principal(new UsernamePasswordAuthenticationToken("client@okane.com", null)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email").value("client@okane.com"))
@@ -245,6 +228,7 @@ class AuthControllerTest {
                 .thenThrow(new InvalidTokenException("User not found"));
 
         mockMvc.perform(get("/api/auth/me")
+                        .accept(MediaType.APPLICATION_JSON)
                         .principal(new UsernamePasswordAuthenticationToken("ghost@okane.com", null)))
                 .andExpect(status().isUnauthorized());
     }

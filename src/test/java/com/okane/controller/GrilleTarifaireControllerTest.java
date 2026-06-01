@@ -13,6 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.ByteArrayHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -37,14 +39,28 @@ class GrilleTarifaireControllerTest {
     private GrilleTarifaireController grilleTarifaireController;
 
     private ObjectMapper objectMapper;
-
     private GrilleTarifaireResponseDTO responseDTO;
     private GrilleTarifaireRequestDTO requestDTO;
 
     @BeforeEach
     void setUp() {
         objectMapper = new ObjectMapper();
-        mockMvc = MockMvcBuilders.standaloneSetup(grilleTarifaireController).build();
+
+        // ByteArrayHttpMessageConverter is required for byte[] export endpoints
+        ByteArrayHttpMessageConverter byteArrayConverter = new ByteArrayHttpMessageConverter();
+        byteArrayConverter.setSupportedMediaTypes(Arrays.asList(
+                MediaType.APPLICATION_PDF,
+                MediaType.TEXT_PLAIN,
+                MediaType.APPLICATION_OCTET_STREAM
+        ));
+
+        mockMvc = MockMvcBuilders
+                .standaloneSetup(grilleTarifaireController)
+                .setMessageConverters(
+                        new MappingJackson2HttpMessageConverter(),
+                        byteArrayConverter
+                )
+                .build();
 
         responseDTO = GrilleTarifaireResponseDTO.builder()
                 .id(1L)
@@ -72,7 +88,8 @@ class GrilleTarifaireControllerTest {
     void getAll_shouldReturn200() throws Exception {
         when(grilleTarifaireService.findAll()).thenReturn(Arrays.asList(responseDTO));
 
-        mockMvc.perform(get("/api/v1/admin/fee-grids"))
+        mockMvc.perform(get("/api/v1/admin/fee-grids")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].corridorPaysOrigineNom").value("Sénégal"));
     }
@@ -81,7 +98,8 @@ class GrilleTarifaireControllerTest {
     void getById_shouldReturn200() throws Exception {
         when(grilleTarifaireService.findById(1L)).thenReturn(responseDTO);
 
-        mockMvc.perform(get("/api/v1/admin/fee-grids/1"))
+        mockMvc.perform(get("/api/v1/admin/fee-grids/1")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1));
     }
@@ -90,7 +108,8 @@ class GrilleTarifaireControllerTest {
     void getByCorridor_shouldReturn200() throws Exception {
         when(grilleTarifaireService.findByCorridorId(1L)).thenReturn(Arrays.asList(responseDTO));
 
-        mockMvc.perform(get("/api/v1/admin/fee-grids/corridor/1"))
+        mockMvc.perform(get("/api/v1/admin/fee-grids/corridor/1")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
@@ -150,7 +169,8 @@ class GrilleTarifaireControllerTest {
     void exportCsv_shouldReturn200() throws Exception {
         when(grilleTarifaireService.exportCsv()).thenReturn("csv,data".getBytes());
 
-        mockMvc.perform(get("/api/v1/admin/fee-grids/export?format=csv"))
+        mockMvc.perform(get("/api/v1/admin/fee-grids/export?format=csv")
+                        .accept(MediaType.TEXT_PLAIN, MediaType.APPLICATION_OCTET_STREAM))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Disposition", "attachment; filename=\"grilles_tarifaires.csv\""));
     }
@@ -159,7 +179,8 @@ class GrilleTarifaireControllerTest {
     void exportPdf_shouldReturn200() throws Exception {
         when(grilleTarifaireService.exportPdf()).thenReturn("pdf".getBytes());
 
-        mockMvc.perform(get("/api/v1/admin/fee-grids/export?format=pdf"))
+        mockMvc.perform(get("/api/v1/admin/fee-grids/export?format=pdf")
+                        .accept(MediaType.APPLICATION_PDF, MediaType.APPLICATION_OCTET_STREAM))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Disposition", "attachment; filename=\"grilles_tarifaires.pdf\""));
     }
