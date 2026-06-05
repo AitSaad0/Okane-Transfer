@@ -49,21 +49,18 @@ public class AppConfig {
 
     @Bean
     public DataSource dataSource() {
+        String url      = System.getenv("SPRING_DATASOURCE_URL");
+        String username = System.getenv("SPRING_DATASOURCE_USERNAME");
+        String password = System.getenv("SPRING_DATASOURCE_PASSWORD");
+
+        System.out.println(">>> URL      = " + url);
+        System.out.println(">>> USERNAME = " + username);
+        System.out.println(">>> PASSWORD = " + password);
+
         HikariDataSource ds = new HikariDataSource();
-
-        ds.setJdbcUrl(System.getenv().getOrDefault(
-                "SPRING_DATASOURCE_URL",
-                "jdbc:mysql://localhost:3306/okane_db"
-        ));
-        ds.setUsername(System.getenv().getOrDefault(
-                "SPRING_DATASOURCE_USERNAME",
-                "root"
-        ));
-        ds.setPassword(System.getenv().getOrDefault(
-                "SPRING_DATASOURCE_PASSWORD",
-                ""   // 👈 set SPRING_DATASOURCE_PASSWORD in your .env or OS env
-        ));
-
+        ds.setJdbcUrl(url != null ? url : "jdbc:mysql://localhost:3306/okane_db");
+        ds.setUsername(username != null ? username : "root");
+        ds.setPassword(password != null ? password : "");
         ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
         return ds;
     }
