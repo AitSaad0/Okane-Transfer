@@ -1,0 +1,27 @@
+<div class="w-full max-w-md bg-white rounded-2xl shadow-sm p-8">
+  <h1 class="text-2xl font-semibold text-slate-800 mb-2">{{ '2FA.TITLE' | translate }}</h1>
+  <p class="text-sm text-slate-500 mb-6">{{ '2FA.SUBTITLE' | translate }}</p>
+  <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4">
+    <div>
+      <label class="text-sm font-medium text-slate-600">{{ 'FIELDS.OTP_CODE' | translate }}</label>
+      <input formControlName="code" type="text" maxlength="6" placeholder="000000"
+        class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm font-mono text-slate-800 tracking-widest text-center focus:outline-none focus:ring-2 focus:ring-primary" />
+    </div>
+    @if (error) {
+      <div class="text-xs text-danger">{{ error }}</div>
+    }
+    <button type="submit" [disabled]="loading"
+      class="w-full bg-primary text-white text-sm font-medium py-2 rounded-lg hover:opacity-90 disabled:opacity-50">
+      {{ loading ? ('ACTIONS.LOADING' | translate) : ('2FA.SUBMIT' | translate) }}
+    </button>
+  </form>
+  <div class="mt-4 text-center space-y-2">
+    <button (click)="resend()" [disabled]="resending"
+      class="text-xs text-primary hover:underline disabled:opacity-50">
+      {{ resending ? ('ACTIONS.LOADING' | translate) : ('2FA.RESEND' | translate) }}
+    </button>
+    <a routerLink="/login" class="text-xs text-slate-500 hover:underline block">
+      {{ 'ACTIONS.BACK_TO_LOGIN' | translate }}
+    </a>
+  </div>
+</div>

@@ -1,11 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
+import { AppShellComponent } from './layouts/app-shell/app-shell.component';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [AppShellComponent],
   templateUrl: './app.html',
-  standalone: false,
   styleUrl: './app.css'
 })
-export class App {
-  protected readonly title = signal('front');
-}
+export class App {}
