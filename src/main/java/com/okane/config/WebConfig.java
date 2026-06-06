@@ -3,7 +3,9 @@ package com.okane.config;
 import com.okane.security.RateLimitFilter;
 import com.okane.service.RateLimiterService;
 import jakarta.servlet.Filter;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
 
 public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -12,6 +14,7 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
         RateLimiterService rateLimiterService = new RateLimiterService();
         return new Filter[] { new RateLimitFilter(rateLimiterService) };
     }
+
 
     @Override
     protected Class<?>[] getRootConfigClasses() {

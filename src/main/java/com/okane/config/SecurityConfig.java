@@ -39,6 +39,13 @@
                             .requestMatchers("/api/auth/password/forgot").permitAll()
                             .requestMatchers("/api/auth/password/reset").permitAll()
                             .requestMatchers("/test").permitAll()
+                            .requestMatchers("/api/v1/admin/audit-logs").hasRole("ADMIN")
+                            .requestMatchers("/api/v1/admin/audit-logs/**").hasRole("ADMIN")
+                            .requestMatchers(
+                                    "/swagger/**",
+                                    "/v3/api-docs",
+                                    "/v3/api-docs/**"
+                            ).permitAll()
                             .anyRequest().authenticated()
                     )
                     .authenticationProvider(authenticationProvider())
