@@ -1,0 +1,66 @@
+{
+  "LOGIN": {
+    "TITLE": "Sign In",
+    "SUBTITLE": "Sign in to your account",
+    "SUBMIT": "Sign In",
+    "FORGOT_PASSWORD": "Forgot password?",
+    "NO_ACCOUNT": "No account yet? Register",
+    "ERROR": "Invalid email or password"
+  },
+  "REGISTER": {
+    "TITLE": "Create Account",
+    "SUBTITLE": "Join OkaneTransfer",
+    "SUBMIT": "Register",
+    "HAVE_ACCOUNT": "Already have an account? Sign in",
+    "ERROR": "Registration failed"
+  },
+  "FORGOT_PASSWORD": {
+    "TITLE": "Forgot Password",
+    "SUBTITLE": "Enter your email to receive a code",
+    "SUBMIT": "Send Code",
+    "SUCCESS": "A code has been sent to your email",
+    "ERROR": "No account found for this email"
+  },
+  "RESET_PASSWORD": {
+    "TITLE": "Reset Password",
+    "SUBTITLE": "Choose a new password",
+    "SUBMIT": "Reset",
+    "SUCCESS": "Password reset. Redirecting...",
+    "MISMATCH": "Passwords do not match",
+    "ERROR": "Invalid or expired code"
+  },
+  "2FA": {
+    "TITLE": "Two-Factor Verification",
+    "SUBTITLE": "Enter the code received by SMS",
+    "SUBMIT": "Verify",
+    "RESEND": "Resend code",
+    "ERROR": "Incorrect or expired code"
+  },
+  "PROFILE_SECURITY": {
+    "TITLE": "Account Security",
+    "SUBTITLE": "Change your password",
+    "SUBMIT": "Save",
+    "SUCCESS": "Password changed successfully",
+    "MISMATCH": "Passwords do not match",
+    "ERROR": "Current password is incorrect"
+  },
+  "ERRORS": {
+    "UNAUTHORIZED": "You are not authorized to view this page",
+    "NOT_FOUND": "Page not found"
+  },
+  "FIELDS": {
+    "EMAIL": "Email address",
+    "PASSWORD": "Password",
+    "NEW_PASSWORD": "New password",
+    "CURRENT_PASSWORD": "Current password",
+    "CONFIRM_PASSWORD": "Confirm password",
+    "NOM": "Last name",
+    "PRENOM": "First name",
+    "PHONE": "Phone",
+    "OTP_CODE": "Verification code"
+  },
+  "ACTIONS": {
+    "LOADING": "Loading...",
+    "BACK_TO_LOGIN": "Back to login"
+  }
+}

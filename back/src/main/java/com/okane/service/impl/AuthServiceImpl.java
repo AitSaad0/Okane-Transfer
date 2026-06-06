@@ -156,7 +156,7 @@ public class AuthServiceImpl {
 
     private AuthResponseDTO buildTokens(User user) {
         return AuthResponseDTO.builder()
-                .accessToken(jwtUtil.generateAccessToken(user.getEmail()))
+                .accessToken(jwtUtil.generateAccessToken(user.getEmail(), user.getRole().name()))
                 .refreshToken(jwtUtil.generateRefreshToken(user.getEmail()))
                 .build();
     }

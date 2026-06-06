@@ -1,0 +1,40 @@
+<div class="max-w-lg">
+  <h1 class="text-2xl font-semibold text-slate-800 mb-1">{{ 'PROFILE_SECURITY.TITLE' | translate }}</h1>
+  <p class="text-sm text-slate-500 mb-6">{{ 'PROFILE_SECURITY.SUBTITLE' | translate }}</p>
+
+  <div class="bg-white rounded-2xl shadow-sm p-6">
+
+    @if (success) {
+      <div class="text-sm text-success bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-3 mb-4">
+        {{ 'PROFILE_SECURITY.SUCCESS' | translate }}
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4">
+      <div>
+        <label class="text-sm font-medium text-slate-600">{{ 'FIELDS.CURRENT_PASSWORD' | translate }}</label>
+        <input formControlName="currentPassword" type="password"
+          class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary" />
+      </div>
+      <div>
+        <label class="text-sm font-medium text-slate-600">{{ 'FIELDS.NEW_PASSWORD' | translate }}</label>
+        <input formControlName="newPassword" type="password"
+          class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary" />
+      </div>
+      <div>
+        <label class="text-sm font-medium text-slate-600">{{ 'FIELDS.CONFIRM_PASSWORD' | translate }}</label>
+        <input formControlName="confirm" type="password"
+          class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary" />
+      </div>
+
+      @if (error) {
+        <div class="text-xs text-danger">{{ error }}</div>
+      }
+
+      <button type="submit" [disabled]="loading"
+        class="w-full bg-primary text-white text-sm font-medium py-2 rounded-lg hover:opacity-90 disabled:opacity-50">
+        {{ loading ? ('ACTIONS.LOADING' | translate) : ('PROFILE_SECURITY.SUBMIT' | translate) }}
+      </button>
+    </form>
+  </div>
+</div>

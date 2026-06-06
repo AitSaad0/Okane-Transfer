@@ -1,0 +1,35 @@
+<div class="w-full max-w-md bg-white rounded-2xl shadow-sm p-8">
+  <h1 class="text-2xl font-semibold text-slate-800 mb-2">{{ 'LOGIN.TITLE' | translate }}</h1>
+  <p class="text-sm text-slate-500 mb-6">{{ 'LOGIN.SUBTITLE' | translate }}</p>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4">
+    <div>
+      <label class="text-sm font-medium text-slate-600">{{ 'FIELDS.EMAIL' | translate }}</label>
+      <input formControlName="email" type="email"
+        class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary" />
+    </div>
+    <div>
+      <label class="text-sm font-medium text-slate-600">{{ 'FIELDS.PASSWORD' | translate }}</label>
+      <input formControlName="password" type="password"
+        class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary" />
+    </div>
+
+    @if (error) {
+      <div class="text-xs text-danger">{{ error }}</div>
+    }
+
+    <button type="submit" [disabled]="loading"
+      class="w-full bg-primary text-white text-sm font-medium py-2 rounded-lg hover:opacity-90 disabled:opacity-50">
+      {{ loading ? ('ACTIONS.LOADING' | translate) : ('LOGIN.SUBMIT' | translate) }}
+    </button>
+  </form>
+
+  <div class="mt-4 text-center space-y-2">
+    <a routerLink="/forgot-password" class="text-xs text-primary hover:underline block">
+      {{ 'LOGIN.FORGOT_PASSWORD' | translate }}
+    </a>
+    <a routerLink="/register" class="text-xs text-slate-500 hover:underline block">
+      {{ 'LOGIN.NO_ACCOUNT' | translate }}
+    </a>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+{
+  "LOGIN": {
+    "TITLE": "Connexion",
+    "SUBTITLE": "Connectez-vous à votre compte",
+    "SUBMIT": "Se connecter",
+    "FORGOT_PASSWORD": "Mot de passe oublié ?",
+    "NO_ACCOUNT": "Pas encore de compte ? S'inscrire",
+    "ERROR": "Email ou mot de passe incorrect"
+  },
+  "REGISTER": {
+    "TITLE": "Créer un compte",
+    "SUBTITLE": "Rejoignez OkaneTransfer",
+    "SUBMIT": "S'inscrire",
+    "HAVE_ACCOUNT": "Déjà un compte ? Se connecter",
+    "ERROR": "Erreur lors de l'inscription"
+  },
+  "FORGOT_PASSWORD": {
+    "TITLE": "Mot de passe oublié",
+    "SUBTITLE": "Entrez votre email pour recevoir un code",
+    "SUBMIT": "Envoyer le code",
+    "SUCCESS": "Un code a été envoyé à votre adresse email",
+    "ERROR": "Aucun compte trouvé pour cet email"
+  },
+  "RESET_PASSWORD": {
+    "TITLE": "Réinitialiser le mot de passe",
+    "SUBTITLE": "Choisissez un nouveau mot de passe",
+    "SUBMIT": "Réinitialiser",
+    "SUCCESS": "Mot de passe réinitialisé. Redirection...",
+    "MISMATCH": "Les mots de passe ne correspondent pas",
+    "ERROR": "Code invalide ou expiré"
+  },
+  "2FA": {
+    "TITLE": "Vérification en deux étapes",
+    "SUBTITLE": "Entrez le code reçu par SMS",
+    "SUBMIT": "Vérifier",
+    "RESEND": "Renvoyer le code",
+    "ERROR": "Code incorrect ou expiré"
+  },
+  "PROFILE_SECURITY": {
+    "TITLE": "Sécurité du compte",
+    "SUBTITLE": "Modifiez votre mot de passe",
+    "SUBMIT": "Enregistrer",
+    "SUCCESS": "Mot de passe modifié avec succès",
+    "MISMATCH": "Les mots de passe ne correspondent pas",
+    "ERROR": "Mot de passe actuel incorrect"
+  },
+  "ERRORS": {
+    "UNAUTHORIZED": "Vous n'avez pas accès à cette page",
+    "NOT_FOUND": "Page introuvable"
+  },
+  "FIELDS": {
+    "EMAIL": "Adresse email",
+    "PASSWORD": "Mot de passe",
+    "NEW_PASSWORD": "Nouveau mot de passe",
+    "CURRENT_PASSWORD": "Mot de passe actuel",
+    "CONFIRM_PASSWORD": "Confirmer le mot de passe",
+    "NOM": "Nom",
+    "PRENOM": "Prénom",
+    "PHONE": "Téléphone",
+    "OTP_CODE": "Code de vérification"
+  },
+  "ACTIONS": {
+    "LOADING": "Chargement...",
+    "BACK_TO_LOGIN": "Retour à la connexion"
+  }
+}
