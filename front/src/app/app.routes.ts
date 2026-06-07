@@ -39,7 +39,14 @@ export const routes: Routes = [
         canActivate: [roleGuard],
         data: { roles: ['ADMIN'] },
         children: [
-          { path: 'audit-logs', loadChildren: () => import('./pages/login/login.component').then(m => m.LoginComponent) },
+          {
+            path: 'reports',
+            loadComponent: () =>
+              import('./pages/admin/reports/report.component')
+                .then(m => m.ReportComponent),
+            canActivate: [roleGuard],
+            data: { roles: ['ADMIN', 'MANAGER'] }
+          }
         ]
       },
 

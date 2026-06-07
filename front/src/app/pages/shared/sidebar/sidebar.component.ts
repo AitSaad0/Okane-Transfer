@@ -35,7 +35,7 @@ export class SidebarComponent implements OnInit {
     { label: 'BROADCAST',     icon: '📣', route: '/admin/notifications/broadcast', roles: ['ADMIN'] },
 
     { label: 'TRANSFERS',     icon: '📦', route: '/admin/transfers',               roles: ['ADMIN', 'MANAGER'] },
-    { label: 'REPORTS',       icon: '📊', route: '/admin/reports/daily',           roles: ['ADMIN', 'MANAGER'] },
+    { label: 'REPORTS',       icon: '📊', route: '/admin/reports',           roles: ['ADMIN', 'MANAGER'] },
 
     { label: 'DASHBOARD',     icon: '🖥️', route: '/manager/dashboard',            roles: ['MANAGER'] },
     { label: 'MGR_REPORTS',   icon: '📄', route: '/manager/reports',              roles: ['MANAGER'] },
