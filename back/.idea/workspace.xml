@@ -10,13 +10,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5d0b6b24-9853-4a25-9490-2799f2096f20" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/reports/models/report.model.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/reports/services/report.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/config/AppConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/proxy.conf.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front/proxy.conf.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/app/core/services/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/core/services/auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/app/layouts/dashboard-layout/dashboard-layout.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/layouts/dashboard-layout/dashboard-layout.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/app/layouts/dashboard-layout/dashboard-layout.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/layouts/dashboard-layout/dashboard-layout.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/security/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/security/JwtUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/JournalAuditServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/JournalAuditServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/app.routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/core/interceptors/jwt.interceptor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/core/interceptors/jwt.interceptor.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/shared/sidebar/sidebar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/shared/sidebar/sidebar.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +84,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "Tomcat Server.Tomcat 10.1.52.executor": "Run",
     "Tomcat Server.Tomcat 11.0.18.executor": "Run",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "feature/navbar-improvements",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/User/Desktop/Okane-Transfer-develop/Okane-Transfer/back",
     "node.js.detected.package.eslint": "true",
@@ -231,7 +232,7 @@
       <workItem from="1780472691185" duration="1000" />
       <workItem from="1780654908121" duration="6083000" />
       <workItem from="1780737881493" duration="6979000" />
-      <workItem from="1780758501012" duration="6336000" />
+      <workItem from="1780758501012" duration="13713000" />
     </task>
     <servers />
   </component>

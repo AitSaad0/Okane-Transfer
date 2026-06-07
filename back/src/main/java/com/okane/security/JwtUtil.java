@@ -5,13 +5,14 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Component
 public class JwtUtil {
 
     private final SecretKey key = Keys.hmacShaKeyFor(
-            "okane-transfer-secret-key-32-chars!!".getBytes()
+            "okane-transfer-secret-key-32-chars!!".getBytes(StandardCharsets.UTF_8)
     );
 
     private final long ACCESS_EXPIRATION  = 1000L * 60 * 15;
