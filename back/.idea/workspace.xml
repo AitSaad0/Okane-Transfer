@@ -9,11 +9,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5d0b6b24-9853-4a25-9490-2799f2096f20" name="Changes" comment="" />
+    <list default="true" id="5d0b6b24-9853-4a25-9490-2799f2096f20" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/config/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/proxy.conf.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front/proxy.conf.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/core/services/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/core/services/auth.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/layouts/dashboard-layout/dashboard-layout.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/layouts/dashboard-layout/dashboard-layout.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/layouts/dashboard-layout/dashboard-layout.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/layouts/dashboard-layout/dashboard-layout.component.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Users/User/Desktop/Okane-Transfer-develop/Okane-Transfer/back" value="3E5djQOE72EBpalOeu1Nl9xPlAG" />
+    </persistenceIdMap>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -26,8 +39,20 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "med202y"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/AitSaad0/Okane-Transfer.git",
+    "accountId": "9f2fe764-2c24-45c2-be3d-6372c9cde4c5"
+  }
+}]]></component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -48,30 +73,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;Tomcat Server.Tomcat 10.1.52.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feat/Rate__Limiting&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/amzazi/Desktop/okane-transfer-project/Okane-Transfer&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "Tomcat Server.Tomcat 10.1.52.executor": "Run",
+    "Tomcat Server.Tomcat 11.0.18.executor": "Run",
+    "git-widget-placeholder": "develop",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/User/Desktop/Okane-Transfer-develop/Okane-Transfer/back",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.okane.service" />
@@ -85,7 +111,7 @@
         <entry key="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
           <value>
             <map>
-              <entry key="Tomcat 10.1.52" value="STOPPED" />
+              <entry key="Tomcat 11.0.18" value="STOPPED" />
             </map>
           </value>
         </entry>
@@ -93,17 +119,17 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="Tomcat 10.1.52" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 10.1.52" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+    <configuration name="Tomcat 11.0.18" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 11.0.18" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="21" nameIsGenerated="true">
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
         <artifact name="Okane-Transfer:war exploded">
           <settings>
-            <option name="CONTEXT_PATH" value="/" />
+            <option name="CONTEXT_PATH" value="/Okane_Transfer_war_exploded" />
           </settings>
         </artifact>
       </deployment>
       <server-settings>
-        <option name="BASE_DIRECTORY_NAME" value="4dcc4bf5-9511-4165-97fe-779455361715" />
+        <option name="BASE_DIRECTORY_NAME" value="fd32cbc5-e0a2-4582-961b-23443066dc0a" />
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -111,7 +137,7 @@
       <predefined_log_file id="Tomcat Host Manager" />
       <predefined_log_file id="Tomcat Localhost Access" />
       <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="36313" />
+        <option name="DEBUG_PORT" value="63293" />
       </RunnerSettings>
       <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
         <option name="USE_ENV_VARIABLES" value="true" />
@@ -184,8 +210,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.32098.37" />
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.32098.37" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
+        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
       </set>
     </attachedChunks>
   </component>
@@ -205,6 +231,7 @@
       <workItem from="1780472691185" duration="1000" />
       <workItem from="1780654908121" duration="6083000" />
       <workItem from="1780737881493" duration="6979000" />
+      <workItem from="1780758501012" duration="6336000" />
     </task>
     <servers />
   </component>
@@ -217,7 +244,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-web/6.2.4/spring-security-web-6.2.4.jar!/org/springframework/security/web/FilterChainProxy.class</url>
           <line>72</line>
-          <properties class="org.springframework.security.web.FilterChainProxy" method="doFilter">
+          <properties class="org.springframework.security.web.FilterChainProxy">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -225,5 +252,13 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>
