@@ -63,7 +63,13 @@ export const routes: Routes = [
         path: 'agent',
         canActivate: [roleGuard],
         data: { roles: ['ADMIN', 'AGENT'] },
-        children: []
+        children: [
+          {
+            path: 'transfers/new',
+            loadComponent: () => import('./pages/agent/transfer-creation/transfer-creation.component')
+              .then(m => m.TransferCreationComponent)
+          }
+        ]
       },
 
       // ── Client routes ─────────────────────────────────────────────────

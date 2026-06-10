@@ -8,10 +8,11 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Repository
-public interface TransfertRepository extends JpaRepository<Transfert, UUID> {
+public interface TransfertRepository extends JpaRepository<Transfert, Long> {
+
+    boolean existsByCodeRetrait(String codeRetrait);
 
     @Query("""
         SELECT t

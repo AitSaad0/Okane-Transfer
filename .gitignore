@@ -29,3 +29,6 @@ back/*.war
 # Logs
 *.log
 logs/
+
+# Documentation
+docs/
