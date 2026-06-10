@@ -4,6 +4,7 @@ import com.okane.service.RecuPdfService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ public class RecuPdfController {
     private static final Logger log = LoggerFactory.getLogger(RecuPdfController.class);
 
     @Autowired
+    @Qualifier("recuPdfServiceImpl")
     private RecuPdfService recuPdfService;
 
     @GetMapping("/{id}/recu")
