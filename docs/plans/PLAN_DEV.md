@@ -9,8 +9,9 @@
    - [G2b — Créer un point de restauration avant le merge](#étape-g2b--créer-un-point-de-restauration-avant-le-merge)
    - [G3 — Détecter les conflits tôt](#étape-g3--détecter-les-conflits-tôt)
    - [G4 — Résoudre les conflits (si besoin)](#étape-g4--résoudre-les-conflits-si-besoin)
-   - [G5 — Valider la résolution et pousser](#étape-g5--valider-la-résolution-et-pousser)
-   - [G6 — Créer la Pull Request sur GitHub](#étape-g6--créer-la-pull-request-sur-github)
+    - [G5 — Valider la résolution (si conflit)](#étape-g5--valider-la-résolution-si-conflit)
+    - [G5b — Pousser la branche locale vers le dépôt distant](#étape-g5b--pousser-la-branche-locale-vers-le-dépôt-distant)
+    - [G6 — Créer la Pull Request sur GitHub](#étape-g6--créer-la-pull-request-sur-github)
    - [G7 — Review + merge sur GitHub](#étape-g7--review--merge-sur-github)
    - [G7a — Mettre à jour la branche locale develop](#étape-g7a--mettre-à-jour-la-branche-locale-develop)
    - [G7b — Créer un point de restauration après le merge](#étape-g7b--créer-un-point-de-restauration-après-le-merge)
@@ -144,13 +145,27 @@ le code venant de develop
 
 **Action :** Supprime les lignes `<<<<<<<`, `=======`, `>>>>>>>`, garde seulement le code correct (le tien, celui de develop, ou un mélange), et enregistre le fichier.
 
-### Étape G5 — Valider la résolution et pousser
+### Étape G5 — Valider la résolution (si conflit)
+
+Si un conflit a été détecté en G3 et résolu en G4, valide la résolution :
 
 ```bash
 git add .
 git commit -m "Resolve merge conflict with develop"
+```
+
+### Étape G5b — Pousser la branche locale vers le dépôt distant
+
+**Objectif** : Rendre la branche feature disponible sur le dépôt distant de l'équipe GitHub avant de créer la Pull Request.
+
+- **Cas 1 (conflit résolu en G4–G5)** : la résolution est déjà commitée localement, il reste à pousser.
+- **Cas 2 (aucun conflit en G3)** : la branche est déjà propre après le `git pull origin develop`, il faut la pousser.
+
+```bash
 git push origin feat/nouvelle-fonctionnalite
 ```
+
+> Cette étape est **obligatoire** même en l'absence de conflit — GitHub a besoin de la branche pour pouvoir créer la Pull Request.
 
 ### Étape G6 — Créer la Pull Request sur GitHub
 
@@ -462,7 +477,8 @@ alias git='git -c user.name=smahbblm -c user.email=190425159+smahbblm@users.nore
 | **G2b** — Tag avant merge | `git tag backup/feat/creation-transfert-classique/avant-merge` |
 | **G3** — Pull de develop | `git pull origin develop` |
 | **G4** — Résoudre conflits (si besoin) | Ouvrir les fichiers en conflit, supprimer les marqueurs, garder le code correct |
-| **G5** — Valider & pousser | `git add . && git commit -m "Resolve merge conflict with develop"`<br>`git push origin feat/creation-transfert-classique` |
+| **G5** — Valider (si conflit) | `git add . && git commit -m "Resolve merge conflict with develop"` |
+| **G5b** — Pousser la branche | `git push origin feat/creation-transfert-classique` |
 | **G6** — Créer la PR | Aller sur `https://github.com/AitSaad0/Okane-Transfer/pulls` → **New pull request** → base: `develop` / compare: `feat/creation-transfert-classique` |
 | **G7** — Review + merge | Cliquer **"Merge pull request"** sur GitHub |
 | **G7a** — Mettre à jour develop local | `git checkout develop`<br>`git pull origin develop` |
@@ -766,7 +782,8 @@ alias git='git -c user.name=smahbblm -c user.email=190425159+smahbblm@users.nore
 | **G2b** — Tag avant merge | `git tag backup/feat/paiement-transfert-classique/avant-merge` |
 | **G3** — Pull de develop | `git pull origin develop` |
 | **G4** — Résoudre conflits (si besoin) | Ouvrir les fichiers en conflit, supprimer les marqueurs, garder le code correct |
-| **G5** — Valider & pousser | `git add . && git commit -m "Resolve merge conflict with develop"`<br>`git push origin feat/paiement-transfert-classique` |
+| **G5** — Valider (si conflit) | `git add . && git commit -m "Resolve merge conflict with develop"` |
+| **G5b** — Pousser la branche | `git push origin feat/paiement-transfert-classique` |
 | **G6** — Créer la PR | Aller sur `https://github.com/AitSaad0/Okane-Transfer/pulls` → **New pull request** → base: `develop` / compare: `feat/paiement-transfert-classique` |
 | **G7** — Review + merge | Cliquer **"Merge pull request"** sur GitHub |
 | **G7a** — Mettre à jour develop local | `git checkout develop`<br>`git pull origin develop` |
