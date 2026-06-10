@@ -41,6 +41,7 @@ export class SidebarComponent implements OnInit {
     { label: 'MGR_REPORTS',   icon: '📄', route: '/manager/reports',              roles: ['MANAGER'] },
 
     { label: 'NEW_TRANSFER',  icon: '➕', route: '/agent/transfers/new',           roles: ['AGENT'] },
+    { label: 'WITHDRAWAL',    icon: '💵', route: '/agent/transfers/payment',       roles: ['AGENT'] },
     { label: 'CASH_REGISTER', icon: '🏦', route: '/agent/cash-register',           roles: ['AGENT'] },
 
     { label: 'CHATBOT',       icon: '🤖', route: '/client/chatbot',                roles: ['CLIENT', 'AGENT'] },

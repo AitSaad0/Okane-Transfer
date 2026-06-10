@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TransfertRepository extends JpaRepository<Transfert, Long> {
@@ -29,6 +30,12 @@ public interface TransfertRepository extends JpaRepository<Transfert, Long> {
 
     @Query("SELECT COUNT(t) FROM Transfert t WHERE t.estSuspect = true")
     long countByEstSuspectTrue();
+
+    @Query("SELECT t FROM Transfert t JOIN FETCH t.expediteur JOIN FETCH t.corridor WHERE t.codeRetrait = :codeRetrait")
+    Optional<Transfert> findByCodeRetrait(@Param("codeRetrait") String codeRetrait);
+
+    @Query("SELECT t FROM Transfert t JOIN FETCH t.beneficiaire b JOIN FETCH t.expediteur WHERE b.telephone = :telephone")
+    List<Transfert> findByBeneficiaireTelephone(@Param("telephone") String telephone);
 
     // save()  → inherited from JpaRepository
     // count() → inherited from JpaRepository

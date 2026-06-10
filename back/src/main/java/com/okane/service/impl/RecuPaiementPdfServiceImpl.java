@@ -15,8 +15,8 @@ import java.math.RoundingMode;
 import java.time.format.DateTimeFormatter;
 
 @Service
-@Qualifier("recuPdfServiceImpl")
-public class RecuPdfServiceImpl implements RecuPdfService {
+@Qualifier("recuPaiementPdfServiceImpl")
+public class RecuPaiementPdfServiceImpl implements RecuPdfService {
 
     @Autowired
     private TransfertRepository transfertRepository;
@@ -26,7 +26,8 @@ public class RecuPdfServiceImpl implements RecuPdfService {
     @Override
     public byte[] genererRecu(Transfert t) throws Exception {
         String ref = "TRF-" + String.format("%06d", t.getId());
-        String date = t.getDateCreation() != null ? t.getDateCreation().format(DATE_FMT) : "-";
+        String dateEnvoi = t.getDateCreation() != null ? t.getDateCreation().format(DATE_FMT) : "-";
+        String datePaiement = t.getDatePaiement() != null ? t.getDatePaiement().format(DATE_FMT) : "-";
         String statut = t.getStatut() != null ? labelStatut(t.getStatut().name()) : "N/A";
         String code = t.getCodeRetrait() != null ? t.getCodeRetrait() : "-";
 
@@ -57,10 +58,15 @@ public class RecuPdfServiceImpl implements RecuPdfService {
         BigDecimal fraisVar = fraisTotal.multiply(BigDecimal.valueOf(0.5)).setScale(2, RoundingMode.HALF_UP);
         BigDecimal fraisFix = fraisTotal.subtract(fraisVar);
 
-        String agentNom = t.getAgentEnvoi() != null
+        String agentEnvoiNom = t.getAgentEnvoi() != null
                 ? (n(t.getAgentEnvoi().getPrenom()) + " " + n(t.getAgentEnvoi().getNom())).trim()
                 : "-";
-        String agenceNom = t.getAgenceEnvoi() != null ? n(t.getAgenceEnvoi().getNom()) : "-";
+        String agenceEnvoiNom = t.getAgenceEnvoi() != null ? n(t.getAgenceEnvoi().getNom()) : "-";
+
+        String agentPaiementNom = t.getAgentPaiement() != null
+                ? (n(t.getAgentPaiement().getPrenom()) + " " + n(t.getAgentPaiement().getNom())).trim()
+                : "-";
+        String agencePaiementNom = t.getAgencePaiement() != null ? n(t.getAgencePaiement().getNom()) : "-";
 
         BigDecimal montantRecu = t.getMontantNet() != null && t.getCorridor() != null && t.getCorridor().getTauxChange() != null
                 ? t.getMontantNet().multiply(t.getCorridor().getTauxChange()).setScale(2, RoundingMode.HALF_UP)
@@ -91,13 +97,13 @@ public class RecuPdfServiceImpl implements RecuPdfService {
         pdf.line(MARGIN, y, MARGIN + RW, y);
 
         y -= 18;
-        pdf.setColor(0.231f, 0.529f, 0.800f);
+        pdf.setColor(0.071f, 0.659f, 0.275f);
         pdf.setFontBold(16);
-        pdf.textCenter("RE\u00c7U DE TRANSFERT", y);
+        pdf.textCenter("RE\u00c7U DE PAIEMENT", y);
         y -= 19;
         pdf.setFontRegular(8);
         pdf.setColor(0.435f, 0.502f, 0.569f);
-        pdf.textCenter("Re\u00e7u officiel \u00e0 conserver par l'exp\u00e9diteur", y);
+        pdf.textCenter("Re\u00e7u officiel \u00e0 conserver par le b\u00e9n\u00e9ficiaire", y);
 
         y -= 24;
         pdf.setColor(0, 0, 0);
@@ -106,9 +112,9 @@ public class RecuPdfServiceImpl implements RecuPdfService {
         pdf.setFontBold(9);
         pdf.textAt(ref, MARGIN + 70, y);
         pdf.setFontRegular(9);
-        pdf.textAt("Date", MARGIN + 230, y);
+        pdf.textAt("Date d'envoi", MARGIN + 230, y);
         pdf.setFontBold(9);
-        pdf.textAt(date, MARGIN + 262, y);
+        pdf.textAt(dateEnvoi, MARGIN + 300, y);
         pdf.setFontRegular(9);
         pdf.textAt("Statut", MARGIN + 410, y);
         pdf.setFontBold(9);
@@ -225,29 +231,54 @@ public class RecuPdfServiceImpl implements RecuPdfService {
         y -= 5;
         pdf.setColor(0.071f, 0.659f, 0.275f);
         pdf.setFontBold(11);
-        float labelW = "Montant re\u00e7u par le b\u00e9n\u00e9ficiaire".length() * 5.5f;
         pdf.textAt("Montant re\u00e7u par le b\u00e9n\u00e9ficiaire", MARGIN, y);
         pdf.textAt(receivedStr, valX + 50, y);
 
-        y -= 30;
+        y -= 26;
         pdf.setStrokeColor(0.898f, 0.898f, 0.898f);
         pdf.line(MARGIN, y - 2, MARGIN + RW, y - 2);
 
         y -= 18;
         pdf.setFontBold(10);
         pdf.setColor(0.435f, 0.502f, 0.569f);
-        pdf.textAt("AGENT", MARGIN, y);
+        pdf.textAt("PAIEMENT", MARGIN, y);
 
         y -= 16;
         pdf.setColor(0, 0, 0);
         pdf.setFontRegular(9);
-        pdf.textAt("Agent", col1, y);
+        pdf.textAt("Date de paiement", col1, y);
         pdf.setFontBold(9);
-        pdf.textAt(agentNom, MARGIN + 55, y);
+        pdf.textAt(datePaiement, col2, y);
+        y -= 15;
         pdf.setFontRegular(9);
-        pdf.textAt("Agence", MARGIN + 250, y);
+        pdf.textAt("Agent paiement", col1, y);
         pdf.setFontBold(9);
-        pdf.textAt(agenceNom, MARGIN + 305, y);
+        pdf.textAt(agentPaiementNom, col2, y);
+        y -= 15;
+        pdf.setFontRegular(9);
+        pdf.textAt("Agence paiement", col1, y);
+        pdf.setFontBold(9);
+        pdf.textAt(agencePaiementNom, col2, y);
+
+        y -= 20;
+        pdf.setStrokeColor(0.898f, 0.898f, 0.898f);
+        pdf.line(MARGIN, y - 2, MARGIN + RW, y - 2);
+
+        y -= 18;
+        pdf.setFontBold(10);
+        pdf.setColor(0.435f, 0.502f, 0.569f);
+        pdf.textAt("ENVOI", MARGIN, y);
+
+        y -= 16;
+        pdf.setColor(0, 0, 0);
+        pdf.setFontRegular(9);
+        pdf.textAt("Agent envoi", col1, y);
+        pdf.setFontBold(9);
+        pdf.textAt(agentEnvoiNom, MARGIN + 80, y);
+        pdf.setFontRegular(9);
+        pdf.textAt("Agence envoi", MARGIN + 230, y);
+        pdf.setFontBold(9);
+        pdf.textAt(agenceEnvoiNom, MARGIN + 310, y);
 
         y = MARGIN + 24;
         pdf.setStrokeColor(0.898f, 0.898f, 0.898f);
@@ -257,7 +288,7 @@ public class RecuPdfServiceImpl implements RecuPdfService {
         pdf.setColor(0.435f, 0.502f, 0.569f);
         pdf.textCenter("Ce re\u00e7u est g\u00e9n\u00e9r\u00e9 automatiquement par OkaneTransfer. Merci de votre confiance.", y);
         y -= 11;
-        pdf.textCenter("OkaneTransfer \u00a9 " + date + " - Tous droits r\u00e9serv\u00e9s", y);
+        pdf.textCenter("OkaneTransfer \u00a9 " + dateEnvoi + " - Tous droits r\u00e9serv\u00e9s", y);
 
         pdf.endPage();
         return pdf.build();

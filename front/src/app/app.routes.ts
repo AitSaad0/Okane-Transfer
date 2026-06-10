@@ -68,6 +68,11 @@ export const routes: Routes = [
             path: 'transfers/new',
             loadComponent: () => import('./pages/agent/transfer-creation/transfer-creation.component')
               .then(m => m.TransferCreationComponent)
+          },
+          {
+            path: 'transfers/payment',
+            loadComponent: () => import('./pages/agent/transfer-payment/transfer-payment.component')
+              .then(m => m.TransferPaymentComponent)
           }
         ]
       },
