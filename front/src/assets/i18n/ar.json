@@ -99,6 +99,7 @@
     "CORRIDOR_LOAD_ERROR": "خطأ في تحميل الممرات",
     "SELECT_PAYS": "اختر بلدًا",
     "ERROR": "خطأ في إنشاء التحويل",
-    "DOWNLOAD_PDF": "تنزيل إيصال PDF"
+    "DOWNLOAD_PDF": "تنزيل إيصال PDF",
+    "DOWNLOAD_PDF_ERROR": "خطأ في تنزيل الإيصال"
   }
 }

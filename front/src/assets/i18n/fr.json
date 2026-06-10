@@ -99,6 +99,7 @@
     "CORRIDOR_LOAD_ERROR": "Erreur lors du chargement des corridors",
     "SELECT_PAYS": "Sélectionnez un pays",
     "ERROR": "Erreur lors de la création du transfert",
-    "DOWNLOAD_PDF": "Télécharger le reçu PDF"
+    "DOWNLOAD_PDF": "Télécharger le reçu PDF",
+    "DOWNLOAD_PDF_ERROR": "Erreur lors du téléchargement du reçu"
   }
 }

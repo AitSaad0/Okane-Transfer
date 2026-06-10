@@ -6,6 +6,9 @@
       <div class="bg-success/10 text-success px-4 py-3 rounded-lg text-sm">
         {{ 'TRANSFER.SUCCESS' | translate }}
       </div>
+      @if (error) {
+        <div class="text-xs text-danger mb-4">{{ error | translate }}</div>
+      }
       <div class="bg-primary/5 border border-primary/20 rounded-xl p-6">
         <p class="text-sm text-slate-500">{{ 'TRANSFER.WITHDRAWAL_CODE' | translate }}</p>
         <p class="text-3xl font-bold text-primary tracking-widest mt-1">{{ result.codeRetrait }}</p>

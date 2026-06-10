@@ -99,6 +99,7 @@
     "CORRIDOR_LOAD_ERROR": "Error loading corridors",
     "SELECT_PAYS": "Select a country",
     "ERROR": "Error creating transfer",
-    "DOWNLOAD_PDF": "Download PDF receipt"
+    "DOWNLOAD_PDF": "Download PDF receipt",
+    "DOWNLOAD_PDF_ERROR": "Error downloading receipt"
   }
 }

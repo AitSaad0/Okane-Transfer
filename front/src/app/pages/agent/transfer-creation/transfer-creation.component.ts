@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { TransferService } from './services/transfer.service';
+import { TokenService } from '../../../core/services/token.service';
 import { Corridor, PaysItem, SimulationResponse, TransfertResponse } from './models/transfer.model';
 
 @Component({
@@ -32,6 +33,7 @@ export class TransferCreationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private transferService: TransferService,
+    private tokenService: TokenService,
     private cdr: ChangeDetectorRef
   ) {
     this.expediteurForm = this.fb.group({
@@ -148,16 +150,22 @@ export class TransferCreationComponent implements OnInit {
 
   downloadPdf(): void {
     if (!this.result?.id) return;
-    const token = localStorage.getItem('accessToken') || '';
+    const token = this.tokenService.getAccessToken();
+    if (!token) return;
     fetch('/api/v1/agent/transfers/' + this.result.id + '/recu', {
       headers: { 'Authorization': 'Bearer ' + token }
-    }).then(res => res.blob()).then(blob => {
+    }).then(res => {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.blob();
+    }).then(blob => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
       a.download = 'recu-transfert-' + this.result!.codeRetrait + '.pdf';
       a.click();
-      URL.revokeObjectURL(url);
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
+    }).catch(() => {
+      this.error = 'TRANSFER.DOWNLOAD_PDF_ERROR';
     });
   }
 
