@@ -1,7 +1,6 @@
 package com.okane.entity;
 
 import com.okane.entity.enums.OperateurMobile;
-import com.okane.entity.enums.StatutTransfert;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,14 +24,6 @@ public class TransfertMobile {
     @Column(name = "numero_destinataire", nullable = false)
     private String numeroDestinataire;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "statut", nullable = false)
-    private StatutTransfert statut;
-
-    @Column(name = "date_envoi", nullable = false)
-    private java.time.LocalDateTime dateEnvoi;
-
-    // étend Transfert (héritage — relation OneToOne vers la table parent)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "transfert_id", nullable = false, unique = true)
     private Transfert transfert;

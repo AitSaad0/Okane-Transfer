@@ -38,7 +38,10 @@ export const routes: Routes = [
         canActivate: [roleGuard],
         data: { roles: ['ADMIN'] },
         children: [
-          { path: 'audit-logs', loadChildren: () => import('./pages/login/login.component').then(m => m.LoginComponent) },
+          {
+            path: 'audit-logs',
+            loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent)
+          },
 
           // Membre 3 — Devises
           { path: 'currencies',             loadComponent: () => import('./pages/admin/currencies/currencies.component').then(m => m.CurrenciesComponent) },
@@ -55,6 +58,20 @@ export const routes: Routes = [
           // Membre 3 — Grilles tarifaires
           { path: 'fee-grids',              loadComponent: () => import('./pages/admin/fee-grids/fee-grids.component').then(m => m.FeeGridsComponent) },
           { path: 'fee-grids/create',       loadComponent: () => import('./pages/admin/fee-grids/fee-grids-create.component').then(m => m.FeeGridsCreateComponent) },
+
+          // Reports & Alerts (from develop)
+          {
+            path: 'reports',
+            loadComponent: () => import('./pages/admin/reports/report.component').then(m => m.ReportComponent),
+            canActivate: [roleGuard],
+            data: { roles: ['ADMIN', 'MANAGER'] }
+          },
+          {
+            path: 'alerts',
+            loadComponent: () => import('./pages/admin/alerts/alerts.component').then(m => m.AlertsComponent),
+            canActivate: [roleGuard],
+            data: { roles: ['ADMIN'] }
+          }
         ]
       },
 
@@ -71,7 +88,23 @@ export const routes: Routes = [
         path: 'agent',
         canActivate: [roleGuard],
         data: { roles: ['ADMIN', 'AGENT'] },
-        children: []
+        children: [
+          {
+            path: 'transfers/new',
+            loadComponent: () => import('./pages/agent/transfer-creation/transfer-creation.component')
+              .then(m => m.TransferCreationComponent)
+          },
+          {
+            path: 'transfers/mobile/new',
+            loadComponent: () => import('./pages/agent/mobile-transfer-creation/mobile-transfer-creation.component')
+              .then(m => m.MobileTransferCreationComponent)
+          },
+          {
+            path: 'transfers/payment',
+            loadComponent: () => import('./pages/agent/transfer-payment/transfer-payment.component')
+              .then(m => m.TransferPaymentComponent)
+          }
+        ]
       },
 
       // ── Client routes ─────────────────────────────────────────────────
