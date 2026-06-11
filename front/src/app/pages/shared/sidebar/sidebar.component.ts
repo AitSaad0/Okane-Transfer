@@ -40,9 +40,10 @@ export class SidebarComponent implements OnInit {
     { label: 'DASHBOARD',     icon: '🖥️', route: '/manager/dashboard',            roles: ['MANAGER'] },
     { label: 'MGR_REPORTS',   icon: '📄', route: '/manager/reports',              roles: ['MANAGER'] },
 
-    { label: 'NEW_TRANSFER',  icon: '➕', route: '/agent/transfers/new',           roles: ['AGENT'] },
-    { label: 'WITHDRAWAL',    icon: '💵', route: '/agent/transfers/payment',       roles: ['AGENT'] },
-    { label: 'CASH_REGISTER', icon: '🏦', route: '/agent/cash-register',           roles: ['AGENT'] },
+    { label: 'NEW_TRANSFER',   icon: '➕', route: '/agent/transfers/new',           roles: ['AGENT'] },
+    { label: 'WITHDRAWAL',     icon: '💵', route: '/agent/transfers/payment',       roles: ['AGENT'] },
+    { label: 'MOBILE_TRANSFER_SIDEBAR', icon: '📱', route: '/agent/transfers/mobile/new',  roles: ['AGENT'] },
+    { label: 'CASH_REGISTER',  icon: '🏦', route: '/agent/cash-register',           roles: ['AGENT'] },
 
     { label: 'CHATBOT',       icon: '🤖', route: '/client/chatbot',                roles: ['CLIENT', 'AGENT'] },
     { label: 'MY_DASHBOARD',  icon: '🏠', route: '/client/dashboard',              roles: ['CLIENT'] },
