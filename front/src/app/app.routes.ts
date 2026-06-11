@@ -46,8 +46,19 @@ export const routes: Routes = [
                 .then(m => m.ReportComponent),
             canActivate: [roleGuard],
             data: { roles: ['ADMIN', 'MANAGER'] }
+          },
+          {
+            path: 'alerts',
+            loadComponent: () =>
+              import('./pages/admin/alerts/alerts.component')
+                .then(m => m.AlertsComponent),
+            canActivate: [roleGuard],
+            data: { roles: ['ADMIN'] }
           }
+
+
         ]
+
       },
 
       // ── Manager routes ────────────────────────────────────────────────

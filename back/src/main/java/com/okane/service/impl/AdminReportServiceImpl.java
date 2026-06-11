@@ -5,6 +5,7 @@ import com.okane.dto.CorridorPerformanceDto;
 import com.okane.dto.DailyReportDto;
 import com.okane.dto.MonthlyReportDto;
 import com.okane.entity.Transfert;
+import com.okane.repository.KycAlertRepository;
 import com.okane.repository.TransfertRepository;
 import com.okane.service.AdminReportService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ import java.util.*;
 public class AdminReportServiceImpl implements AdminReportService {
 
     private final TransfertRepository transfertRepository;
-
+    private final KycAlertRepository kycAlertRepository;
     @Override
     public List<DailyReportDto> getDailyReport(
             LocalDate date,
@@ -218,26 +219,15 @@ public class AdminReportServiceImpl implements AdminReportService {
     @Override
     public List<AlertDto> getActiveAlerts() {
 
-        List<AlertDto> alerts = new ArrayList<>();
-
-        alerts.add(
-                AlertDto.builder()
-                        .type("HIGH_VOLUME")
-                        .message("Volume exceeds configured threshold")
-                        .severity("HIGH")
-                        .timestamp(LocalDateTime.now())
-                        .build()
-        );
-
-        alerts.add(
-                AlertDto.builder()
-                        .type("ERROR_RATE")
-                        .message("High transfer error rate detected")
-                        .severity("MEDIUM")
-                        .timestamp(LocalDateTime.now())
-                        .build()
-        );
-
-        return alerts;
+        return kycAlertRepository
+                .findByStatusOrderByCreatedAtDesc("OPEN")
+                .stream()
+                .map(alert -> AlertDto.builder()
+                        .type(alert.getAlertType())
+                        .message(alert.getMessage())
+                        .severity(alert.getSeverity())
+                        .timestamp(alert.getCreatedAt())
+                        .build())
+                .toList();
     }
 }

@@ -9,18 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5d0b6b24-9853-4a25-9490-2799f2096f20" name="Changes" comment="">
+    <list default="true" id="5d0b6b24-9853-4a25-9490-2799f2096f20" name="Changes" comment="export issues fixed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/controller/AdminReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/controller/AdminReportController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/service/ExportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/service/ExportService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/ExportServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/ExportServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/okane/controller/AdminReportControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/okane/controller/AdminReportControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/okane/service/AuthServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/okane/service/AuthServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/proxy.conf.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front/proxy.conf.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/admin/reports/report.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/reports/report.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/admin/reports/report.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/reports/report.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/admin/reports/services/report.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/reports/services/report.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/repository/KycAlertRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/repository/KycAlertRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/AdminReportServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/AdminReportServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/app.routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/shared/sidebar/sidebar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/shared/sidebar/sidebar.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -243,12 +237,33 @@
       <workItem from="1780654908121" duration="6083000" />
       <workItem from="1780737881493" duration="6979000" />
       <workItem from="1780758501012" duration="14662000" />
-      <workItem from="1781191852797" duration="4311000" />
+      <workItem from="1781191852797" duration="11541000" />
     </task>
+    <task id="LOCAL-00001" summary="export issues fixed">
+      <option name="closed" value="true" />
+      <created>1781196291042</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1781196291042</updated>
+    </task>
+    <task id="LOCAL-00002" summary="export issues fixed">
+      <option name="closed" value="true" />
+      <created>1781196294752</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1781196294752</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="export issues fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="export issues fixed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
