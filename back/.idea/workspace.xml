@@ -10,14 +10,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5d0b6b24-9853-4a25-9490-2799f2096f20" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/reports/models/report.model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/reports/services/report.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/security/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/security/JwtUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/JournalAuditServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/JournalAuditServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/app.routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/app/core/interceptors/jwt.interceptor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/core/interceptors/jwt.interceptor.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/shared/sidebar/sidebar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/shared/sidebar/sidebar.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/controller/AdminReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/controller/AdminReportController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/service/ExportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/service/ExportService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/ExportServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/ExportServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/okane/controller/AdminReportControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/okane/controller/AdminReportControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/okane/service/AuthServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/okane/service/AuthServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/proxy.conf.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front/proxy.conf.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/admin/reports/report.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/reports/report.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/admin/reports/report.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/reports/report.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/admin/reports/services/report.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/reports/services/report.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,20 +43,25 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="feature/reports-frontend" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "med202y"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;med202y&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/AitSaad0/Okane-Transfer.git",
-    "accountId": "9f2fe764-2c24-45c2-be3d-6372c9cde4c5"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/AitSaad0/Okane-Transfer.git&quot;,
+    &quot;accountId&quot;: &quot;9f2fe764-2c24-45c2-be3d-6372c9cde4c5&quot;
   }
-}]]></component>
+}</component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -77,6 +85,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
+    "Maven.Okane-Transfer [clean].executor": "Run",
+    "Maven.Okane-Transfer [package].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
@@ -84,7 +94,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "Tomcat Server.Tomcat 10.1.52.executor": "Run",
     "Tomcat Server.Tomcat 11.0.18.executor": "Run",
-    "git-widget-placeholder": "feature/navbar-improvements",
+    "git-widget-placeholder": "fix/export-issues",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/User/Desktop/Okane-Transfer-develop/Okane-Transfer/back",
     "node.js.detected.package.eslint": "true",
@@ -232,7 +242,8 @@
       <workItem from="1780472691185" duration="1000" />
       <workItem from="1780654908121" duration="6083000" />
       <workItem from="1780737881493" duration="6979000" />
-      <workItem from="1780758501012" duration="13713000" />
+      <workItem from="1780758501012" duration="14662000" />
+      <workItem from="1781191852797" duration="4311000" />
     </task>
     <servers />
   </component>

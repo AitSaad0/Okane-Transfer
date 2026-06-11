@@ -91,9 +91,22 @@ export class ReportComponent {
   }
 
   export(format: 'csv' | 'pdf') {
-    if (this.reportType !== 'daily' || !this.date) return;
+    let export$;
 
-    this.reportService.exportReport(format, this.date, this.corridorId).subscribe((blob) => {
+    if (this.reportType === 'daily') {
+      if (!this.date) { this.error = 'Please select a date.'; return; }
+      export$ = this.reportService.exportDailyReport(format, this.date, this.corridorId);
+    } else if (this.reportType === 'monthly') {
+      if (!this.year) { this.error = 'Please enter a year.'; return; }
+      export$ = this.reportService.exportMonthlyReport(format, this.year);
+    } else if (this.reportType === 'corridor') {
+      if (!this.startDate || !this.endDate) { this.error = 'Please select both dates.'; return; }
+      export$ = this.reportService.exportCorridorReport(format, this.startDate, this.endDate);
+    } else {
+      return;
+    }
+
+    export$.subscribe((blob) => {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;

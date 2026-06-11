@@ -55,7 +55,7 @@ class AuthServiceTest {
 
         when(userRepository.existsByEmail("client@okane.com")).thenReturn(false);
         when(passwordEncoder.encode("password123")).thenReturn("encodedPassword");
-        when(jwtUtil.generateAccessToken("client@okane.com")).thenReturn("access-token");
+        when(jwtUtil.generateAccessToken("client@okane.com","CLIENT")).thenReturn("access-token");
         when(jwtUtil.generateRefreshToken("client@okane.com")).thenReturn("refresh-token");
 
         AuthResponseDTO response = authService.register(dto);
@@ -76,7 +76,7 @@ class AuthServiceTest {
 
         when(userRepository.existsByEmail("admin@okane.com")).thenReturn(false);
         when(passwordEncoder.encode(any())).thenReturn("encoded");
-        when(jwtUtil.generateAccessToken(any())).thenReturn("access-token");
+        when(jwtUtil.generateAccessToken(any(), any())).thenReturn("access-token");
         when(jwtUtil.generateRefreshToken(any())).thenReturn("refresh-token");
 
         AuthResponseDTO response = authService.register(dto);
@@ -119,7 +119,7 @@ class AuthServiceTest {
 
         when(userRepository.findByEmail("client@okane.com")).thenReturn(Optional.of(user));
         when(passwordEncoder.matches("password123", "encodedPassword")).thenReturn(true);
-        when(jwtUtil.generateAccessToken("client@okane.com")).thenReturn("access-token");
+        when(jwtUtil.generateAccessToken("client@okane.com", "CLIENT")).thenReturn("access-token");
         when(jwtUtil.generateRefreshToken("client@okane.com")).thenReturn("refresh-token");
 
         AuthResponseDTO response = authService.login(dto);
@@ -196,7 +196,7 @@ class AuthServiceTest {
         when(jwtUtil.isRefreshToken("valid-refresh-token")).thenReturn(true);
         when(jwtUtil.extractEmail("valid-refresh-token")).thenReturn("client@okane.com");
         when(userRepository.findByEmail("client@okane.com")).thenReturn(Optional.of(user));
-        when(jwtUtil.generateAccessToken("client@okane.com")).thenReturn("access-token");
+        when(jwtUtil.generateAccessToken("client@okane.com", "CLIENT")).thenReturn("access-token");
         when(jwtUtil.generateRefreshToken("client@okane.com")).thenReturn("refresh-token");
 
         AuthResponseDTO response = authService.refresh(dto);
