@@ -70,6 +70,11 @@ export const routes: Routes = [
               .then(m => m.TransferCreationComponent)
           },
           {
+            path: 'transfers/mobile/new',
+            loadComponent: () => import('./pages/agent/mobile-transfer-creation/mobile-transfer-creation.component')
+              .then(m => m.MobileTransferCreationComponent)
+          },
+          {
             path: 'transfers/payment',
             loadComponent: () => import('./pages/agent/transfer-payment/transfer-payment.component')
               .then(m => m.TransferPaymentComponent)
