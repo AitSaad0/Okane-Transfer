@@ -63,6 +63,22 @@
     "LOADING": "Loading...",
     "BACK_TO_LOGIN": "Back to login"
   },
+  "AUTH": {
+    "RIGHTS_RESERVED": "All rights reserved.",
+    "SIDE": {
+      "LOGIN_TITLE": "Send money worldwide, made simple",
+      "LOGIN_TEXT": "Fast, secure and transparent transfers. Join thousands of users who trust OkaneTransfer every day.",
+      "USERS": "Users",
+      "COUNTRIES": "Countries",
+      "UPTIME": "Uptime",
+      "REGISTER_TITLE": "Join the OkaneTransfer community",
+      "REGISTER_TEXT": "Create your free account and enjoy fast transfers with reduced fees.",
+      "FEATURE_1": "Free and quick sign-up",
+      "FEATURE_2": "Reduced transfer fees",
+      "FEATURE_3": "24/7 customer support",
+      "FORGOT_TITLE": "Regain access to your account",
+      "FORGOT_TEXT": "Don't worry, it happens to everyone. Enter your email and we'll send you a code to reset your password."
+    },
   "USERS": {
     "TITLE": "User Management",
     "SUBTITLE": "users total",
