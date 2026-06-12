@@ -9,12 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5d0b6b24-9853-4a25-9490-2799f2096f20" name="Changes" comment="export issues fixed">
+    <list default="true" id="5d0b6b24-9853-4a25-9490-2799f2096f20" name="Changes" comment="added interface that shows all alerts">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/repository/KycAlertRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/repository/KycAlertRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/AdminReportServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/AdminReportServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/app.routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/shared/sidebar/sidebar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/shared/sidebar/sidebar.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/admin/compliance/compliance-sar/compliance-sar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/compliance/compliance-sar/compliance-sar.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/admin/compliance/compliance-sar/compliance-sar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/compliance/compliance-sar/compliance-sar.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +37,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="feature/reports-frontend" />
+        <entry key="$PROJECT_DIR$/.." value="feature/alerts-interface" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -88,7 +86,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "Tomcat Server.Tomcat 10.1.52.executor": "Run",
     "Tomcat Server.Tomcat 11.0.18.executor": "Run",
-    "git-widget-placeholder": "fix/export-issues",
+    "git-widget-placeholder": "feature/compliance-interface",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/User/Desktop/Okane-Transfer-develop/Okane-Transfer/back",
     "node.js.detected.package.eslint": "true",
@@ -237,7 +235,7 @@
       <workItem from="1780654908121" duration="6083000" />
       <workItem from="1780737881493" duration="6979000" />
       <workItem from="1780758501012" duration="14662000" />
-      <workItem from="1781191852797" duration="11541000" />
+      <workItem from="1781191852797" duration="18655000" />
     </task>
     <task id="LOCAL-00001" summary="export issues fixed">
       <option name="closed" value="true" />
@@ -255,7 +253,23 @@
       <option name="project" value="LOCAL" />
       <updated>1781196294752</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="added interface that shows all alerts">
+      <option name="closed" value="true" />
+      <created>1781208928805</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1781208928805</updated>
+    </task>
+    <task id="LOCAL-00004" summary="added interface that shows all alerts">
+      <option name="closed" value="true" />
+      <created>1781270737195</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1781270737195</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -263,7 +277,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="export issues fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="export issues fixed" />
+    <MESSAGE value="added interface that shows all alerts" />
+    <option name="LAST_COMMIT_MESSAGE" value="added interface that shows all alerts" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
