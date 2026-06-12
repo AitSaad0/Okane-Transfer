@@ -1,0 +1,33 @@
+@if (loading()) {
+  <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+    <p class="text-sm text-slate-400 text-center">Calcul des frais...</p>
+  </div>
+}
+
+@if (error()) {
+  <div class="p-3 bg-rose-50 border border-rose-200 rounded-lg text-sm text-danger">{{ error() }}</div>
+}
+
+@if (result(); as r) {
+  <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-4 space-y-3">
+    <p class="text-sm font-medium text-primary">Simulation des frais — {{ r.corridorLabel }}</p>
+    <div class="grid grid-cols-2 gap-3 text-sm">
+      <div class="bg-white rounded-lg p-3 border border-indigo-100">
+        <p class="text-xs text-slate-500 mb-1">Montant envoyé</p>
+        <p class="font-mono font-medium text-slate-800">{{ r.amount | number:'1.2-2' }} MAD</p>
+      </div>
+      <div class="bg-white rounded-lg p-3 border border-indigo-100">
+        <p class="text-xs text-slate-500 mb-1">Frais</p>
+        <p class="font-mono font-medium text-warning">{{ r.fee | number:'1.2-2' }} MAD</p>
+      </div>
+      <div class="bg-white rounded-lg p-3 border border-indigo-100">
+        <p class="text-xs text-slate-500 mb-1">Montant reçu</p>
+        <p class="font-mono font-medium text-success">{{ r.amountReceived | number:'1.2-2' }}</p>
+      </div>
+      <div class="bg-white rounded-lg p-3 border border-indigo-100">
+        <p class="text-xs text-slate-500 mb-1">Part agence / centrale</p>
+        <p class="font-mono text-slate-600 text-xs">{{ r.agencyShare | number:'1.2-2' }} / {{ r.centralShare | number:'1.2-2' }}</p>
+      </div>
+    </div>
+  </div>
+}

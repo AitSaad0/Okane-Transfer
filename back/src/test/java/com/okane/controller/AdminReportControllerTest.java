@@ -86,9 +86,9 @@ class AdminReportControllerTest {
         List<DailyReportDto> reports = Arrays.asList(new DailyReportDto());
         when(adminReportService.getDailyReport(any(), any(), isNull())).thenReturn(reports);
         when(exportService.exportDailyCsv(anyList())).thenReturn(new ByteArrayInputStream("csv-data".getBytes()));
-        mockMvc.perform(get("/api/v1/admin/reports/export")
-                .param("format", "csv")
-                .param("date", "2024-01-01"))
+        mockMvc.perform(get("/api/v1/admin/reports/export/daily")
+                        .param("format", "csv")
+                        .param("date", "2024-01-01"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Disposition",
                         org.hamcrest.Matchers.containsString("daily-report.csv")))
@@ -100,9 +100,9 @@ class AdminReportControllerTest {
         List<DailyReportDto> reports = Arrays.asList(new DailyReportDto());
         when(adminReportService.getDailyReport(any(), any(), isNull())).thenReturn(reports);
         when(exportService.exportDailyPdf(anyList())).thenReturn(new ByteArrayInputStream("pdf-data".getBytes()));
-        mockMvc.perform(get("/api/v1/admin/reports/export")
-                .param("format", "pdf")
-                .param("date", "2024-01-01"))
+        mockMvc.perform(get("/api/v1/admin/reports/export/daily")
+                        .param("format", "pdf")
+                        .param("date", "2024-01-01"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Disposition",
                         org.hamcrest.Matchers.containsString("daily-report.pdf")))

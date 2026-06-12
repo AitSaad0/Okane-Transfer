@@ -91,63 +91,90 @@ public class AdminReportController {
                 adminReportService.getActiveAlerts()
         );
     }
-    @GetMapping("/export")
-    public ResponseEntity<byte[]> exportReport(
-
+    @GetMapping("/export/daily")
+    public ResponseEntity<byte[]> exportDailyReport(
             @RequestParam String format,
-
-            @RequestParam
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-            LocalDate date,
-
-            @RequestParam(required = false)
-            UUID corridorId
-
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @RequestParam(required = false) UUID corridorId
     ) throws IOException {
 
-        List<DailyReportDto> reports =
-                adminReportService.getDailyReport(
-                        date,
-                        corridorId,
-                        null
-                );
-
+        List<DailyReportDto> reports = adminReportService.getDailyReport(date, corridorId, null);
         ByteArrayInputStream file;
-
         String filename;
-
         String contentType;
 
         if (format.equalsIgnoreCase("csv")) {
-
             file = exportService.exportDailyCsv(reports);
-
             filename = "daily-report.csv";
-
             contentType = "text/csv";
-
         } else if (format.equalsIgnoreCase("pdf")) {
-
             file = exportService.exportDailyPdf(reports);
-
             filename = "daily-report.pdf";
-
             contentType = "application/pdf";
-
         } else {
-
-            throw new RuntimeException(
-                    "Unsupported format: " + format
-            );
+            throw new RuntimeException("Unsupported format: " + format);
         }
 
-        byte[] bytes = file.readAllBytes();
+        return buildResponse(file.readAllBytes(), filename, contentType);
+    }
 
+    @GetMapping("/export/monthly")
+    public ResponseEntity<byte[]> exportMonthlyReport(
+            @RequestParam String format,
+            @RequestParam int year
+    ) throws IOException {
+
+        List<MonthlyReportDto> reports = adminReportService.getMonthlyReport(year);
+        ByteArrayInputStream file;
+        String filename;
+        String contentType;
+
+        if (format.equalsIgnoreCase("csv")) {
+            file = exportService.exportMonthlyCsv(reports);
+            filename = "monthly-report.csv";
+            contentType = "text/csv";
+        } else if (format.equalsIgnoreCase("pdf")) {
+            file = exportService.exportMonthlyPdf(reports);
+            filename = "monthly-report.pdf";
+            contentType = "application/pdf";
+        } else {
+            throw new RuntimeException("Unsupported format: " + format);
+        }
+
+        return buildResponse(file.readAllBytes(), filename, contentType);
+    }
+
+    @GetMapping("/export/corridors")
+    public ResponseEntity<byte[]> exportCorridorReport(
+            @RequestParam String format,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
+    ) throws IOException {
+
+        List<CorridorPerformanceDto> reports = adminReportService.getCorridorPerformance(startDate, endDate);
+        ByteArrayInputStream file;
+        String filename;
+        String contentType;
+
+        if (format.equalsIgnoreCase("csv")) {
+            file = exportService.exportCorridorCsv(reports);
+            filename = "corridor-report.csv";
+            contentType = "text/csv";
+        } else if (format.equalsIgnoreCase("pdf")) {
+            file = exportService.exportCorridorPdf(reports);
+            filename = "corridor-report.pdf";
+            contentType = "application/pdf";
+        } else {
+            throw new RuntimeException("Unsupported format: " + format);
+        }
+
+        return buildResponse(file.readAllBytes(), filename, contentType);
+    }
+
+    // private helper
+    private ResponseEntity<byte[]> buildResponse(byte[] bytes, String filename, String contentType) {
         return ResponseEntity.ok()
-                .header(
-                        HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=" + filename
-                )
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
                 .contentType(MediaType.parseMediaType(contentType))
                 .body(bytes);
     }

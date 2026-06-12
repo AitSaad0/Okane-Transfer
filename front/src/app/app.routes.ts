@@ -3,18 +3,16 @@ import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
 
 export const routes: Routes = [
-
   // ── Auth Layout ───────────────────────────────────────────────────────
   {
     path: '',
     loadComponent: () =>
-      import('./layouts/auth-layout/auth-layout.component')
-        .then(m => m.AuthLayoutComponent),
+      import('./layouts/auth-layout/auth-layout.component').then((m) => m.AuthLayoutComponent),
     children: [
       { path: '',          redirectTo: 'login', pathMatch: 'full' },
-      { path: 'login',     loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent) },
-      { path: 'register',  loadComponent: () => import('./pages/register/register.component').then(m => m.RegisterComponent) },
-      { path: 'forgot-password', loadComponent: () => import('./pages/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent) },
+      { path: 'login',     data: { illustration: 'login' }, loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent) },
+      { path: 'register',  data: { illustration: 'register' }, loadComponent: () => import('./pages/register/register.component').then(m => m.RegisterComponent) },
+      { path: 'forgot-password', data: { illustration: 'forgot' }, loadComponent: () => import('./pages/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent) },
       { path: 'reset-password',  loadComponent: () => import('./pages/reset-password/reset-password.component').then(m => m.ResetPasswordComponent) },
       { path: '2fa/verify', loadComponent: () => import('./pages/two-fa-verify/two-fa-verify.component').then(m => m.TwoFaVerifyComponent) },
     ]
@@ -25,12 +23,16 @@ export const routes: Routes = [
     path: '',
     canActivate: [authGuard],
     loadComponent: () =>
-      import('./layouts/dashboard-layout/dashboard-layout.component')
-        .then(m => m.DashboardLayoutComponent),
+      import('./layouts/dashboard-layout/dashboard-layout.component').then(
+        (m) => m.DashboardLayoutComponent,
+      ),
     children: [
       {
         path: 'profile/security',
-        loadComponent: () => import('./pages/profile-security/profile-security.component').then(m => m.ProfileSecurityComponent)
+        loadComponent: () =>
+          import('./pages/profile-security/profile-security.component').then(
+            (m) => m.ProfileSecurityComponent,
+          ),
       },
 
       // ── Admin routes ──────────────────────────────────────────────────
@@ -42,12 +44,68 @@ export const routes: Routes = [
           {
             path: 'reports',
             loadComponent: () =>
-              import('./pages/admin/reports/report.component')
-                .then(m => m.ReportComponent),
+              import('./pages/admin/reports/report.component').then((m) => m.ReportComponent),
             canActivate: [roleGuard],
-            data: { roles: ['ADMIN', 'MANAGER'] }
-          }
-        ]
+            data: { roles: ['ADMIN', 'MANAGER'] },
+          },{
+            path: 'compliance/dashboard',
+            loadComponent: () =>
+              import('./pages/admin/compliance/compliance-dashboard/compliance-dashboard.component')
+                .then(m => m.ComplianceDashboardComponent),
+            canActivate: [roleGuard],
+            data: { roles: ['ADMIN'] }
+          },
+          {
+            path: 'compliance/sar',
+            loadComponent: () =>
+              import('./pages/admin/compliance/compliance-sar/compliance-sar.component')
+                .then(m => m.ComplianceSarComponent),
+            canActivate: [roleGuard],
+            data: { roles: ['ADMIN'] }
+          },
+          {
+            path: 'compliance/threshold',
+            loadComponent: () =>
+              import('./pages/admin/compliance/compliance-threshold/compliance-threshold.component')
+                .then(m => m.ComplianceThresholdsComponent),
+            canActivate: [roleGuard],
+            data: { roles: ['ADMIN'] }
+          },
+          // ── Users ────────────────────────────────────────────────────────
+          {
+            path: 'users',
+            children: [
+              {
+                path: '',
+                loadComponent: () =>
+                  import('./pages/admin/users/user-list/user-list.component').then(
+                    (m) => m.UserListComponent,
+                  ),
+              },
+              {
+                path: 'create',
+                loadComponent: () =>
+                  import('./pages/admin/users/user-form/user-form.component').then(
+                    (m) => m.UserFormComponent,
+                  ),
+              },
+              {
+                path: ':id/edit',
+                loadComponent: () =>
+                  import('./pages/admin/users/user-form/user-form.component').then(
+                    (m) => m.UserFormComponent,
+                  ),
+              },
+              {
+                path: ':id/detail',
+                loadComponent: () =>
+                  import('./pages/admin/users/user-detail/user-detail.component').then(
+                    (m) => m.UserDetailComponent,
+                  ),
+              },
+            ],
+          },
+        ],
       },
 
       // ── Manager routes ────────────────────────────────────────────────
@@ -55,7 +113,7 @@ export const routes: Routes = [
         path: 'manager',
         canActivate: [roleGuard],
         data: { roles: ['ADMIN', 'MANAGER'] },
-        children: []
+        children: [],
       },
 
       // ── Agent routes ──────────────────────────────────────────────────
@@ -63,23 +121,7 @@ export const routes: Routes = [
         path: 'agent',
         canActivate: [roleGuard],
         data: { roles: ['ADMIN', 'AGENT'] },
-        children: [
-          {
-            path: 'transfers/new',
-            loadComponent: () => import('./pages/agent/transfer-creation/transfer-creation.component')
-              .then(m => m.TransferCreationComponent)
-          },
-          {
-            path: 'transfers/mobile/new',
-            loadComponent: () => import('./pages/agent/mobile-transfer-creation/mobile-transfer-creation.component')
-              .then(m => m.MobileTransferCreationComponent)
-          },
-          {
-            path: 'transfers/payment',
-            loadComponent: () => import('./pages/agent/transfer-payment/transfer-payment.component')
-              .then(m => m.TransferPaymentComponent)
-          }
-        ]
+        children: [],
       },
 
       // ── Client routes ─────────────────────────────────────────────────
@@ -87,13 +129,21 @@ export const routes: Routes = [
         path: 'client',
         canActivate: [roleGuard],
         data: { roles: ['CLIENT'] },
-        children: []
+        children: [],
       },
-    ]
+    ],
   },
 
   // ── Public error pages ────────────────────────────────────────────────
-  { path: 'unauthorized', loadComponent: () => import('./pages/unauthorized/unauthorized.component').then(m => m.UnauthorizedComponent) },
-  { path: 'not-found',    loadComponent: () => import('./pages/not-found/not-found.component').then(m => m.NotFoundComponent) },
-  { path: '**',           redirectTo: 'not-found' }
+  {
+    path: 'unauthorized',
+    loadComponent: () =>
+      import('./pages/unauthorized/unauthorized.component').then((m) => m.UnauthorizedComponent),
+  },
+  {
+    path: 'not-found',
+    loadComponent: () =>
+      import('./pages/not-found/not-found.component').then((m) => m.NotFoundComponent),
+  },
+  { path: '**', redirectTo: 'not-found' },
 ];

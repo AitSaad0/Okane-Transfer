@@ -1,0 +1,157 @@
+<div class="page-wrapper">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="flex items-center gap-3">
+      <button (click)="goBack()" class="back-btn">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <div>
+        <h1 class="page-title">{{ 'USER_DETAIL.TITLE' | translate }}</h1>
+        <p class="page-subtitle">{{ 'USER_DETAIL.SUBTITLE' | translate }}</p>
+      </div>
+    </div>
+    <div *ngIf="user" class="flex items-center gap-2">
+      <button (click)="showStatusDialog = true"
+              [ngClass]="user.active ? 'btn-warning' : 'btn-success'">
+        {{ (user.active ? 'USER_DETAIL.SUSPEND' : 'USER_DETAIL.ACTIVATE') | translate }}
+      </button>
+      <button (click)="goToEdit()" class="btn-secondary">{{ 'USER_DETAIL.EDIT' | translate }}</button>
+      <button (click)="showDeleteDialog = true" class="btn-danger">
+        {{ 'USER_DETAIL.DELETE_RGPD' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="alert-error">{{ error }}</div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="flex items-center justify-center py-24">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Content -->
+  <div *ngIf="!loading && user">
+
+    <!-- Hero card -->
+    <div class="hero-card">
+      <div class="avatar-lg">{{ user.prenom[0] }}{{ user.nom[0] }}</div>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-3 flex-wrap">
+          <h2 class="text-xl font-semibold text-slate-800">{{ user.prenom }} {{ user.nom }}</h2>
+          <app-status-badge [status]="user.role"></app-status-badge>
+          <app-status-badge [status]="user.active.toString()"></app-status-badge>
+        </div>
+        <p class="text-sm text-slate-500 mt-1">{{ user.email }}</p>
+        <p *ngIf="user.agenceNom" class="text-sm text-slate-400 mt-0.5">
+          <span class="font-medium text-slate-600">{{ 'USER_DETAIL.AGENCY_LABEL' | translate }}</span> {{ user.agenceNom }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-bar">
+      <button (click)="setTab('profil')"
+              [ngClass]="activeTab === 'profil' ? 'tab-active' : 'tab'">
+        {{ 'USER_DETAIL.TAB_PROFILE' | translate }}
+      </button>
+      <button (click)="setTab('activite')"
+              [ngClass]="activeTab === 'activite' ? 'tab-active' : 'tab'">
+        {{ 'USER_DETAIL.TAB_ACTIVITY' | translate }}
+      </button>
+    </div>
+
+    <!-- Tab : Profil -->
+    <div *ngIf="activeTab === 'profil'" class="info-card">
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">{{ 'USER_DETAIL.FIRSTNAME' | translate }}</span>
+          <span class="info-value">{{ user.prenom }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">{{ 'USER_DETAIL.LASTNAME' | translate }}</span>
+          <span class="info-value">{{ user.nom }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">{{ 'USER_DETAIL.EMAIL' | translate }}</span>
+          <span class="info-value">{{ user.email }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">{{ 'USER_DETAIL.PHONE' | translate }}</span>
+          <span class="info-value">{{ user.telephone ?? ('COMMON.EMPTY' | translate) }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">{{ 'USER_DETAIL.ROLE' | translate }}</span>
+          <app-status-badge [status]="user.role"></app-status-badge>
+        </div>
+        <div class="info-item">
+          <span class="info-label">{{ 'USER_DETAIL.ACCOUNT_STATUS' | translate }}</span>
+          <app-status-badge [status]="user.active.toString()"></app-status-badge>
+        </div>
+        <div class="info-item">
+          <span class="info-label">{{ 'USER_DETAIL.AGENCY' | translate }}</span>
+          <span class="info-value">{{ user.agenceNom ?? ('COMMON.EMPTY' | translate) }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">{{ 'USER_DETAIL.INTERNAL_ID' | translate }}</span>
+          <span class="info-value font-mono text-slate-500">#{{ user.id }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab : Activité -->
+    <div *ngIf="activeTab === 'activite'" class="info-card">
+      <div *ngIf="loadingActivity" class="flex items-center justify-center py-12">
+        <div class="spinner"></div>
+      </div>
+
+      <div *ngIf="!loadingActivity && activities.length === 0" class="empty-state">
+        <svg class="empty-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+        </svg>
+        <p class="text-sm text-slate-500">{{ 'USER_DETAIL.NO_ACTIVITY' | translate }}</p>
+      </div>
+
+      <div *ngIf="!loadingActivity && activities.length > 0" class="activity-list">
+        <div *ngFor="let a of activities" class="activity-item">
+          <div class="activity-dot"></div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between gap-2 flex-wrap">
+              <span class="text-sm font-medium text-slate-700">{{ a.action }}</span>
+              <span class="text-xs text-slate-400">{{ formatDate(a.timestamp) }}</span>
+            </div>
+            <p *ngIf="a.details" class="text-xs text-slate-500 mt-0.5">{{ a.details }}</p>
+            <p *ngIf="a.ipAddress" class="text-xs text-slate-400 font-mono">{{ 'USER_DETAIL.IP_LABEL' | translate }} : {{ a.ipAddress }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Dialog : Toggle statut -->
+<app-confirm-dialog
+  *ngIf="user"
+  [visible]="showStatusDialog"
+  [title]="(user.active ? 'USER_DETAIL.SUSPEND_ACCOUNT' : 'USER_DETAIL.ACTIVATE_ACCOUNT') | translate"
+  [message]="(user.active ? 'USER_DETAIL.SUSPEND_MESSAGE' : 'USER_DETAIL.ACTIVATE_MESSAGE') | translate"
+  [confirmLabel]="(user.active ? 'USER_DETAIL.SUSPEND' : 'USER_DETAIL.ACTIVATE') | translate"
+  [danger]="user.active"
+  (confirmed)="confirmToggleStatus()"
+  (cancelled)="showStatusDialog = false">
+</app-confirm-dialog>
+
+<!-- Dialog : Suppression RGPD -->
+<app-confirm-dialog
+  [visible]="showDeleteDialog"
+  title="{{ 'USER_DETAIL.DELETE_ACCOUNT_TITLE' | translate }}"
+  message="{{ 'USER_DETAIL.DELETE_ACCOUNT_MESSAGE' | translate }}"
+  confirmLabel="{{ 'USER_DETAIL.DELETE_PERMANENTLY' | translate }}"
+  [danger]="true"
+  (confirmed)="confirmDelete()"
+  (cancelled)="showDeleteDialog = false">
+</app-confirm-dialog>
