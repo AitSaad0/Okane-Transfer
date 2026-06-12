@@ -34,3 +34,8 @@ logs/
 docs/
 docs/plans/PLAN_DEV.md
 docs/notes-projet-equipe.txt
+
+# Auxiliary files (local dev helpers, screenshots)
+widget_history.png
+start-frontend.bat
+start-frontend.ps1
