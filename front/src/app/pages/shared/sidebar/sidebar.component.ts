@@ -33,6 +33,7 @@ export class SidebarComponent implements OnInit {
     { label: 'AUDIT',         icon: '📋', route: '/admin/audit-logs',              roles: ['ADMIN'] },
     { label: 'MOBILE_MONEY',  icon: '📱', route: '/admin/mobile-money',            roles: ['ADMIN'] },
     { label: 'BROADCAST',     icon: '📣', route: '/admin/notifications/broadcast', roles: ['ADMIN'] },
+    { label: 'Alerts',     icon: '📣', route: '/admin/alerts', roles: ['ADMIN'] },
 
     { label: 'TRANSFERS',     icon: '📦', route: '/admin/transfers',               roles: ['ADMIN', 'MANAGER'] },
     { label: 'REPORTS',       icon: '📊', route: '/admin/reports',           roles: ['ADMIN', 'MANAGER'] },
@@ -40,8 +41,10 @@ export class SidebarComponent implements OnInit {
     { label: 'DASHBOARD',     icon: '🖥️', route: '/manager/dashboard',            roles: ['MANAGER'] },
     { label: 'MGR_REPORTS',   icon: '📄', route: '/manager/reports',              roles: ['MANAGER'] },
 
-    { label: 'NEW_TRANSFER',  icon: '➕', route: '/agent/transfers/new',           roles: ['AGENT'] },
-    { label: 'CASH_REGISTER', icon: '🏦', route: '/agent/cash-register',           roles: ['AGENT'] },
+    { label: 'NEW_TRANSFER',   icon: '➕', route: '/agent/transfers/new',           roles: ['AGENT'] },
+    { label: 'WITHDRAWAL',     icon: '💵', route: '/agent/transfers/payment',       roles: ['AGENT'] },
+    { label: 'MOBILE_TRANSFER_SIDEBAR', icon: '📱', route: '/agent/transfers/mobile/new',  roles: ['AGENT'] },
+    { label: 'CASH_REGISTER',  icon: '🏦', route: '/agent/cash-register',           roles: ['AGENT'] },
 
     { label: 'CHATBOT',       icon: '🤖', route: '/client/chatbot',                roles: ['CLIENT', 'AGENT'] },
     { label: 'MY_DASHBOARD',  icon: '🏠', route: '/client/dashboard',              roles: ['CLIENT'] },

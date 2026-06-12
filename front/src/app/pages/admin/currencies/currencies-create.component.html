@@ -1,0 +1,79 @@
+<div class="p-6 bg-slate-50 min-h-screen">
+  <div class="max-w-lg mx-auto">
+
+    <!-- Header -->
+    <div class="mb-6">
+      <a routerLink="/admin/currencies" class="text-sm text-secondary hover:text-primary transition-colors">← Retour aux devises</a>
+      <h1 class="text-2xl font-semibold text-slate-800 mt-2">Nouvelle devise</h1>
+      <p class="text-sm text-slate-500 mt-1">Ajouter une devise selon la norme ISO 4217</p>
+    </div>
+
+    <!-- Card -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+
+      @if (error()) {
+        <div class="mb-4 p-3 bg-rose-50 border border-rose-200 rounded-lg text-sm text-danger">{{ error() }}</div>
+      }
+
+      <div class="space-y-4">
+
+        <!-- Code -->
+        <div>
+          <label class="text-sm font-medium text-slate-600 block mb-1">Code ISO 4217 *</label>
+          <input [formControl]="$any(form.get('code'))"
+            placeholder="ex: MAD"
+            maxlength="3"
+            class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm font-mono text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent uppercase"
+            (input)="form.get('code')?.setValue($any($event.target).value.toUpperCase())"/>
+          @if (form.get('code')?.invalid && form.get('code')?.touched) {
+            <p class="text-xs text-danger mt-1">Code requis — exactement 3 lettres</p>
+          }
+        </div>
+
+        <!-- Symbole -->
+        <div>
+          <label class="text-sm font-medium text-slate-600 block mb-1">Symbole *</label>
+          <input [formControl]="$any(form.get('symbol'))"
+            placeholder="ex: د.م."
+            class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"/>
+          @if (form.get('symbol')?.invalid && form.get('symbol')?.touched) {
+            <p class="text-xs text-danger mt-1">Symbole requis</p>
+          }
+        </div>
+
+        <!-- Nom -->
+        <div>
+          <label class="text-sm font-medium text-slate-600 block mb-1">Nom complet *</label>
+          <input [formControl]="$any(form.get('name'))"
+            placeholder="ex: Dirham marocain"
+            class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"/>
+          @if (form.get('name')?.invalid && form.get('name')?.touched) {
+            <p class="text-xs text-danger mt-1">Nom requis</p>
+          }
+        </div>
+
+        <!-- Pays -->
+        <div>
+          <label class="text-sm font-medium text-slate-600 block mb-1">Pays associés *</label>
+          <input [formControl]="$any(form.get('countries'))"
+            placeholder="ex: Maroc, Mauritanie"
+            class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"/>
+          <p class="text-xs text-slate-400 mt-1">Séparer les pays par une virgule</p>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex gap-3 pt-2">
+          <button (click)="submit()" [disabled]="form.invalid || loading()"
+            class="flex-1 bg-primary text-white text-sm font-medium py-2 rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+            {{ loading() ? 'Création...' : 'Créer la devise' }}
+          </button>
+          <a routerLink="/admin/currencies"
+            class="flex-1 text-center border border-slate-200 text-slate-600 text-sm font-medium py-2 rounded-lg hover:bg-slate-50 transition-colors">
+            Annuler
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

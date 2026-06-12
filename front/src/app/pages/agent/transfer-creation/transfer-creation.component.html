@@ -1,0 +1,284 @@
+<div class="w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-sm p-8">
+  <h1 class="text-2xl font-semibold text-slate-800 mb-6">{{ 'TRANSFER.TITLE' | translate }}</h1>
+
+  @if (success && result) {
+    <div class="text-center space-y-4">
+      <div class="bg-success/10 text-success px-4 py-3 rounded-lg text-sm">
+        {{ 'TRANSFER.SUCCESS' | translate }}
+      </div>
+      @if (error) {
+        <div class="text-xs text-danger mb-4">{{ error | translate }}</div>
+      }
+      <div class="bg-primary/5 border border-primary/20 rounded-xl p-6">
+        <p class="text-sm text-slate-500">{{ 'TRANSFER.WITHDRAWAL_CODE' | translate }}</p>
+        <p class="text-3xl font-bold text-primary tracking-widest mt-1">{{ result.codeRetrait }}</p>
+      </div>
+      <div class="text-xs text-slate-500">
+        <p>{{ 'TRANSFER.SMS_SENT' | translate }} {{ result.expediteurTelephone }}</p>
+        <p>{{ 'TRANSFER.EMAIL_SENT' | translate }}</p>
+      </div>
+      <div class="bg-slate-50 rounded-lg p-4 text-left text-sm space-y-1">
+        <p><span class="font-medium">{{ 'TRANSFER.MONTANT' | translate }}:</span> {{ result.montantEnvoye }} {{ result.deviseSource }}</p>
+        <p><span class="font-medium">{{ 'TRANSFER.FEES' | translate }}:</span> {{ result.frais }}</p>
+        <p><span class="font-medium">{{ 'TRANSFER.NET' | translate }}:</span> {{ result.montantNet }} {{ result.deviseDestination }}</p>
+        <p><span class="font-medium">{{ 'TRANSFER.CORRIDOR' | translate }}:</span> {{ result.corridorDescription }}</p>
+        <p><span class="font-medium">{{ 'TRANSFER.EXPEDITEUR' | translate }}:</span> {{ result.expediteurPrenom }} {{ result.expediteurNom }}</p>
+        <p><span class="font-medium">{{ 'TRANSFER.BENEFICIAIRE' | translate }}:</span> {{ result.beneficiairePrenom }} {{ result.beneficiaireNom }}</p>
+      </div>
+      <button (click)="downloadPdf()"
+        class="border border-primary text-primary text-sm font-medium py-2 px-6 rounded-lg hover:bg-primary/5">
+        {{ 'TRANSFER.DOWNLOAD_PDF' | translate }}
+      </button>
+      <button (click)="resetForm()"
+        class="bg-primary text-white text-sm font-medium py-2 px-6 rounded-lg hover:opacity-90">
+        {{ 'TRANSFER.NEW' | translate }}
+      </button>
+    </div>
+  } @else {
+    <div class="flex items-center gap-2 mb-8">
+      @for (step of [1,2,3,4]; track step) {
+        <div class="flex items-center gap-2">
+          <div [class.bg-primary]="currentStep >= step" [class.bg-slate-200]="currentStep < step"
+            class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium text-white">
+            {{ step }}
+          </div>
+          @if (step < 4) {
+            <div [class.bg-primary]="currentStep > step" [class.bg-slate-200]="currentStep <= step"
+              class="w-12 h-1 rounded"></div>
+          }
+        </div>
+      }
+    </div>
+
+    @if (error) {
+      <div class="text-xs text-danger mb-4">{{ error }}</div>
+    }
+
+    @if (currentStep === 1) {
+      <div>
+        <h2 class="text-lg font-medium text-slate-700 mb-4">{{ 'TRANSFER.CHOOSE_CORRIDOR' | translate }}</h2>
+        <div class="space-y-3">
+          @for (corridor of corridors; track corridor.id) {
+            <button type="button" (click)="selectCorridor(corridor)"
+              [class.border-primary]="selectedCorridor?.id === corridor.id"
+              class="w-full text-left border border-slate-200 rounded-xl p-4 hover:border-primary transition-colors">
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="font-medium text-slate-800">{{ corridor.paysOrigineNom }} → {{ corridor.paysDestinationNom }}</p>
+                  <p class="text-sm text-slate-500">{{ corridor.deviseSourceCode }} → {{ corridor.deviseDestinationCode }}</p>
+                </div>
+                <div class="text-right">
+                  <p class="text-sm text-slate-500">{{ 'TRANSFER.RATE' | translate }}</p>
+                  <p class="font-semibold text-slate-700">1 {{ corridor.deviseSourceCode }} = {{ corridor.tauxChange }} {{ corridor.deviseDestinationCode }}</p>
+                </div>
+              </div>
+            </button>
+          }
+        </div>
+      </div>
+    }
+
+    @if (currentStep === 2) {
+      <fieldset [formGroup]="expediteurForm">
+        <legend class="text-lg font-medium text-slate-700 mb-4">{{ 'TRANSFER.EXPEDITEUR' | translate }}</legend>
+        @if (selectedCorridor) {
+          <div class="mb-4 text-sm text-slate-500 bg-slate-50 rounded-lg p-3">
+            {{ selectedCorridor.paysOrigineNom }} → {{ selectedCorridor.paysDestinationNom }}
+          </div>
+        }
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="text-sm font-medium text-slate-600">{{ 'FIELDS.NOM' | translate }}</label>
+            <input formControlName="nom" type="text"
+              class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" />
+          </div>
+          <div>
+            <label class="text-sm font-medium text-slate-600">{{ 'FIELDS.PRENOM' | translate }}</label>
+            <input formControlName="prenom" type="text"
+              class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" />
+          </div>
+          <div>
+            <label class="text-sm font-medium text-slate-600">{{ 'TRANSFER.CIN' | translate }}</label>
+            <input formControlName="numPieceIdentite" type="text"
+              class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" />
+          </div>
+          <div>
+            <label class="text-sm font-medium text-slate-600">{{ 'FIELDS.PHONE' | translate }}</label>
+            <input formControlName="telephone" type="text"
+              class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" />
+          </div>
+          <div>
+            <label class="text-sm font-medium text-slate-600">{{ 'TRANSFER.PAYS' | translate }}</label>
+            <select formControlName="paysId"
+              class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm bg-white">
+              <option value="">{{ selectedCorridor ? getCountryName(selectedCorridor.paysOrigineId) : ('TRANSFER.SELECT_PAYS' | translate) }}</option>
+              @for (c of countries; track c.id) {
+                <option [value]="c.id">{{ c.nom }}</option>
+              }
+            </select>
+          </div>
+          <div>
+            <label class="text-sm font-medium text-slate-600">{{ 'FIELDS.EMAIL' | translate }}</label>
+            <input formControlName="email" type="email"
+              class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" />
+          </div>
+        </div>
+      </fieldset>
+    }
+
+    @if (currentStep === 3) {
+      <fieldset [formGroup]="beneficiaireForm">
+        <legend class="text-lg font-medium text-slate-700 mb-4">{{ 'TRANSFER.BENEFICIAIRE' | translate }}</legend>
+        @if (selectedCorridor) {
+          <div class="mb-4 text-sm text-slate-500 bg-slate-50 rounded-lg p-3">
+            {{ selectedCorridor.paysOrigineNom }} → {{ selectedCorridor.paysDestinationNom }}
+          </div>
+        }
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="text-sm font-medium text-slate-600">{{ 'FIELDS.NOM' | translate }}</label>
+            <input formControlName="nom" type="text"
+              class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" />
+          </div>
+          <div>
+            <label class="text-sm font-medium text-slate-600">{{ 'FIELDS.PRENOM' | translate }}</label>
+            <input formControlName="prenom" type="text"
+              class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" />
+          </div>
+          <div>
+            <label class="text-sm font-medium text-slate-600">{{ 'FIELDS.PHONE' | translate }}</label>
+            <input formControlName="telephone" type="text"
+              class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" />
+          </div>
+          <div>
+            <label class="text-sm font-medium text-slate-600">{{ 'TRANSFER.PAYS' | translate }}</label>
+            <select formControlName="paysId"
+              class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm bg-white">
+              <option value="">{{ selectedCorridor ? getCountryName(selectedCorridor.paysDestinationId) : ('TRANSFER.SELECT_PAYS' | translate) }}</option>
+              @for (c of countries; track c.id) {
+                <option [value]="c.id">{{ c.nom }}</option>
+              }
+            </select>
+          </div>
+        </div>
+      </fieldset>
+    }
+
+    @if (currentStep === 4) {
+      <div>
+        <fieldset [formGroup]="montantForm">
+          <legend class="text-lg font-medium text-slate-700 mb-4">{{ 'TRANSFER.MONTANT_ET_FRAIS' | translate }}</legend>
+          @if (selectedCorridor) {
+            <div class="mb-4 text-sm text-slate-500 bg-slate-50 rounded-lg p-3">
+              {{ selectedCorridor.paysOrigineNom }} → {{ selectedCorridor.paysDestinationNom }}
+            </div>
+          }
+          <div class="grid grid-cols-1 gap-4 max-w-xs">
+            <div>
+              <label class="text-sm font-medium text-slate-600">{{ 'TRANSFER.MONTANT' | translate }}</label>
+              <div class="flex gap-2 mt-1">
+                <input formControlName="montantEnvoye" type="number" step="0.01" min="1"
+                  class="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-sm" />
+                <span class="self-center text-sm font-medium text-slate-500">{{ selectedCorridor?.deviseSourceCode }}</span>
+              </div>
+            </div>
+          </div>
+          <button type="button" (click)="calculerFrais()" [disabled]="montantForm.invalid || simulationLoading"
+            class="mt-4 bg-primary text-white text-sm font-medium py-2 px-6 rounded-lg hover:opacity-90 disabled:opacity-50">
+            @if (simulationLoading) {
+              {{ 'ACTIONS.LOADING' | translate }}
+            } @else {
+              {{ 'TRANSFER.CALCULER_FRAIS' | translate }}
+            }
+          </button>
+        </fieldset>
+
+        @if (simulation) {
+          <div class="mt-6 bg-slate-50 rounded-xl p-5 text-sm space-y-3">
+            <p class="font-semibold text-slate-700 mb-3">{{ 'TRANSFER.RECAP_TITLE' | translate }}</p>
+
+            <div class="flex justify-between">
+              <span class="text-slate-600">{{ 'TRANSFER.MONTANT_DEPART' | translate }}</span>
+              <span class="font-medium text-slate-800">{{ simulation.montantEnvoye | number:'1.2-2' }} {{ selectedCorridor?.deviseSourceCode }}</span>
+            </div>
+
+            <div class="border-t border-slate-200 pt-2">
+              <p class="text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">{{ 'TRANSFER.FEES' | translate }}</p>
+              <div class="flex justify-between pl-3">
+                <span class="text-slate-500">{{ 'TRANSFER.FEES_FIXED' | translate }}</span>
+                <span class="text-slate-700">{{ simulation.fraisFixe | number:'1.2-2' }} {{ selectedCorridor?.deviseSourceCode }}</span>
+              </div>
+              <div class="flex justify-between pl-3">
+                <span class="text-slate-500">{{ 'TRANSFER.FEES_PROPORTIONAL' | translate }}</span>
+                <span class="text-slate-700">{{ simulation.fraisVariable | number:'1.2-2' }} {{ selectedCorridor?.deviseSourceCode }}</span>
+              </div>
+              <div class="flex justify-between font-medium mt-1">
+                <span class="text-slate-700">{{ 'TRANSFER.TOTAL_FEES' | translate }}</span>
+                <span class="text-danger">{{ simulation.fraisTotal | number:'1.2-2' }} {{ selectedCorridor?.deviseSourceCode }}</span>
+              </div>
+            </div>
+
+            <div class="flex justify-between border-t border-slate-200 pt-2">
+              <span class="text-slate-600">{{ 'TRANSFER.NET' | translate }}</span>
+              <span class="font-semibold text-slate-800">{{ simulation.montantRecu | number:'1.2-2' }} {{ selectedCorridor?.deviseSourceCode }}</span>
+            </div>
+
+            <div class="border-t border-slate-200 pt-2">
+              <p class="text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">{{ 'TRANSFER.RATE' | translate }}</p>
+              <div class="flex justify-between pl-3">
+                <span class="text-slate-500">{{ 'TRANSFER.RATE_APPLIED' | translate }}</span>
+                <span class="text-slate-700">1 {{ selectedCorridor?.deviseSourceCode }} = {{ selectedCorridor?.tauxChange }} {{ selectedCorridor?.deviseDestinationCode }}</span>
+              </div>
+              <div class="flex justify-between pl-3">
+                <span class="text-slate-500">{{ 'TRANSFER.RATE_SOURCE' | translate }}</span>
+                <span class="text-slate-700">{{ 'TRANSFER.RATE_SOURCE_VALUE' | translate }}</span>
+              </div>
+            </div>
+
+            <div class="flex justify-between border-t border-slate-200 pt-2 text-base">
+              <span class="font-semibold text-slate-700">{{ 'TRANSFER.BENEFICIARY_RECEIVES' | translate }}</span>
+              <span class="font-bold text-primary">{{ simulation.montantRecu * (selectedCorridor?.tauxChange ?? 1) | number:'1.2-2' }} {{ selectedCorridor?.deviseDestinationCode }}</span>
+            </div>
+
+            @if (simulation.message) {
+              <p class="text-xs text-slate-400 italic mt-2">{{ simulation.message }}</p>
+            }
+          </div>
+
+          <button type="button" (click)="submit()" [disabled]="loading"
+            class="mt-6 bg-primary text-white text-sm font-medium py-2.5 px-8 rounded-lg hover:opacity-90 disabled:opacity-50 w-full">
+            @if (loading) {
+              {{ 'ACTIONS.LOADING' | translate }}
+            } @else {
+              {{ 'TRANSFER.CONFIRM' | translate }}
+            }
+          </button>
+        }
+      </div>
+    }
+
+    <div class="flex justify-between mt-6">
+      @if (currentStep > 1 && currentStep < 4) {
+        <button type="button" (click)="prevStep()"
+          class="border border-slate-200 text-slate-600 text-sm font-medium py-2 px-6 rounded-lg hover:bg-slate-50">
+          {{ 'ACTIONS.BACK' | translate }}
+        </button>
+      }
+      @if (currentStep === 1) {
+        <div class="ml-auto"></div>
+      }
+      @if (currentStep === 2) {
+        <button type="button" (click)="nextStep()" [disabled]="expediteurForm.invalid"
+          class="bg-primary text-white text-sm font-medium py-2 px-6 rounded-lg hover:opacity-90 disabled:opacity-50 ml-auto">
+          {{ 'ACTIONS.NEXT' | translate }}
+        </button>
+      }
+      @if (currentStep === 3) {
+        <button type="button" (click)="nextStep()" [disabled]="beneficiaireForm.invalid"
+          class="bg-primary text-white text-sm font-medium py-2 px-6 rounded-lg hover:opacity-90 disabled:opacity-50 ml-auto">
+          {{ 'ACTIONS.NEXT' | translate }}
+        </button>
+      }
+    </div>
+  }
+</div>
