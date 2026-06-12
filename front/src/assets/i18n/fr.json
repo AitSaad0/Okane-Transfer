@@ -220,8 +220,7 @@
     "ESCALATE_SENT": "Votre demande a été transmise à un conseiller.",
     "ERROR": "Une erreur est survenue. Veuillez réessayer.",
     "UNREAD_BADGE": "{{count}} non lu(s)"
-  }
-},
+  },
   "USERS": {
     "TITLE": "Gestion des utilisateurs",
     "SUBTITLE": "utilisateur au total",

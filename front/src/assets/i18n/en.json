@@ -78,7 +78,8 @@
       "FEATURE_3": "24/7 customer support",
       "FORGOT_TITLE": "Regain access to your account",
       "FORGOT_TEXT": "Don't worry, it happens to everyone. Enter your email and we'll send you a code to reset your password."
-    },
+    }
+  },
   "USERS": {
     "TITLE": "User Management",
     "SUBTITLE": "users total",
