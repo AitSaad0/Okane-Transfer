@@ -47,6 +47,29 @@ export const routes: Routes = [
               import('./pages/admin/reports/report.component').then((m) => m.ReportComponent),
             canActivate: [roleGuard],
             data: { roles: ['ADMIN', 'MANAGER'] },
+          },{
+            path: 'compliance/dashboard',
+            loadComponent: () =>
+              import('./pages/admin/compliance/compliance-dashboard/compliance-dashboard.component')
+                .then(m => m.ComplianceDashboardComponent),
+            canActivate: [roleGuard],
+            data: { roles: ['ADMIN'] }
+          },
+          {
+            path: 'compliance/sar',
+            loadComponent: () =>
+              import('./pages/admin/compliance/compliance-sar/compliance-sar.component')
+                .then(m => m.ComplianceSarComponent),
+            canActivate: [roleGuard],
+            data: { roles: ['ADMIN'] }
+          },
+          {
+            path: 'compliance/threshold',
+            loadComponent: () =>
+              import('./pages/admin/compliance/compliance-threshold/compliance-threshold.component')
+                .then(m => m.ComplianceThresholdsComponent),
+            canActivate: [roleGuard],
+            data: { roles: ['ADMIN'] }
           },
           // ── Users ────────────────────────────────────────────────────────
           {
