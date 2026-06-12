@@ -61,7 +61,9 @@
   },
   "ACTIONS": {
     "LOADING": "Loading...",
-    "BACK_TO_LOGIN": "Back to login"
+    "BACK_TO_LOGIN": "Back to login",
+    "NEXT": "Next",
+    "BACK": "← Back"
   },
   "AUTH": {
     "RIGHTS_RESERVED": "All rights reserved.",
