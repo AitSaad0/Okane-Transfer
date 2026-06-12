@@ -1,0 +1,146 @@
+.dashboard-container {
+  padding: 24px;
+  background: #f5f7fa;
+  min-height: 100vh;
+}
+
+.dashboard-title {
+  margin-bottom: 24px;
+  color: #1f2937;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+/* Nav Tabs */
+.nav-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0;
+}
+
+.nav-tab {
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #6b7280;
+  font-weight: 500;
+  font-size: 14px;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s ease;
+}
+
+.nav-tab:hover {
+  color: #3b82f6;
+}
+
+.active-tab {
+  color: #3b82f6;
+  border-bottom-color: #3b82f6;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border-left: 5px solid #3b82f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.stat-card.warning { border-left-color: #f59e0b; }
+.stat-card.danger  { border-left-color: #ef4444; }
+.stat-card.success { border-left-color: #10b981; }
+
+.label {
+  font-size: 14px;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.card-link {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.card-link:hover {
+  text-decoration: underline;
+}
+
+/* Quick Actions */
+.quick-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 12px 24px;
+  background: #3b82f6;
+  color: #fff;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.action-btn:hover {
+  background: #2563eb;
+}
+
+.action-btn.secondary {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.action-btn.secondary:hover {
+  background: #e5e7eb;
+}
+
+/* States */
+.loading {
+  padding: 24px;
+  color: #6b7280;
+}
+
+.error {
+  padding: 24px;
+  color: #ef4444;
+}
+
+@media (max-width: 768px) {
+  .dashboard-container { padding: 16px; }
+  .value { font-size: 24px; }
+  .nav-tabs { overflow-x: auto; }
+  .quick-actions { flex-direction: column; }
+  .action-btn { text-align: center; }
+}

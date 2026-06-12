@@ -1,0 +1,56 @@
+<div *ngIf="loading" class="loading">Loading...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<div *ngIf="dashboard && !loading" class="dashboard-container">
+  <h2 class="dashboard-title">Compliance Dashboard</h2>
+
+  <nav class="nav-tabs">
+    <a routerLink="/admin/compliance/dashboard" routerLinkActive="active-tab" class="nav-tab">
+      Dashboard
+    </a>
+    <a routerLink="/admin/compliance/sar" routerLinkActive="active-tab" class="nav-tab">
+      SAR Reports
+    </a>
+    <a routerLink="/admin/compliance/threshold" routerLinkActive="active-tab" class="nav-tab">
+      Thresholds
+    </a>
+  </nav>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="label">Total Transfers</span>
+      <span class="value">{{ dashboard.totalTransfers }}</span>
+    </div>
+
+    <div class="stat-card warning">
+      <span class="label">Suspicious Transfers</span>
+      <span class="value">{{ dashboard.suspiciousTransfers }}</span>
+    </div>
+
+    <div class="stat-card">
+      <span class="label">Total SAR Reports</span>
+      <span class="value">{{ dashboard.totalSarReports }}</span>
+      <a routerLink="/admin/compliance/sar" class="card-link">View Reports →</a>
+    </div>
+
+    <div class="stat-card danger">
+      <span class="label">Open SAR Reports</span>
+      <span class="value">{{ dashboard.openSarReports }}</span>
+      <a routerLink="/admin/compliance/sar" class="card-link">View Open →</a>
+    </div>
+
+    <div class="stat-card success">
+      <span class="label">Suspicious Rate</span>
+      <span class="value">{{ dashboard.suspiciousRate | number:'1.2-2' }}%</span>
+    </div>
+  </div>
+
+  <div class="quick-actions">
+    <a routerLink="/admin/compliance/sar" class="action-btn">
+      Manage SAR Reports
+    </a>
+    <a routerLink="/admin/compliance/threshold" class="action-btn secondary">
+      Update AML Thresholds
+    </a>
+  </div>
+</div>

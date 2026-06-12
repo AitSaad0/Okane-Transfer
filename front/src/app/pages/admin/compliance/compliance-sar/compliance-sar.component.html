@@ -1,0 +1,52 @@
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<div *ngIf="!loading && !selectedSar">
+  <h2>SAR Reports</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Reference</th>
+      <th>Reason</th>
+      <th>Transfer Amount</th>
+      <th>Threshold Amount</th>
+      <th>Status</th>
+      <th>Transfer Code</th>
+      <th>Created At</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let sar of sars">
+      <td>{{ sar.referenceCode }}</td>
+      <td>{{ sar.reason }}</td>
+      <td>{{ sar.transferAmount | number:'1.2-2' }}</td>
+      <td>{{ sar.thresholdAmount | number:'1.2-2' }}</td>
+      <td>{{ sar.status }}</td>
+      <td>{{ sar.transferCode }}</td>
+      <td>{{ sar.createdAt | date:'medium' }}</td>
+      <td>
+        <button (click)="viewSar(sar.id)">View</button>
+      </td>
+    </tr>
+    <tr *ngIf="sars.length === 0">
+      <td colspan="8">No SAR reports found.</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="!loading && selectedSar">
+  <button (click)="backToList()">← Back to List</button>
+  <h2>SAR Detail — {{ selectedSar.referenceCode }}</h2>
+  <dl>
+    <dt>ID</dt><dd>{{ selectedSar.id }}</dd>
+    <dt>Reference Code</dt><dd>{{ selectedSar.referenceCode }}</dd>
+    <dt>Reason</dt><dd>{{ selectedSar.reason }}</dd>
+    <dt>Transfer Amount</dt><dd>{{ selectedSar.transferAmount | number:'1.2-2' }}</dd>
+    <dt>Threshold Amount</dt><dd>{{ selectedSar.thresholdAmount | number:'1.2-2' }}</dd>
+    <dt>Status</dt><dd>{{ selectedSar.status }}</dd>
+    <dt>Transfer Code</dt><dd>{{ selectedSar.transferCode }}</dd>
+    <dt>Created At</dt><dd>{{ selectedSar.createdAt | date:'long' }}</dd>
+  </dl>
+</div>
