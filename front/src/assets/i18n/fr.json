@@ -62,5 +62,22 @@
   "ACTIONS": {
     "LOADING": "Chargement...",
     "BACK_TO_LOGIN": "Retour à la connexion"
+  },
+  "AUTH": {
+    "RIGHTS_RESERVED": "Tous droits réservés.",
+    "SIDE": {
+      "LOGIN_TITLE": "Envoyez de l'argent partout dans le monde, en toute simplicité",
+      "LOGIN_TEXT": "Des transferts rapides, sécurisés et transparents. Rejoignez des milliers d'utilisateurs qui font confiance à OkaneTransfer chaque jour.",
+      "USERS": "Utilisateurs",
+      "COUNTRIES": "Pays",
+      "UPTIME": "Disponibilité",
+      "REGISTER_TITLE": "Rejoignez la communauté OkaneTransfer",
+      "REGISTER_TEXT": "Créez votre compte gratuitement et profitez de transferts rapides avec des frais réduits.",
+      "FEATURE_1": "Inscription gratuite et rapide",
+      "FEATURE_2": "Frais de transfert réduits",
+      "FEATURE_3": "Support client disponible 24/7",
+      "FORGOT_TITLE": "Récupérez l'accès à votre compte",
+      "FORGOT_TEXT": "Pas de souci, ça arrive à tout le monde. Entrez votre email et nous vous enverrons un code pour réinitialiser votre mot de passe."
+    }
   }
 }

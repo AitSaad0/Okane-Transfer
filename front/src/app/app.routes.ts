@@ -12,9 +12,9 @@ export const routes: Routes = [
         .then(m => m.AuthLayoutComponent),
     children: [
       { path: '',          redirectTo: 'login', pathMatch: 'full' },
-      { path: 'login',     loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent) },
-      { path: 'register',  loadComponent: () => import('./pages/register/register.component').then(m => m.RegisterComponent) },
-      { path: 'forgot-password', loadComponent: () => import('./pages/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent) },
+      { path: 'login',     data: { illustration: 'login' }, loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent) },
+      { path: 'register',  data: { illustration: 'register' }, loadComponent: () => import('./pages/register/register.component').then(m => m.RegisterComponent) },
+      { path: 'forgot-password', data: { illustration: 'forgot' }, loadComponent: () => import('./pages/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent) },
       { path: 'reset-password',  loadComponent: () => import('./pages/reset-password/reset-password.component').then(m => m.ResetPasswordComponent) },
       { path: '2fa/verify', loadComponent: () => import('./pages/two-fa-verify/two-fa-verify.component').then(m => m.TwoFaVerifyComponent) },
     ]
