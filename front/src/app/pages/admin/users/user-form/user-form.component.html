@@ -1,0 +1,105 @@
+<div class="page-wrapper">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="flex items-center gap-3">
+      <button (click)="onCancel()" class="back-btn">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <div>
+        <h1 class="page-title">{{ title }}</h1>
+        <p class="page-subtitle">Remplissez les informations du compte</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="alert-error">{{ error }}</div>
+
+  <!-- Loading skeleton -->
+  <div *ngIf="loading" class="form-card flex items-center justify-center py-16">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Form -->
+  <form *ngIf="!loading" [formGroup]="form" (ngSubmit)="onSubmit()" class="form-card">
+
+    <!-- Section : Identité -->
+    <div class="section-title">Identité</div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+      <!-- Prénom -->
+      <div class="field">
+        <label class="label">Prénom <span class="text-rose-500">*</span></label>
+        <input formControlName="prenom" type="text" placeholder="ex : Karim"
+               [ngClass]="{'input-error': hasError('prenom')}" class="input"/>
+        <span *ngIf="hasError('prenom')" class="error-msg">Le prénom est obligatoire.</span>
+      </div>
+      <!-- Nom -->
+      <div class="field">
+        <label class="label">Nom <span class="text-rose-500">*</span></label>
+        <input formControlName="nom" type="text" placeholder="ex : Benali"
+               [ngClass]="{'input-error': hasError('nom')}" class="input"/>
+        <span *ngIf="hasError('nom')" class="error-msg">Le nom est obligatoire.</span>
+      </div>
+      <!-- Email -->
+      <div class="field">
+        <label class="label">Email <span class="text-rose-500">*</span></label>
+        <input formControlName="email" type="email" placeholder="ex : karim@okane.ma"
+               [ngClass]="{'input-error': hasError('email')}" class="input"
+               [attr.readonly]="isEdit ? true : null"/>
+        <span *ngIf="hasError('email')" class="error-msg">Email invalide.</span>
+      </div>
+      <!-- Téléphone -->
+      <div class="field">
+        <label class="label">Téléphone</label>
+        <input formControlName="telephone" type="tel" placeholder="ex : +212600000000" class="input"/>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Section : Accès -->
+    <div class="section-title">Accès & rôle</div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+      <!-- Rôle -->
+      <div class="field">
+        <label class="label">Rôle <span class="text-rose-500">*</span></label>
+        <select formControlName="role" class="input" [attr.disabled]="isEdit ? true : null">
+          <option *ngFor="let r of roles" [value]="r.value">{{ r.label }}</option>
+        </select>
+      </div>
+      <!-- Agence (conditionnel) -->
+      <div class="field" *ngIf="showAgence">
+        <label class="label">Agence <span class="text-rose-500">*</span></label>
+        <select formControlName="agenceId" [ngClass]="{'input-error': hasError('agenceId')}" class="input">
+          <option [value]="null">— Sélectionner une agence —</option>
+          <option *ngFor="let a of agences" [value]="a.id">{{ a.nom }} — {{ a.ville }}</option>
+        </select>
+        <span *ngIf="hasError('agenceId')" class="error-msg">L'agence est obligatoire pour ce rôle.</span>
+      </div>
+      <!-- Mot de passe (création uniquement) -->
+      <div class="field" *ngIf="!isEdit">
+        <label class="label">Mot de passe <span class="text-rose-500">*</span></label>
+        <input formControlName="password" type="password" placeholder="Min. 8 caractères"
+               [ngClass]="{'input-error': hasError('password')}" class="input"/>
+        <span *ngIf="hasError('password')" class="error-msg">
+          {{ form.get('password')?.errors?.['required'] ? 'Le mot de passe est obligatoire.' : 'Min. 8 caractères.' }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+      <button type="button" (click)="onCancel()" class="btn-secondary">Annuler</button>
+      <button type="submit" [disabled]="saving" class="btn-primary">
+        <svg *ngIf="saving" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+        </svg>
+        {{ saving ? 'Enregistrement…' : (isEdit ? 'Enregistrer les modifications' : 'Créer le compte') }}
+      </button>
+    </div>
+  </form>
+</div>

@@ -62,5 +62,105 @@
   "ACTIONS": {
     "LOADING": "Chargement...",
     "BACK_TO_LOGIN": "Retour à la connexion"
+  },
+  "USERS": {
+    "TITLE": "Gestion des utilisateurs",
+    "SUBTITLE": "utilisateur au total",
+    "CREATE": "Créer un utilisateur",
+    "SEARCH": "Rechercher par nom, email…",
+    "ALL_ROLES": "Tous les rôles",
+    "ALL_STATUSES": "Tous les statuts",
+    "NO_USERS": "Aucun utilisateur trouvé",
+    "NO_USERS_SUB": "Modifiez vos filtres ou créez un nouvel utilisateur.",
+    "LOADING": "Chargement…",
+    "COLS": {
+      "USER": "Utilisateur",
+      "ROLE": "Rôle",
+      "AGENCY": "Agence",
+      "STATUS": "Statut",
+      "ACTIONS": "Actions"
+    },
+    "ROLES": {
+      "ROLE_ADMIN": "Admin",
+      "ROLE_MANAGER": "Manager",
+      "ROLE_AGENT": "Agent",
+      "ROLE_CLIENT": "Client"
+    },
+    "STATUS": {
+      "ACTIVE": "Actif",
+      "SUSPENDED": "Suspendu"
+    },
+    "ACTIONS": {
+      "VIEW": "Voir le détail",
+      "EDIT": "Modifier",
+      "SUSPEND": "Suspendre",
+      "ACTIVATE": "Activer",
+      "DELETE": "Supprimer (RGPD)"
+    },
+    "DIALOG": {
+      "SUSPEND_TITLE": "Suspendre le compte",
+      "SUSPEND_MSG": "Le compte sera suspendu. L'utilisateur ne pourra plus se connecter.",
+      "ACTIVATE_TITLE": "Activer le compte",
+      "ACTIVATE_MSG": "Le compte sera réactivé. L'utilisateur pourra se reconnecter.",
+      "DELETE_TITLE": "Supprimer le compte (RGPD)",
+      "DELETE_MSG": "Les données personnelles seront pseudonymisées et le compte définitivement désactivé. Cette action est irréversible.",
+      "DELETE_CONFIRM": "Supprimer définitivement",
+      "CANCEL": "Annuler",
+      "CONFIRM": "Confirmer"
+    },
+    "FORM": {
+      "CREATE_TITLE": "Créer un utilisateur",
+      "EDIT_TITLE": "Modifier l'utilisateur",
+      "SUBTITLE": "Remplissez les informations du compte",
+      "IDENTITY": "Identité",
+      "ACCESS": "Accès & rôle",
+      "FIRSTNAME": "Prénom",
+      "FIRSTNAME_PH": "ex : Karim",
+      "LASTNAME": "Nom",
+      "LASTNAME_PH": "ex : Benali",
+      "EMAIL": "Email",
+      "EMAIL_PH": "ex : karim@okane.ma",
+      "PHONE": "Téléphone",
+      "PHONE_PH": "ex : +212600000000",
+      "ROLE": "Rôle",
+      "AGENCY": "Agence",
+      "AGENCY_PH": "— Sélectionner une agence —",
+      "PASSWORD": "Mot de passe",
+      "PASSWORD_PH": "Min. 8 caractères",
+      "SAVE": "Enregistrer les modifications",
+      "SAVING": "Enregistrement…",
+      "CREATE_BTN": "Créer le compte",
+      "CANCEL": "Annuler",
+      "ERR_REQUIRED_FIRSTNAME": "Le prénom est obligatoire.",
+      "ERR_REQUIRED_LASTNAME": "Le nom est obligatoire.",
+      "ERR_INVALID_EMAIL": "Email invalide.",
+      "ERR_REQUIRED_AGENCY": "L'agence est obligatoire pour ce rôle.",
+      "ERR_REQUIRED_PASSWORD": "Le mot de passe est obligatoire.",
+      "ERR_MIN_PASSWORD": "Min. 8 caractères."
+    }
+  },
+  "USER_DETAIL": {
+    "TITLE": "Détail utilisateur",
+    "SUBTITLE": "Informations complètes du compte",
+    "TAB_PROFILE": "Profil",
+    "TAB_ACTIVITY": "Activité",
+    "FIRSTNAME": "Prénom",
+    "LASTNAME": "Nom",
+    "EMAIL": "Email",
+    "PHONE": "Téléphone",
+    "ROLE": "Rôle",
+    "STATUS": "Statut du compte",
+    "AGENCY": "Agence",
+    "ID": "ID interne",
+    "NO_ACTIVITY": "Aucune activité enregistrée.",
+    "EDIT": "Modifier",
+    "SUSPEND": "Suspendre",
+    "ACTIVATE": "Activer",
+    "DELETE_RGPD": "Supprimer (RGPD)"
+  },
+  "COMMON": {
+    "EMPTY": "—"
   }
+
 }
+
