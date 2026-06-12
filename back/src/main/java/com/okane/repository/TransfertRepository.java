@@ -37,6 +37,27 @@ public interface TransfertRepository extends JpaRepository<Transfert, Long> {
     @Query("SELECT t FROM Transfert t JOIN FETCH t.beneficiaire b JOIN FETCH t.expediteur WHERE b.telephone = :telephone")
     List<Transfert> findByBeneficiaireTelephone(@Param("telephone") String telephone);
 
+    @Query("SELECT t FROM Transfert t JOIN FETCH t.expediteur e JOIN FETCH t.corridor JOIN FETCH t.beneficiaire WHERE e.telephone = :telephone AND t.expediteur.id = :clientId")
+    List<Transfert> findByExpediteurTelephoneAndClientId(@Param("telephone") String telephone, @Param("clientId") Long clientId);
+
+    @Query("SELECT t FROM Transfert t JOIN FETCH t.beneficiaire b JOIN FETCH t.corridor WHERE b.telephone = :telephone AND t.expediteur.id = :clientId")
+    List<Transfert> findByBeneficiaireTelephoneAndClientId(@Param("telephone") String telephone, @Param("clientId") Long clientId);
+
+    @Query("SELECT t FROM Transfert t JOIN FETCH t.expediteur e JOIN FETCH t.corridor JOIN FETCH t.beneficiaire WHERE e.numPieceIdentite = :cin AND t.expediteur.id = :clientId")
+    List<Transfert> findByExpediteurCINAndClientId(@Param("cin") String cin, @Param("clientId") Long clientId);
+
+    @Query("SELECT t FROM Transfert t JOIN FETCH t.beneficiaire b JOIN FETCH t.corridor WHERE b.numPieceIdentite = :cin AND t.expediteur.id = :clientId")
+    List<Transfert> findByBeneficiaireCINAndClientId(@Param("cin") String cin, @Param("clientId") Long clientId);
+
+    @Query("SELECT t FROM Transfert t JOIN FETCH t.expediteur e JOIN FETCH t.corridor JOIN FETCH t.beneficiaire WHERE t.expediteur.id = :clientId ORDER BY t.dateCreation DESC")
+    List<Transfert> findByExpediteurIdOrderByDateCreationDesc(@Param("clientId") Long clientId);
+
+    @Query("SELECT t FROM Transfert t JOIN FETCH t.expediteur e JOIN FETCH t.corridor JOIN FETCH t.beneficiaire WHERE t.codeRetrait = :code AND (t.expediteur.id = :clientId OR t.beneficiaire.id = :clientId)")
+    Optional<Transfert> findByCodeRetraitAndClientId(@Param("code") String code, @Param("clientId") Long clientId);
+
+    @Query("SELECT t FROM Transfert t JOIN FETCH t.expediteur e JOIN FETCH t.corridor JOIN FETCH t.beneficiaire WHERE t.beneficiaire.id = :clientId ORDER BY t.dateCreation DESC")
+    List<Transfert> findByBeneficiaireIdOrderByDateCreationDesc(@Param("clientId") Long clientId);
+
     // save()  → inherited from JpaRepository
     // count() → inherited from JpaRepository
 }
