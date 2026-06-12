@@ -1,0 +1,40 @@
+<div class="alerts-container">
+  <div class="alerts-header">
+    <span class="alerts-title">Alertes KYC actives</span>
+    <span class="alerts-count" *ngIf="!loading">{{ alerts.length }} alerte(s)</span>
+  </div>
+
+  <div *ngIf="loading" class="state-msg">Chargement...</div>
+  <div *ngIf="error" class="state-msg error">{{ error }}</div>
+
+  <div *ngIf="!loading && !error && alerts.length === 0" class="state-msg">
+    Aucune alerte active.
+  </div>
+
+  <div *ngIf="!loading && alerts.length > 0" class="table-wrapper">
+    <table class="alerts-table">
+      <thead>
+      <tr>
+        <th>Type</th>
+        <th>Message</th>
+        <th>Sévérité</th>
+        <th>Date</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let alert of alerts" [class]="'row-' + alert.severity?.toLowerCase()">
+        <td class="type-cell">
+          <span class="type-icon">{{ getTypeIcon(alert.type) }}</span>
+          <span class="type-label">{{ alert.type }}</span>
+        </td>
+        <td class="message-cell">{{ alert.message }}</td>
+        <td>
+            <span [class]="'badge ' + getSeverityClass(alert.severity)">
+              {{ alert.severity }}
+            </span>
+        </td>
+        <td class="date-cell">{{ parseTimestamp(alert.timestamp) | date: 'dd/MM/yyyy HH:mm' }}</td>      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

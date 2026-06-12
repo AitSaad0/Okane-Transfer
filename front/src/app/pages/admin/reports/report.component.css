@@ -1,0 +1,39 @@
+.report-container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.report-container h2 {
+  margin-bottom: 20px;
+}
+
+.report-container select,
+.report-container input {
+  display: block;
+  margin: 10px 0;
+  padding: 8px;
+  width: 250px;
+}
+
+.report-container button {
+  margin: 10px 5px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.report-container table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.report-container th,
+.report-container td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.report-container th {
+  background: #f4f4f4;
+}

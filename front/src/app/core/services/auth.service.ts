@@ -56,7 +56,7 @@ export class AuthService {
       case 'ADMIN':   this.router.navigate(['/admin']);            break;
       case 'MANAGER': this.router.navigate(['/manager']);          break;
       case 'AGENT':   this.router.navigate(['/agent']);            break;
-      case 'CLIENT':  this.router.navigate(['/client/dashboard']); break;
+      case 'CLIENT':  this.router.navigate(['/client']); break;
       default:        this.router.navigate(['/unauthorized']);      break;
     }
   }
