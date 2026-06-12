@@ -1,0 +1,166 @@
+<div class="page-wrapper">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">{{ 'USERS.TITLE' | translate }}</h1>
+      <p class="page-subtitle">{{ totalElements }} {{ 'USERS.SUBTITLE' | translate }}</p>
+    </div>
+    <button (click)="goToCreate()" class="btn-primary">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+      </svg>
+      {{ 'USERS.CREATE' | translate }}
+    </button>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="alert-error">{{ error }}</div>
+
+  <!-- Filtres -->
+  <div class="filters-bar">
+    <div class="search-wrapper">
+      <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+      </svg>
+      <input [(ngModel)]="searchText" type="text"
+             [placeholder]="'USERS.SEARCH' | translate"
+             class="search-input"/>
+    </div>
+    <select [(ngModel)]="selectedRole" (ngModelChange)="onFilterChange()" class="filter-select">
+      <option *ngFor="let r of roles" [value]="r.value">{{ r.label }}</option>
+    </select>
+    <select [(ngModel)]="selectedStatus" (ngModelChange)="onFilterChange()" class="filter-select">
+      <option *ngFor="let s of statuses" [value]="s.value">{{ s.label }}</option>
+    </select>
+  </div>
+
+  <!-- Table -->
+  <div class="table-card">
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <span class="text-sm text-slate-400">{{ 'USERS.LOADING' | translate }}</span>
+    </div>
+
+    <!-- Empty -->
+    <div *ngIf="!loading && filteredUsers.length === 0" class="empty-state">
+      <svg class="empty-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+      </svg>
+      <p class="font-medium text-slate-700">{{ 'USERS.NO_USERS' | translate }}</p>
+      <p class="text-sm text-slate-400 mt-1">{{ 'USERS.NO_USERS_SUB' | translate }}</p>
+    </div>
+
+    <!-- Table -->
+    <table *ngIf="!loading && filteredUsers.length > 0" class="data-table">
+      <thead>
+      <tr>
+        <th>{{ 'USERS.COLS.USER' | translate }}</th>
+        <th>{{ 'USERS.COLS.ROLE' | translate }}</th>
+        <th>{{ 'USERS.COLS.AGENCY' | translate }}</th>
+        <th>{{ 'USERS.COLS.STATUS' | translate }}</th>
+        <th class="text-right">{{ 'USERS.COLS.ACTIONS' | translate }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of filteredUsers" class="table-row">
+        <td>
+          <div class="flex items-center gap-3">
+            <div class="avatar">{{ user.prenom[0] }}{{ user.nom[0] }}</div>
+            <div>
+              <p class="font-medium text-slate-800 text-sm">{{ user.prenom }} {{ user.nom }}</p>
+              <p class="text-xs text-slate-400">{{ user.email }}</p>
+              <p *ngIf="user.telephone" class="text-xs text-slate-400">{{ user.telephone }}</p>
+            </div>
+          </div>
+        </td>
+        <td><app-status-badge [status]="user.role"></app-status-badge></td>
+        <td>
+          <span *ngIf="user.agenceNom" class="text-sm text-slate-600">{{ user.agenceNom }}</span>
+          <span *ngIf="!user.agenceNom" class="text-sm text-slate-300">—</span>
+        </td>
+        <td><app-status-badge [status]="user.active.toString()"></app-status-badge></td>
+        <td>
+          <div class="flex items-center justify-end gap-1">
+            <button (click)="goToDetail(user.id)"
+                    [title]="'USERS.ACTIONS.VIEW' | translate" class="action-btn">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0zM2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+              </svg>
+            </button>
+            <button (click)="goToEdit(user.id)"
+                    [title]="'USERS.ACTIONS.EDIT' | translate" class="action-btn">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+              </svg>
+            </button>
+            <button (click)="openStatusDialog(user)"
+                    [title]="(user.active ? 'USERS.ACTIONS.SUSPEND' : 'USERS.ACTIONS.ACTIVATE') | translate"
+                    [ngClass]="user.active ? 'action-btn-warning' : 'action-btn-success'">
+              <svg *ngIf="user.active" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
+              </svg>
+              <svg *ngIf="!user.active" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+            </button>
+            <button (click)="openDeleteDialog(user)"
+                    [title]="'USERS.ACTIONS.DELETE' | translate" class="action-btn-danger">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+              </svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div *ngIf="totalPages > 1" class="pagination">
+      <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 0" class="page-btn">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <button *ngFor="let p of pages" (click)="goToPage(p)"
+              [ngClass]="p === currentPage ? 'page-btn-active' : 'page-btn'">
+        {{ p + 1 }}
+      </button>
+      <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages - 1" class="page-btn">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Dialog : Suspendre / Activer -->
+<app-confirm-dialog
+  [visible]="showStatusDialog"
+  [title]="(userToToggle?.active ? 'USERS.DIALOG.SUSPEND_TITLE' : 'USERS.DIALOG.ACTIVATE_TITLE') | translate"
+  [message]="(userToToggle?.active ? 'USERS.DIALOG.SUSPEND_MSG' : 'USERS.DIALOG.ACTIVATE_MSG') | translate"
+  [confirmLabel]="(userToToggle?.active ? 'USERS.ACTIONS.SUSPEND' : 'USERS.ACTIONS.ACTIVATE') | translate"
+  [danger]="!!userToToggle?.active"
+  (confirmed)="confirmToggleStatus()"
+  (cancelled)="showStatusDialog = false">
+</app-confirm-dialog>
+
+<!-- Dialog : Suppression RGPD -->
+<app-confirm-dialog
+  [visible]="showDeleteDialog"
+  [title]="'USERS.DIALOG.DELETE_TITLE' | translate"
+  [message]="'USERS.DIALOG.DELETE_MSG' | translate"
+  [confirmLabel]="'USERS.DIALOG.DELETE_CONFIRM' | translate"
+  [danger]="true"
+  (confirmed)="confirmDelete()"
+  (cancelled)="showDeleteDialog = false">
+</app-confirm-dialog>
