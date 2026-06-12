@@ -1,0 +1,114 @@
+.page-wrapper {
+  @apply p-6 max-w-4xl mx-auto;
+}
+
+.page-header {
+  @apply flex items-start justify-between mb-6 flex-wrap gap-4;
+}
+
+.page-title {
+  @apply text-2xl font-semibold text-slate-800;
+}
+
+.page-subtitle {
+  @apply text-sm text-slate-500 mt-0.5;
+}
+
+.back-btn {
+  @apply p-2 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors;
+}
+
+.alert-error {
+  @apply mb-4 px-4 py-3 bg-rose-50 border border-rose-200 text-rose-700 text-sm rounded-lg;
+}
+
+/* Hero card */
+.hero-card {
+  @apply flex items-center gap-5 bg-white rounded-2xl border border-slate-100 shadow-sm p-6 mb-4;
+}
+
+.avatar-lg {
+  @apply w-16 h-16 rounded-2xl bg-indigo-100 text-indigo-700 text-xl font-bold
+  flex items-center justify-center flex-shrink-0 uppercase;
+}
+
+/* Tabs */
+.tabs-bar {
+  @apply flex gap-1 mb-4 bg-slate-100 rounded-xl p-1 w-fit;
+}
+
+.tab {
+  @apply px-4 py-1.5 text-sm font-medium text-slate-500 rounded-lg hover:text-slate-700 transition-colors;
+}
+
+.tab-active {
+  @apply px-4 py-1.5 text-sm font-medium text-slate-800 bg-white rounded-lg shadow-sm transition-colors;
+}
+
+/* Info card */
+.info-card {
+  @apply bg-white rounded-2xl border border-slate-100 shadow-sm p-6;
+}
+
+.info-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5;
+}
+
+.info-item {
+  @apply flex flex-col gap-1;
+}
+
+.info-label {
+  @apply text-xs font-medium text-slate-400 uppercase tracking-wide;
+}
+
+.info-value {
+  @apply text-sm font-medium text-slate-800;
+}
+
+/* Activity */
+.activity-list {
+  @apply flex flex-col gap-0;
+}
+
+.activity-item {
+  @apply flex items-start gap-4 py-4 border-b border-slate-50 last:border-0;
+}
+
+.activity-dot {
+  @apply w-2.5 h-2.5 rounded-full bg-indigo-400 mt-1.5 flex-shrink-0;
+}
+
+/* Empty state */
+.empty-state {
+  @apply flex flex-col items-center justify-center py-12 text-center;
+}
+
+.empty-icon {
+  @apply w-10 h-10 text-slate-300 mb-3;
+}
+
+/* Buttons */
+.btn-secondary {
+  @apply px-4 py-2 text-sm font-medium text-slate-600 bg-slate-100
+  hover:bg-slate-200 rounded-lg transition-colors;
+}
+
+.btn-warning {
+  @apply px-4 py-2 text-sm font-medium text-amber-700 bg-amber-50
+  hover:bg-amber-100 border border-amber-200 rounded-lg transition-colors;
+}
+
+.btn-success {
+  @apply px-4 py-2 text-sm font-medium text-emerald-700 bg-emerald-50
+  hover:bg-emerald-100 border border-emerald-200 rounded-lg transition-colors;
+}
+
+.btn-danger {
+  @apply px-4 py-2 text-sm font-medium text-rose-600 bg-rose-50
+  hover:bg-rose-100 border border-rose-200 rounded-lg transition-colors;
+}
+
+.spinner {
+  @apply w-8 h-8 border-4 border-indigo-100 border-t-indigo-500 rounded-full animate-spin;
+}
