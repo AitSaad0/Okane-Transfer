@@ -1,9 +1,9 @@
-<div *ngIf="loading">Loading...</div>
-<div *ngIf="error">{{ error }}</div>
+<div *ngIf="error()">{{ error() }}</div>
 
-<div *ngIf="!loading && !selectedSar">
+<div *ngIf="!selectedSar()">
   <h2>SAR Reports</h2>
-  <table>
+  <div *ngIf="loadingList()">Loading...</div>
+  <table *ngIf="!loadingList()">
     <thead>
     <tr>
       <th>Reference</th>
@@ -17,7 +17,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let sar of sars">
+    <tr *ngFor="let sar of sars()">
       <td>{{ sar.referenceCode }}</td>
       <td>{{ sar.reason }}</td>
       <td>{{ sar.transferAmount | number:'1.2-2' }}</td>
@@ -29,24 +29,27 @@
         <button (click)="viewSar(sar.id)">View</button>
       </td>
     </tr>
-    <tr *ngIf="sars.length === 0">
+    <tr *ngIf="sars().length === 0">
       <td colspan="8">No SAR reports found.</td>
     </tr>
     </tbody>
   </table>
 </div>
 
-<div *ngIf="!loading && selectedSar">
+<div *ngIf="selectedSar()">
   <button (click)="backToList()">← Back to List</button>
-  <h2>SAR Detail — {{ selectedSar.referenceCode }}</h2>
-  <dl>
-    <dt>ID</dt><dd>{{ selectedSar.id }}</dd>
-    <dt>Reference Code</dt><dd>{{ selectedSar.referenceCode }}</dd>
-    <dt>Reason</dt><dd>{{ selectedSar.reason }}</dd>
-    <dt>Transfer Amount</dt><dd>{{ selectedSar.transferAmount | number:'1.2-2' }}</dd>
-    <dt>Threshold Amount</dt><dd>{{ selectedSar.thresholdAmount | number:'1.2-2' }}</dd>
-    <dt>Status</dt><dd>{{ selectedSar.status }}</dd>
-    <dt>Transfer Code</dt><dd>{{ selectedSar.transferCode }}</dd>
-    <dt>Created At</dt><dd>{{ selectedSar.createdAt | date:'long' }}</dd>
-  </dl>
+  <div *ngIf="loadingDetail()">Loading detail...</div>
+  <ng-container *ngIf="!loadingDetail()">
+    <h2>SAR Detail — {{ selectedSar()!.referenceCode }}</h2>
+    <dl>
+      <dt>ID</dt><dd>{{ selectedSar()!.id }}</dd>
+      <dt>Reference Code</dt><dd>{{ selectedSar()!.referenceCode }}</dd>
+      <dt>Reason</dt><dd>{{ selectedSar()!.reason }}</dd>
+      <dt>Transfer Amount</dt><dd>{{ selectedSar()!.transferAmount | number:'1.2-2' }}</dd>
+      <dt>Threshold Amount</dt><dd>{{ selectedSar()!.thresholdAmount | number:'1.2-2' }}</dd>
+      <dt>Status</dt><dd>{{ selectedSar()!.status }}</dd>
+      <dt>Transfer Code</dt><dd>{{ selectedSar()!.transferCode }}</dd>
+      <dt>Created At</dt><dd>{{ selectedSar()!.createdAt | date:'long' }}</dd>
+    </dl>
+  </ng-container>
 </div>
