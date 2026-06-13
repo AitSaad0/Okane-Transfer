@@ -1,0 +1,73 @@
+<div class="preferences-container">
+
+  <h2>Notification Preferences</h2>
+
+  <div *ngIf="loading" class="loading">
+    Loading preferences...
+  </div>
+
+  <div *ngIf="!loading" class="preferences-card">
+
+    <div class="preference-item">
+      <div>
+        <h4>Email Notifications</h4>
+        <p>Receive notifications by email.</p>
+      </div>
+
+      <label class="switch">
+        <input
+          type="checkbox"
+          [(ngModel)]="preferences.emailActive"
+        />
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="preference-item">
+      <div>
+        <h4>SMS Notifications</h4>
+        <p>Receive notifications by SMS.</p>
+      </div>
+
+      <label class="switch">
+        <input
+          type="checkbox"
+          [(ngModel)]="preferences.smsActive"
+        />
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="preference-item">
+      <div>
+        <h4>Push Notifications</h4>
+        <p>Receive browser/mobile notifications.</p>
+      </div>
+
+      <label class="switch">
+        <input
+          type="checkbox"
+          [(ngModel)]="preferences.pushActive"
+        />
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <button
+      class="save-btn"
+      (click)="savePreferences()"
+      [disabled]="saving"
+    >
+      {{ saving ? 'Saving...' : 'Save Preferences' }}
+    </button>
+
+    <div *ngIf="successMessage" class="success">
+      {{ successMessage }}
+    </div>
+
+    <div *ngIf="errorMessage" class="error">
+      {{ errorMessage }}
+    </div>
+
+  </div>
+</div>
