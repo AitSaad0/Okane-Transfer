@@ -1,53 +1,60 @@
 package com.okane.controller;
 
-import com.okane.entity.User;
 import com.okane.dto.NotificationPreferenceDto;
-import com.okane.repository.UserRepository;
+import com.okane.dto.requestDto.BroadcastNotificationRequest;
+import com.okane.dto.responseDto.NotificationResponseDto;
+import com.okane.entity.User;
 import com.okane.service.NotificationService;
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
-@RequiredArgsConstructor
 public class NotificationController {
 
     private final NotificationService notificationService;
-    private final UserRepository userRepository;
+
+    public NotificationController(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
 
     @GetMapping("/notifications")
-    public ResponseEntity<?> getNotifications(HttpServletRequest request) {
-        User currentUser = getCurrentUser(request);
+    public ResponseEntity<List<NotificationResponseDto>> getNotifications(
+            @AuthenticationPrincipal User currentUser
+    ) {
         return ResponseEntity.ok(
                 notificationService.getUserNotifications(currentUser)
         );
     }
 
     @PatchMapping("/notifications/{id}/read")
-    public ResponseEntity<?> markAsRead(@PathVariable Long id) {
+    public ResponseEntity<Void> markAsRead(@PathVariable Long id) {
         notificationService.markAsRead(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/clients/notifications/prefs")
-    public ResponseEntity<?> updatePrefs(
-            HttpServletRequest request,
+    @PutMapping("/notifications/preferences")
+    public ResponseEntity<Void> updatePrefs(
+            @AuthenticationPrincipal User currentUser,
             @RequestBody NotificationPreferenceDto dto
     ) {
-        User user = getCurrentUser(request);
-        notificationService.updatePreferences(user, dto);
-        return ResponseEntity.ok().build();
+        notificationService.updatePreferences(currentUser, dto);
+        return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/notifications/preferences")
+    public ResponseEntity<NotificationPreferenceDto> getPreferences(
+            @AuthenticationPrincipal User currentUser
+    ) {
+        return ResponseEntity.ok(
+                NotificationPreferenceDto.builder()
+                        .emailActive(currentUser.getNotificationEmail())
+                        .smsActive(currentUser.getNotificationSms())
+                        .pushActive(currentUser.getNotificationPush())
+                        .build()
+        );
     }
 
-    //  replace with @AuthenticationPrincipal once Spring Security is configured
-    private User getCurrentUser(HttpServletRequest request) {
-        String email = request.getHeader("X-User-Email");
-        if (email == null) {
-            throw new RuntimeException("Missing X-User-Email header");
-        }
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found: " + email));
-    }
 }

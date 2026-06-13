@@ -33,6 +33,12 @@ export const routes: Routes = [
           import('./pages/profile-security/profile-security.component').then(
             (m) => m.ProfileSecurityComponent,
           ),
+      },{
+        path: 'notifications',
+        loadComponent: () =>
+          import('./pages/shared/notification/notifications.component').then(
+            (m) => m.NotificationsComponent,
+          ),
       },
 
       // ── Admin routes ──────────────────────────────────────────────────
@@ -164,7 +170,12 @@ export const routes: Routes = [
         path: 'client',
         canActivate: [roleGuard],
         data: { roles: ['CLIENT'] },
-        children: [],
+        children: [{
+          path: 'notifications/preferences',
+          loadComponent: () =>
+            import('./pages/client/notifications-preferences/notifications-preferences.component')
+              .then(m => m.NotificationPreferencesComponent)
+        }],
       },
     ],
   },

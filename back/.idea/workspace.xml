@@ -10,10 +10,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5d0b6b24-9853-4a25-9490-2799f2096f20" name="Changes" comment="added interface that shows all alerts">
-      <change afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/audit-logs/models/journal-audit.model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/audit-logs/service/audit-logs.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/app/pages/shared/notification/models/notification-preference.model.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/app/pages/shared/notification/models/notification.model.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/app/pages/shared/notification/services/notification.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/controller/NotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/controller/NotificationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/entity/enums/CanalNotification.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/entity/enums/CanalNotification.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/app.routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/shared/navbar/navbar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/shared/navbar/navbar.component.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +91,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "Tomcat Server.Tomcat 10.1.52.executor": "Run",
     "Tomcat Server.Tomcat 11.0.18.executor": "Run",
-    "git-widget-placeholder": "feature/watchlist-interface",
+    "git-widget-placeholder": "feature/audit-logs-interface",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/User/Desktop/Okane-Transfer-develop/Okane-Transfer/back",
     "node.js.detected.package.eslint": "true",
@@ -236,7 +240,7 @@
       <workItem from="1780654908121" duration="6083000" />
       <workItem from="1780737881493" duration="6979000" />
       <workItem from="1780758501012" duration="14662000" />
-      <workItem from="1781191852797" duration="28962000" />
+      <workItem from="1781191852797" duration="33682000" />
     </task>
     <task id="LOCAL-00001" summary="export issues fixed">
       <option name="closed" value="true" />
