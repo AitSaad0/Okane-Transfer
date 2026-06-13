@@ -30,6 +30,7 @@ export class SidebarComponent implements OnInit {
     { label: 'RATES',         icon: '📈', route: '/admin/exchange-rates',          roles: ['ADMIN'] },
     { label: 'FEES',          icon: '💰', route: '/admin/fee-grids',               roles: ['ADMIN'] },
     { label: 'COMPLIANCE',    icon: '🛡️', route: '/admin/compliance/dashboard',    roles: ['ADMIN'] },
+    { label: 'Watchlist',    icon: '🛡️', route: '/admin/kyc/watchlist',    roles: ['ADMIN'] },
     { label: 'AUDIT',         icon: '📋', route: '/admin/audit-logs',              roles: ['ADMIN'] },
     { label: 'MOBILE_MONEY',  icon: '📱', route: '/admin/mobile-money',            roles: ['ADMIN'] },
     { label: 'BROADCAST',     icon: '📣', route: '/admin/notifications/broadcast', roles: ['ADMIN'] },

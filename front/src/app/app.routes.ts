@@ -71,6 +71,14 @@ export const routes: Routes = [
             canActivate: [roleGuard],
             data: { roles: ['ADMIN'] }
           },
+          {
+            path: 'kyc/watchlist',
+            loadComponent: () =>
+              import('./pages/admin/kyc/watchlist/admin-watchlist.component')
+                .then(m => m.AdminWatchlistComponent),
+            canActivate: [roleGuard],
+            data: { roles: ['ADMIN'] }
+          },
           // ── Users ────────────────────────────────────────────────────────
           {
             path: 'users',
