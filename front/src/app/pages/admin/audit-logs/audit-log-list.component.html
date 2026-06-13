@@ -1,0 +1,73 @@
+<div class="audit-log-container">
+
+  <div class="audit-log-header">
+    <h2>Journaux d'audit</h2>
+    @if (isLoading()) {
+      <span class="spinner"></span>
+    }
+  </div>
+
+  @if (errorMessage()) {
+    <div class="error-banner">{{ errorMessage() }}</div>
+  }
+
+  <div class="table-wrapper">
+    <table class="audit-log-table">
+      <thead>
+      <tr>
+        <th (click)="sortBy('timestamp')">
+          Date / Heure {{ sortIcon('timestamp') }}
+        </th>
+        <th (click)="sortBy('action')">
+          Action {{ sortIcon('action') }}
+        </th>
+        <th (click)="sortBy('type')">
+          Type {{ sortIcon('type') }}
+        </th>
+        <th>Utilisateur</th>
+        <th>Adresse IP</th>
+        <th>Transfert</th>
+        <th>Détails</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (log of logs(); track log.id) {
+          <tr>
+            <td>{{ formatTimestamp(log.timestamp) | date:'dd/MM/yyyy HH:mm:ss' }}</td>            <td>{{ log.action }}</td>
+            <td><span [class]="getTypeClass(log.type)">{{ log.type }}</span></td>
+            <td>
+              <div class="user-cell">
+                <span class="user-name">{{ log.utilisateurNom }}</span>
+                <span class="user-email">{{ log.utilisateurEmail }}</span>
+              </div>
+            </td>
+            <td>{{ log.ipAddress || '—' }}</td>
+            <td>
+              @if (log.transfertId) {
+                <span>#{{ log.transfertId }}</span>
+              } @else {
+                <span class="muted">—</span>
+              }
+            </td>
+            <td class="details-cell" [title]="log.details">{{ log.details || '—' }}</td>
+          </tr>
+        } @empty {
+          @if (!isLoading()) {
+            <tr>
+              <td colspan="7" class="no-data-cell">Aucun journal d'audit trouvé.</td>
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
+    <button (click)="previousPage()" [disabled]="pageIndex === 0">← Précédent</button>
+    <span class="page-info">
+      Page {{ pageIndex + 1 }} / {{ totalPages() }} ({{ totalElements() }} entrées)
+    </span>
+    <button (click)="nextPage()" [disabled]="pageIndex + 1 >= totalPages()">Suivant →</button>
+  </div>
+
+</div>
