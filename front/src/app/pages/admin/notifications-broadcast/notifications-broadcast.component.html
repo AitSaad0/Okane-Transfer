@@ -1,0 +1,72 @@
+<div class="broadcast-container">
+  <h2>Diffuser une notification</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="broadcast-form">
+
+    <div class="form-group">
+      <label for="type">Type</label>
+      <select id="type" formControlName="type">
+        <option value="" disabled selected>Sélectionner un type</option>
+        <option *ngFor="let t of typeOptions" [value]="t">{{ t }}</option>
+      </select>
+      <div class="error" *ngIf="form.get('type')?.touched && form.get('type')?.invalid">
+        Le type est requis.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="canal">Canal</label>
+      <select id="canal" formControlName="canal">
+        <option value="" disabled selected>Sélectionner un canal</option>
+        <option *ngFor="let c of canalOptions" [value]="c">{{ c }}</option>
+      </select>
+      <div class="error" *ngIf="form.get('canal')?.touched && form.get('canal')?.invalid">
+        Le canal est requis.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="contenu">Contenu</label>
+      <textarea id="contenu" formControlName="contenu" rows="4" maxlength="1000"></textarea>
+      <div class="error" *ngIf="form.get('contenu')?.touched && form.get('contenu')?.invalid">
+        Le contenu est requis (max 1000 caractères).
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="loading">
+      {{ loading ? 'Envoi en cours...' : 'Diffuser' }}
+    </button>
+
+    <div class="success" *ngIf="successMessage">{{ successMessage }}</div>
+    <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+  </form>
+
+  <hr />
+
+  <h2>Historique des diffusions</h2>
+
+  <div *ngIf="loadingHistory">Chargement de l'historique...</div>
+
+  <table class="history-table" *ngIf="!loadingHistory && history.length > 0">
+    <thead>
+    <tr>
+      <th>Date</th>
+      <th>Type</th>
+      <th>Canal</th>
+      <th>Contenu</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of history">
+      <td>{{ item.dateEnvoi | date:'dd/MM/yyyy HH:mm' }}</td>
+      <td>{{ item.type }}</td>
+      <td>{{ item.canal }}</td>
+      <td>{{ item.contenu }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loadingHistory && history.length === 0">
+    Aucune notification diffusée pour le moment.
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<!-- notifications.component.html -->
+<div class="notif-shell">
+
+  <header class="notif-header">
+    <div class="notif-title">
+      <h2>Notifications</h2>
+      <span class="badge" *ngIf="unreadCount > 0">{{ unreadCount }} non lues</span>
+    </div>
+
+    <!-- Type filter chips -->
+    <div class="filter-chips">
+      <button
+        *ngFor="let t of types"
+        class="chip"
+        [class.active]="selectedType === t"
+        (click)="onTypeChange(t)"
+      >
+        {{ typeLabels[t] }}
+      </button>
+    </div>
+  </header>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="state-msg">Chargement…</div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="state-msg error">{{ error }}</div>
+
+  <!-- Empty -->
+  <div *ngIf="!loading && !error && filtered.length === 0" class="state-msg muted">
+    Aucune notification
+  </div>
+
+  <!-- List -->
+  <ul class="notif-list" *ngIf="!loading && !error && filtered.length > 0">
+    <li
+      *ngFor="let n of filtered"
+      class="notif-item"
+      [class.unread]="!n.lu"
+      (click)="markRead(n)"
+    >
+      <span class="notif-icon">{{ typeIcon(n.type) }}</span>
+
+      <div class="notif-body">
+        <p class="notif-content">{{ n.contenu }}</p>
+        <div class="notif-meta">
+          <span class="notif-type">{{ typeLabels[n.type] }}</span>
+          <span class="notif-canal">· {{ n.canal }}</span>
+          <span class="notif-date">· {{ n.dateEnvoi | date:'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+      </div>
+
+      <span class="dot" *ngIf="!n.lu" title="Non lue"></span>
+    </li>
+  </ul>
+
+</div>

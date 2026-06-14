@@ -1,0 +1,391 @@
+/* ── Page layout ────────────────────────────────────────────── */
+.watchlist-page {
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.page-header .header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.page-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.page-title .icon {
+  margin-right: 0.4rem;
+}
+
+.entry-count {
+  background: #fee2e2;
+  color: #b91c1c;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────── */
+.btn {
+  padding: 0.5rem 1.1rem;
+  border-radius: 0.4rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn:not(:disabled):hover {
+  opacity: 0.85;
+}
+
+.btn.btn-danger {
+  background: #dc2626;
+  color: #fff;
+}
+
+.btn.btn-outline {
+  background: transparent;
+  border: 1.5px solid #d1d5db;
+  color: #374151;
+}
+
+/* ── Search ──────────────────────────────────────────────────── */
+.search-bar {
+  margin-bottom: 1.25rem;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 420px;
+  padding: 0.55rem 0.9rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 0.4rem;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #6366f1;
+}
+
+/* ── Table ───────────────────────────────────────────────────── */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.watchlist-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.watchlist-table th {
+  text-align: left;
+  padding: 0.65rem 1rem;
+  background: #f9fafb;
+  border-bottom: 2px solid #e5e7eb;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+}
+
+.watchlist-table td {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+}
+
+.watchlist-table tr:hover td {
+  background: #fef2f2;
+}
+
+.name-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.alert-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ef4444;
+  flex-shrink: 0;
+}
+
+.mono {
+  font-family: monospace;
+}
+
+.small {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.reason-cell {
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Badges ──────────────────────────────────────────────────── */
+.badge {
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge.badge-danger {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.badge.badge-warning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge.badge-info {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.badge.badge-secondary {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+/* ── Empty / loading ─────────────────────────────────────────── */
+.empty-state,
+.loading-state {
+  text-align: center;
+  padding: 3rem;
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
+/* ── Modal ───────────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-box {
+  background: #fff;
+  border-radius: 0.6rem;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.4rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.modal-header .close-btn {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.modal-header .close-btn:hover {
+  color: #111;
+}
+
+.modal-body {
+  padding: 1.4rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-footer {
+  padding: 1rem 1.4rem;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+/* ── Form ────────────────────────────────────────────────────── */
+.form-group {
+  margin-bottom: 1.1rem;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.35rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 0.4rem;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.form-control:focus {
+  border-color: #6366f1;
+}
+
+textarea.form-control {
+  resize: vertical;
+}
+
+.required {
+  color: #ef4444;
+}
+
+/* ── Client dropdown ─────────────────────────────────────────── */
+.client-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1.5px solid #d1d5db;
+  border-top: none;
+  border-radius: 0 0 0.4rem 0.4rem;
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.client-option {
+  padding: 0.65rem 0.9rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.client-option:hover {
+  background: #f9fafb;
+}
+
+.client-meta {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.searching-hint {
+  font-size: 0.78rem;
+  color: #9ca3af;
+  margin-top: 0.3rem;
+}
+
+/* ── Selected client chip ────────────────────────────────────── */
+.selected-client {
+  margin-bottom: 1.1rem;
+}
+
+.client-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fef2f2;
+  border: 1.5px solid #fca5a5;
+  border-radius: 0.4rem;
+  padding: 0.6rem 0.9rem;
+}
+
+.client-chip .chip-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: 0.85rem;
+}
+
+.client-chip .chip-info strong {
+  color: #b91c1c;
+}
+
+.client-chip .chip-info span {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.client-chip .chip-remove {
+  background: none;
+  border: none;
+  color: #b91c1c;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.client-chip .chip-remove:hover {
+  color: #7f1d1d;
+}
+
+/* ── Alerts ──────────────────────────────────────────────────── */
+.alert {
+  padding: 0.65rem 0.9rem;
+  border-radius: 0.4rem;
+  font-size: 0.85rem;
+  margin-top: 0.75rem;
+}
+
+.alert.alert-success {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.alert.alert-error {
+  background: #fee2e2;
+  color: #b91c1c;
+}

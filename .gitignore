@@ -1,43 +1,41 @@
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-.kotlin
+# Dependencies
+node_modules/
+front/node_modules/
 
-### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
-*.iws
-*.iml
-*.ipr
+# Build output
+front/dist/
+front/.angular/
 
-### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+# Environment
+front/.env
+back/.env
+*.env
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
+# IDE
+.idea/
 .vscode/
+*.iml
 
-### Mac OS ###
+# OS
 .DS_Store
+Thumbs.db
 
-.env
+# Java / Spring
+back/target/
+back/*.jar
+back/*.war
+*.class
 
-!.env.example
+# Logs
+*.log
+logs/
+
+# Documentation
+docs/
+docs/plans/PLAN_DEV.md
+docs/notes-projet-equipe.txt
+
+# Auxiliary files (local dev helpers, screenshots)
+widget_history.png
+start-frontend.bat
+start-frontend.ps1

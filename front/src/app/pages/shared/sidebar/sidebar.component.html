@@ -1,0 +1,29 @@
+@if (auth.isLoggedIn()) {
+  <aside class="sidebar" [class.sidebar--collapsed]="isCollapsed">
+    <button class="sidebar__toggle" (click)="toggleCollapse()">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <nav class="sidebar__nav">
+      @for (item of navItems; track item.route) {
+        <a [routerLink]="item.route" routerLinkActive="active" class="sidebar__item">
+          <i [className]="'sidebar__icon ' + item.icon"></i>
+          @if (!isCollapsed) {
+            <span class="sidebar__label">{{ item.label | translate }}</span>
+          }
+        </a>
+      }
+    </nav>
+    <div class="sidebar__footer">
+      @if (!isCollapsed) {
+        <button (click)="goHome()" class="sidebar__disconnect">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          {{ 'Disconnect' | translate }}
+        </button>
+      } @else {
+        <button (click)="goHome()" class="sidebar__disconnect sidebar__disconnect--icon">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </button>
+      }
+    </div>
+  </aside>
+}

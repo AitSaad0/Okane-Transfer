@@ -1,0 +1,12 @@
+<div class="layout">
+  <app-navbar></app-navbar>
+  <div class="layout__body">
+    <app-sidebar></app-sidebar>
+    <main class="layout__content">
+      <router-outlet />
+    </main>
+  </div>
+</div>
+@if (isClient) {
+  <app-chatbot-widget></app-chatbot-widget>
+}

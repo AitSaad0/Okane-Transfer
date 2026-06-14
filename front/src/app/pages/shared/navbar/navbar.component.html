@@ -1,0 +1,62 @@
+@if (auth.isLoggedIn()) {
+  <nav class="navbar">
+    <div class="navbar__brand">
+      <i class="fa-solid fa-arrow-right-arrow-left navbar__logo-icon"></i>
+      <span class="navbar__title">OkaneTransfer</span>
+    </div>
+    <div class="navbar__actions">
+
+      <div class="navbar__lang-wrapper">
+        <button class="lang-toggle" (click)="toggleLangDropdown()">
+          <i class="fa-solid fa-globe"></i>
+          <span>{{ currentLang.toUpperCase() }}</span>
+          <i class="fa-solid fa-chevron-down lang-chevron"></i>
+        </button>
+        @if (isLangDropdownOpen) {
+          <div class="lang-dropdown">
+            @for (lang of languages; track lang) {
+              <button
+                (click)="switchLang(lang)"
+                [class.active]="currentLang === lang"
+                class="lang-option">
+                <i class="fa-solid fa-check lang-check" [class.visible]="currentLang === lang"></i>
+                {{ lang.toUpperCase() }}
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      <a routerLink="/notifications" class="navbar__notif">
+        <i class="fa-regular fa-bell" style="font-size: 18px;"></i>
+        @if (unreadNotifications > 0) {
+          <span class="badge">{{ unreadNotifications }}</span>
+        }
+      </a>
+
+      <div class="navbar__user" (click)="toggleDropdown()">
+        <div class="avatar">{{ initials }}</div>
+        <span class="navbar__username">{{ fullName }}</span>
+        <i class="fa-solid fa-chevron-down" style="font-size: 11px;"></i>
+        @if (isDropdownOpen) {
+          <div class="dropdown">
+            <a routerLink="/profile/security" class="dropdown__item">
+              <i class="fa-regular fa-user"></i>
+              {{ 'NAV.PROFILE' | translate }}
+            </a>
+            <a routerLink="client/notifications/preferences" class="dropdown__item">
+              <i class="fa-regular fa-bell"></i>
+              {{ 'Notifications Preferences' | translate }}
+            </a>
+            <hr>
+            <button (click)="logout()" class="dropdown__item dropdown__item--danger">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              {{ 'NAV.LOGOUT' | translate }}
+            </button>
+          </div>
+        }
+      </div>
+
+    </div>
+  </nav>
+}

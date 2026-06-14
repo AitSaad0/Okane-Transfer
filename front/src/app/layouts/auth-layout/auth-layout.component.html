@@ -1,0 +1,128 @@
+<div class="min-h-screen flex bg-white">
+  <!-- Left panel - branding/illustration -->
+  <div class="hidden lg:flex lg:w-1/2 relative bg-gradient-to-br from-primary via-indigo-800 to-indigo-950 overflow-hidden">
+    <!-- Decorative shapes -->
+    <div class="absolute -top-24 -left-24 w-96 h-96 bg-white/5 rounded-full"></div>
+    <div class="absolute top-1/3 -right-32 w-80 h-80 bg-white/5 rounded-full"></div>
+    <div class="absolute bottom-0 left-1/4 w-64 h-64 bg-white/5 rounded-full"></div>
+
+    <div class="relative z-10 flex flex-col justify-between p-12 text-white w-full">
+      <div class="flex items-center gap-2">
+        <div class="w-9 h-9 rounded-lg bg-white/15 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+            <path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+          </svg>
+        </div>
+        <span class="text-lg font-semibold">OkaneTransfer</span>
+      </div>
+
+      @switch (illustration) {
+        @case ('login') {
+          <div class="space-y-6">
+            <h2 class="text-3xl font-bold leading-tight">{{ 'AUTH.SIDE.LOGIN_TITLE' | translate }}</h2>
+            <p class="text-white/70 text-sm leading-relaxed max-w-sm">{{ 'AUTH.SIDE.LOGIN_TEXT' | translate }}</p>
+            <div class="flex gap-8 pt-4">
+              <div>
+                <div class="text-2xl font-bold">50K+</div>
+                <div class="text-xs text-white/50">{{ 'AUTH.SIDE.USERS' | translate }}</div>
+              </div>
+              <div>
+                <div class="text-2xl font-bold">120+</div>
+                <div class="text-xs text-white/50">{{ 'AUTH.SIDE.COUNTRIES' | translate }}</div>
+              </div>
+              <div>
+                <div class="text-2xl font-bold">99.9%</div>
+                <div class="text-xs text-white/50">{{ 'AUTH.SIDE.UPTIME' | translate }}</div>
+              </div>
+            </div>
+          </div>
+        }
+        @case ('register') {
+          <div class="space-y-6">
+            <h2 class="text-3xl font-bold leading-tight">{{ 'AUTH.SIDE.REGISTER_TITLE' | translate }}</h2>
+            <p class="text-white/70 text-sm leading-relaxed max-w-sm">{{ 'AUTH.SIDE.REGISTER_TEXT' | translate }}</p>
+            <ul class="space-y-3 pt-2">
+              <li class="flex items-center gap-3 text-sm text-white/80">
+                <span class="w-6 h-6 rounded-full bg-white/15 flex items-center justify-center flex-shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                {{ 'AUTH.SIDE.FEATURE_1' | translate }}
+              </li>
+              <li class="flex items-center gap-3 text-sm text-white/80">
+                <span class="w-6 h-6 rounded-full bg-white/15 flex items-center justify-center flex-shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                {{ 'AUTH.SIDE.FEATURE_2' | translate }}
+              </li>
+              <li class="flex items-center gap-3 text-sm text-white/80">
+                <span class="w-6 h-6 rounded-full bg-white/15 flex items-center justify-center flex-shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                {{ 'AUTH.SIDE.FEATURE_3' | translate }}
+              </li>
+            </ul>
+          </div>
+        }
+        @case ('forgot') {
+          <div class="space-y-6">
+            <div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </div>
+            <h2 class="text-3xl font-bold leading-tight">{{ 'AUTH.SIDE.FORGOT_TITLE' | translate }}</h2>
+            <p class="text-white/70 text-sm leading-relaxed max-w-sm">{{ 'AUTH.SIDE.FORGOT_TEXT' | translate }}</p>
+          </div>
+        }
+      }
+
+      <div class="text-xs text-white/40">
+        © 2026 OkaneTransfer. {{ 'AUTH.RIGHTS_RESERVED' | translate }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Right panel - form -->
+  <div class="flex-1 flex flex-col bg-slate-50 relative">
+    <div id="lang-switcher" class="absolute top-4 right-4 z-50">
+      <button
+        (click)="toggle()"
+        class="flex items-center gap-2 px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-600 hover:border-primary hover:text-primary transition-colors shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+        <span class="uppercase font-medium">{{ currentLang }}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
+      @if (open) {
+        <div class="absolute right-0 mt-1 w-40 bg-white border border-slate-200 rounded-lg shadow-lg overflow-hidden z-50">
+          @for (lang of langs; track lang.code) {
+            <button
+              (click)="switchLang(lang.code)"
+              class="w-full flex items-center justify-between px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors"
+              [class.text-primary]="currentLang === lang.code"
+              [class.font-medium]="currentLang === lang.code">
+              <span>{{ lang.label }}</span>
+              @if (currentLang === lang.code) {
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              }
+            </button>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="flex-1 flex items-center justify-center p-6">
+      <router-outlet />
+    </div>
+  </div>
+</div>
