@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -16,7 +16,8 @@ interface ComplianceDashboardDto {
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './compliance-dashboard.component.html',
-  styleUrls: ['./compliance-dashboard.component.css']
+  styleUrls: ['./compliance-dashboard.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComplianceDashboardComponent implements OnInit {
   dashboard: ComplianceDashboardDto | null = null;
@@ -25,7 +26,10 @@ export class ComplianceDashboardComponent implements OnInit {
 
   private readonly apiUrl = '/api/v1/admin/compliance/dashboard';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.loadDashboard();
@@ -34,15 +38,18 @@ export class ComplianceDashboardComponent implements OnInit {
   loadDashboard(): void {
     this.loading = true;
     this.error = null;
+    this.cdr.markForCheck();
 
     this.http.get<ComplianceDashboardDto>(this.apiUrl).subscribe({
       next: (data) => {
         this.dashboard = data;
         this.loading = false;
+        this.cdr.markForCheck();
       },
       error: () => {
         this.error = 'Failed to load dashboard data.';
         this.loading = false;
+        this.cdr.markForCheck();
       }
     });
   }
