@@ -60,7 +60,7 @@ public class AppConfig {
         System.out.println(">>> PASSWORD = " + password);
 
         HikariDataSource ds = new HikariDataSource();
-        ds.setJdbcUrl(url != null ? url : "jdbc:mysql://localhost:3310/okane_db");
+        ds.setJdbcUrl(url != null ? url : "jdbc:mysql://localhost:3306/okane_db");
         ds.setUsername(username != null ? username : "root");
         ds.setPassword(password != null ? password : "");
         ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
