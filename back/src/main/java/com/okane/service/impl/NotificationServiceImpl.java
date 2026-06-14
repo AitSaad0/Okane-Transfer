@@ -1,6 +1,7 @@
 package com.okane.service.impl;
 
 
+import com.okane.dto.responseDto.BroadcastNotificationResponse;
 import com.okane.entity.Transfert;
 import com.okane.entity.Notification;
 import com.okane.dto.NotificationPreferenceDto;
@@ -174,6 +175,16 @@ public class NotificationServiceImpl
             }
         }
     }
+    @Override
+    public List<BroadcastNotificationResponse> getAllBroadcasts() {
+        List<TypeNotification> broadcastTypes = List.of(
+                TypeNotification.SYSTEME,
+                TypeNotification.MAINTENANCE,
+                TypeNotification.ALERTE
+        );
+        return notificationRepository.findAllBroadcasts(broadcastTypes);
+    }
+
 
     private NotificationResponseDto mapToDto(Notification n) {
 

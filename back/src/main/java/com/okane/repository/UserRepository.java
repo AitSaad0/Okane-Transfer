@@ -48,7 +48,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     // Pour gestion agents par agence
     List<User> findByAgenceIdAndRoleAndDeletedFalse(Long agenceId, Role role);
-
+    List<User> findByDeletedFalse();
 
     boolean existsByIdAndAgenceId(Long userId, Long agenceId);
 }
