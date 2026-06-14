@@ -78,12 +78,7 @@ export class BroadcastNotificationComponent implements OnInit {
 
     this.notificationService.getAllBroadcasts().subscribe({
       next: (data) => {
-
-        this.history = data.map((item: any) => ({
-          ...item,
-          dateEnvoi: this.convertDate(item.dateEnvoi)
-        }));
-
+        this.history = data;
         this.loadingHistory = false;
         this.cdr.markForCheck();
       },
@@ -92,40 +87,5 @@ export class BroadcastNotificationComponent implements OnInit {
         this.cdr.markForCheck();
       }
     });
-  }
-
-  private convertDate(value: any): Date | null {
-
-    if (!value) {
-      return null;
-    }
-
-    // LocalDateTime serialized as array
-    if (Array.isArray(value)) {
-      return new Date(
-        value[0],
-        value[1] - 1,
-        value[2],
-        value[3] || 0,
-        value[4] || 0,
-        value[5] || 0
-      );
-    }
-
-    // "2026,6,14,1,27,35"
-    if (typeof value === 'string' && value.includes(',')) {
-      const p = value.split(',').map(Number);
-
-      return new Date(
-        p[0],
-        p[1] - 1,
-        p[2],
-        p[3] || 0,
-        p[4] || 0,
-        p[5] || 0
-      );
-    }
-
-    return new Date(value);
   }
 }
