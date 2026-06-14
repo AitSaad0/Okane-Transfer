@@ -23,11 +23,11 @@ export class UserFormComponent implements OnInit {
   error = '';
   agences: AgenceResponseDto[] = [];
 
+  // CLIENT retiré — les clients s'inscrivent eux-mêmes via /register
   readonly roles: { value: UserRole; label: string }[] = [
-    { value: 'ADMIN', label: 'Administrateur' },
+    { value: 'ADMIN',   label: 'Administrateur' },
     { value: 'MANAGER', label: 'Manager' },
-    { value: 'AGENT', label: 'Agent' },
-    { value: 'CLIENT', label: 'Client' },
+    { value: 'AGENT',   label: 'Agent' },
   ];
 
   constructor(
@@ -56,7 +56,7 @@ export class UserFormComponent implements OnInit {
     // Surveiller le rôle pour afficher/masquer le select agence
     this.form.get('role')?.valueChanges.subscribe((role) => {
       const agenceCtrl = this.form.get('agenceId');
-      if (role === 'ROLE_AGENT' || role === 'ROLE_MANAGER') {
+      if (role === 'AGENT' || role === 'MANAGER') {
         agenceCtrl?.setValidators(Validators.required);
       } else {
         agenceCtrl?.clearValidators();
@@ -68,13 +68,13 @@ export class UserFormComponent implements OnInit {
 
   private buildForm(): void {
     this.form = this.fb.group({
-      prenom: ['', Validators.required],
-      nom: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      prenom:    ['', Validators.required],
+      nom:       ['', Validators.required],
+      email:     ['', [Validators.required, Validators.email]],
       telephone: [''],
-      role: ['ROLE_CLIENT', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      agenceId: [null],
+      role:      ['MANAGER', Validators.required],   // défaut MANAGER, plus ROLE_CLIENT
+      password:  ['', [Validators.required, Validators.minLength(8)]],
+      agenceId:  [null],
     });
   }
 
@@ -83,12 +83,12 @@ export class UserFormComponent implements OnInit {
     this.userService.getUserById(id).subscribe({
       next: (user) => {
         this.form.patchValue({
-          prenom: user.prenom,
-          nom: user.nom,
-          email: user.email,
+          prenom:    user.prenom,
+          nom:       user.nom,
+          email:     user.email,
           telephone: user.telephone ?? '',
-          role: user.role,
-          agenceId: user.agenceId,
+          role:      user.role,
+          agenceId:  user.agenceId,
         });
         this.loading = false;
         this.cdr.detectChanges();
@@ -111,7 +111,7 @@ export class UserFormComponent implements OnInit {
 
   get showAgence(): boolean {
     const r = this.form.get('role')?.value;
-    return r === 'ROLE_AGENT' || r === 'ROLE_MANAGER';
+    return r === 'AGENT' || r === 'MANAGER';   // sans préfixe ROLE_
   }
 
   get title(): string {
@@ -128,10 +128,10 @@ export class UserFormComponent implements OnInit {
 
     if (this.isEdit && this.userId) {
       const dto = {
-        nom: this.form.value.nom,
-        prenom: this.form.value.prenom,
+        nom:       this.form.value.nom,
+        prenom:    this.form.value.prenom,
         telephone: this.form.value.telephone || undefined,
-        agenceId: this.form.value.agenceId || undefined,
+        agenceId:  this.form.value.agenceId  || undefined,
       };
       this.userService.updateUser(this.userId, dto).subscribe({
         next: () => this.router.navigate(['/admin/users']),
@@ -142,13 +142,13 @@ export class UserFormComponent implements OnInit {
       });
     } else {
       const dto = {
-        email: this.form.value.email,
-        password: this.form.value.password,
-        nom: this.form.value.nom,
-        prenom: this.form.value.prenom,
+        email:     this.form.value.email,
+        password:  this.form.value.password,
+        nom:       this.form.value.nom,
+        prenom:    this.form.value.prenom,
         telephone: this.form.value.telephone || undefined,
-        role: this.form.value.role,
-        agenceId: this.form.value.agenceId || undefined,
+        role:      this.form.value.role,
+        agenceId:  this.form.value.agenceId  || undefined,
       };
       this.userService.createUser(dto).subscribe({
         next: () => this.router.navigate(['/admin/users']),

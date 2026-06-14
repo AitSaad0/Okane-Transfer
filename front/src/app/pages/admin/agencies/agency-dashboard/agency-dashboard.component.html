@@ -1,0 +1,161 @@
+<div class="page-wrapper">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="flex items-center gap-3">
+      <button (click)="goBack()" class="back-btn">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <div>
+        <h1 class="page-title">{{ 'AGENCIES.DASHBOARD.TITLE' | translate }}</h1>
+        <p class="page-subtitle" *ngIf="dashboard">
+          {{ dashboard.agenceNom }} — {{ dashboard.agenceVille }}, {{ dashboard.paysNom }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="alert-error">{{ error }}</div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="flex items-center justify-center py-24">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Content -->
+  <div *ngIf="!loading && dashboard">
+
+    <!-- KPI cards row 1 -->
+    <div class="kpi-grid">
+      <!-- Volume envoi -->
+      <div class="kpi-card">
+        <div class="kpi-icon bg-indigo-50 text-indigo-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"/>
+          </svg>
+        </div>
+        <div>
+          <p class="kpi-label">{{ 'AGENCIES.DASHBOARD.KPI.SEND_VOLUME' | translate }}</p>
+          <p class="kpi-value">{{ dashboard.volumeEnvoiJour | number:'1.0-2' }}</p>
+        </div>
+      </div>
+
+      <!-- Volume paiement -->
+      <div class="kpi-card">
+        <div class="kpi-icon bg-sky-50 text-sky-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 13l-5 5m0 0l-5-5m5 5V6"/>
+          </svg>
+        </div>
+        <div>
+          <p class="kpi-label">{{ 'AGENCIES.DASHBOARD.KPI.PAY_VOLUME' | translate }}</p>
+          <p class="kpi-value">{{ dashboard.volumePaiementJour | number:'1.0-2' }}</p>
+        </div>
+      </div>
+
+      <!-- Nombre de transferts -->
+      <div class="kpi-card">
+        <div class="kpi-icon bg-violet-50 text-violet-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M8 7h12m0 0l-4-4m4 4l-4 4M16 17H4m0 0l4 4m-4-4l4-4"/>
+          </svg>
+        </div>
+        <div>
+          <p class="kpi-label">{{ 'AGENCIES.DASHBOARD.KPI.TRANSFERS_COUNT' | translate }}</p>
+          <p class="kpi-value">{{ dashboard.nombreTransfertJour }}</p>
+        </div>
+      </div>
+
+      <!-- Commissions -->
+      <div class="kpi-card">
+        <div class="kpi-icon bg-emerald-50 text-emerald-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+          </svg>
+        </div>
+        <div>
+          <p class="kpi-label">{{ 'AGENCIES.DASHBOARD.KPI.COMMISSIONS' | translate }}</p>
+          <p class="kpi-value">{{ dashboard.commissionsGenerees | number:'1.0-2' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
+
+      <!-- Taux de succès -->
+      <div class="info-card lg:col-span-1">
+        <div class="section-title">{{ 'AGENCIES.DASHBOARD.SUCCESS_RATE' | translate }}</div>
+        <div class="flex items-center justify-center py-4">
+          <div class="success-ring" [style.--pct]="dashboard.tauxSucces">
+            <span class="success-value">{{ dashboard.tauxSucces | number:'1.0-1' }}%</span>
+          </div>
+        </div>
+        <div class="status-breakdown">
+          <div class="status-row">
+            <span class="status-dot bg-emerald-500"></span>
+            <span class="status-label">{{ 'AGENCIES.DASHBOARD.STATUS.PAID' | translate }}</span>
+            <span class="status-count">{{ dashboard.transfertsPaye }}</span>
+          </div>
+          <div class="status-row">
+            <span class="status-dot bg-amber-500"></span>
+            <span class="status-label">{{ 'AGENCIES.DASHBOARD.STATUS.PENDING' | translate }}</span>
+            <span class="status-count">{{ dashboard.transfertsEnAttente }}</span>
+          </div>
+          <div class="status-row">
+            <span class="status-dot bg-rose-500"></span>
+            <span class="status-label">{{ 'AGENCIES.DASHBOARD.STATUS.CANCELLED' | translate }}</span>
+            <span class="status-count">{{ dashboard.transfertsAnnule }}</span>
+          </div>
+          <div class="status-row">
+            <span class="status-dot bg-slate-400"></span>
+            <span class="status-label">{{ 'AGENCIES.DASHBOARD.STATUS.EXPIRED' | translate }}</span>
+            <span class="status-count">{{ dashboard.transfertsExpire }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Plafond journalier -->
+      <div class="info-card lg:col-span-1">
+        <div class="section-title">{{ 'AGENCIES.DASHBOARD.CEILING_USAGE' | translate }}</div>
+        <div class="mt-2">
+          <div class="flex items-baseline justify-between mb-2">
+            <span class="text-2xl font-semibold text-slate-800">{{ dashboard.tauxUtilisationPlafond | number:'1.0-1' }}%</span>
+            <span class="text-xs text-slate-400">
+              {{ dashboard.volumeEnvoiJour | number:'1.0-0' }} / {{ dashboard.plafondJournalier | number:'1.0-0' }}
+            </span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-bar" [ngClass]="plafondBarColor" [style.width.%]="plafondPercentClamped"></div>
+          </div>
+          <p class="text-xs text-slate-400 mt-3">
+            {{ 'AGENCIES.DASHBOARD.CEILING_CONFIG' | translate }}
+            <span class="font-mono text-slate-600">{{ dashboard.plafondJournalier | number:'1.0-2' }}</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Caisse -->
+      <div class="info-card lg:col-span-1">
+        <div class="section-title">{{ 'AGENCIES.AGENTS.COLS.CASH' | translate }}</div>
+        <div class="flex items-center gap-3 mt-2">
+          <div class="kpi-icon"
+               [ngClass]="dashboard.caisseOuverte ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-100 text-slate-400'">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 10h18M3 10l1.5-5h15L21 10M3 10v8a1 1 0 001 1h16a1 1 0 001-1v-8"/>
+            </svg>
+          </div>
+          <div>
+            <p class="kpi-label">{{ (dashboard.caisseOuverte ? 'AGENCIES.DASHBOARD.CASH_OPEN' : 'AGENCIES.DASHBOARD.CASH_CLOSED') | translate }}</p>
+            <p class="kpi-value">{{ dashboard.soldeCaisseActuel | number:'1.2-2' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

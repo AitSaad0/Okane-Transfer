@@ -1,0 +1,169 @@
+<div class="page-wrapper">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">{{ 'AGENCIES.TITLE' | translate }}</h1>
+      <p class="page-subtitle">
+        {{ totalElements }} {{ (totalElements > 1 ? 'AGENCIES.SUBTITLE_OTHER' : 'AGENCIES.SUBTITLE_ONE') | translate }}
+      </p>
+    </div>
+    <button (click)="goToCreate()" class="btn-primary">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+      </svg>
+      {{ 'AGENCIES.CREATE' | translate }}
+    </button>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="alert-error">{{ error }}</div>
+
+  <!-- Filtres -->
+  <div class="filters-bar">
+    <div class="search-wrapper">
+      <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+      </svg>
+      <input [(ngModel)]="searchText" type="text"
+             [placeholder]="'AGENCIES.SEARCH' | translate"
+             class="search-input"/>
+    </div>
+    <select [(ngModel)]="selectedPaysId" (ngModelChange)="onFilterChange()" class="filter-select">
+      <option value="">{{ 'AGENCIES.ALL_COUNTRIES' | translate }}</option>
+      <option *ngFor="let p of pays" [value]="p.id">{{ p.nom }}</option>
+    </select>
+    <select [(ngModel)]="selectedStatus" (ngModelChange)="onFilterChange()" class="filter-select">
+      <option *ngFor="let s of statuses" [value]="s.value">{{ s.label }}</option>
+    </select>
+  </div>
+
+  <!-- Table -->
+  <div class="table-card">
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <span class="text-sm text-slate-400">{{ 'AGENCIES.LOADING' | translate }}</span>
+    </div>
+
+    <!-- Empty -->
+    <div *ngIf="!loading && filteredAgencies.length === 0" class="empty-state">
+      <svg class="empty-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/>
+      </svg>
+      <p class="font-medium text-slate-700">{{ 'AGENCIES.NO_AGENCIES' | translate }}</p>
+      <p class="text-sm text-slate-400 mt-1">{{ 'AGENCIES.NO_AGENCIES_SUB' | translate }}</p>
+    </div>
+
+    <!-- Table -->
+    <table *ngIf="!loading && filteredAgencies.length > 0" class="data-table">
+      <thead>
+      <tr>
+        <th>{{ 'AGENCIES.COLS.AGENCY' | translate }}</th>
+        <th>{{ 'AGENCIES.COLS.LOCATION' | translate }}</th>
+        <th>{{ 'AGENCIES.COLS.CEILING' | translate }}</th>
+        <th>{{ 'AGENCIES.COLS.STATUS' | translate }}</th>
+        <th class="text-right">{{ 'AGENCIES.COLS.ACTIONS' | translate }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let agency of filteredAgencies" class="table-row">
+        <!-- Agence -->
+        <td>
+          <div class="flex items-center gap-3">
+            <div class="avatar">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/>
+              </svg>
+            </div>
+            <p class="font-medium text-slate-800 text-sm">{{ agency.nom }}</p>
+          </div>
+        </td>
+        <!-- Localisation -->
+        <td>
+          <p class="text-sm text-slate-600">{{ agency.ville }}, {{ agency.paysNom }}</p>
+          <p class="text-xs text-slate-400">{{ agency.adresse }}</p>
+        </td>
+        <!-- Plafond -->
+        <td>
+          <span class="font-mono text-sm text-slate-700">{{ agency.plafondJournalier | number:'1.0-2' }}</span>
+          <span class="text-xs text-slate-400 ml-1">{{ agency.paysCode }}</span>
+        </td>
+        <!-- Statut -->
+        <td>
+          <app-status-badge [status]="agency.statut"></app-status-badge>
+        </td>
+        <!-- Actions -->
+        <td>
+          <div class="flex items-center justify-end gap-1">
+            <button (click)="goToDashboard(agency.id)"
+                    [title]="'AGENCIES.ACTIONS.DASHBOARD' | translate" class="action-btn">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2"/>
+              </svg>
+            </button>
+            <button (click)="goToAgents(agency.id)"
+                    [title]="'AGENCIES.ACTIONS.AGENTS' | translate" class="action-btn">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </button>
+            <button (click)="goToEdit(agency.id)"
+                    [title]="'AGENCIES.ACTIONS.EDIT' | translate" class="action-btn">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+              </svg>
+            </button>
+            <button (click)="openStatusDialog(agency)"
+                    [title]="(agency.statut === 'ACTIVE' ? 'AGENCIES.ACTIONS.SUSPEND' : 'AGENCIES.ACTIONS.ACTIVATE') | translate"
+                    [ngClass]="agency.statut === 'ACTIVE' ? 'action-btn-warning' : 'action-btn-success'">
+              <svg *ngIf="agency.statut === 'ACTIVE'" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
+              </svg>
+              <svg *ngIf="agency.statut !== 'ACTIVE'" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div *ngIf="totalPages > 1" class="pagination">
+      <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 0" class="page-btn">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <button *ngFor="let p of pages" (click)="goToPage(p)"
+              [ngClass]="p === currentPage ? 'page-btn-active' : 'page-btn'">
+        {{ p + 1 }}
+      </button>
+      <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages - 1" class="page-btn">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Dialog : Activer / Suspendre -->
+<app-confirm-dialog
+  [visible]="showStatusDialog"
+  [title]="(agencyToToggle?.statut === 'ACTIVE' ? 'AGENCIES.DIALOG.SUSPEND_TITLE' : 'AGENCIES.DIALOG.ACTIVATE_TITLE') | translate"
+  [message]="(agencyToToggle?.statut === 'ACTIVE' ? 'AGENCIES.DIALOG.SUSPEND_MSG' : 'AGENCIES.DIALOG.ACTIVATE_MSG') | translate"
+  [confirmLabel]="(agencyToToggle?.statut === 'ACTIVE' ? 'AGENCIES.DIALOG.SUSPEND_CONFIRM' : 'AGENCIES.DIALOG.ACTIVATE_CONFIRM') | translate"
+  [danger]="agencyToToggle?.statut === 'ACTIVE'"
+  (confirmed)="confirmToggleStatus()"
+  (cancelled)="showStatusDialog = false">
+</app-confirm-dialog>

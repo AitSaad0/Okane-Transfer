@@ -5,7 +5,7 @@ import {
   AgentDetailResponseDto,
   AssignAgentRequestDto,
   UpdateAgentStatusRequestDto,
-} from '../models/agent.model';
+} from '../models/agence.model';
 
 @Injectable({ providedIn: 'root' })
 export class AgentService {

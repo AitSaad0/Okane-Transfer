@@ -4,15 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { AgenceService } from '../../agencies/services/agence.service';
 import { Role, UserResponseDTO, UserRole } from '../models/user.model';
+import { AgenceResponseDto } from '../../agencies/models/agence.model';
 import { StatusBadgeComponent } from '../../../shared/status-badge/status-badge.component';
 import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
-
 
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, StatusBadgeComponent, ConfirmDialogComponent,TranslatePipe],
+  imports: [CommonModule, FormsModule, StatusBadgeComponent, ConfirmDialogComponent, TranslatePipe],
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css'],
 })
@@ -29,6 +30,10 @@ export class UserListComponent implements OnInit {
   searchText = '';
   selectedRole: UserRole | '' = '';
   selectedStatus: '' | 'true' | 'false' = '';
+  selectedAgenceId: number | '' = '';   // ← AJOUT filtre agence
+
+  // Données pour le select agence
+  agences: AgenceResponseDto[] = [];    // ← AJOUT
 
   // Dialog suppression
   showDeleteDialog = false;
@@ -38,12 +43,12 @@ export class UserListComponent implements OnInit {
   showStatusDialog = false;
   userToToggle: UserResponseDTO | null = null;
 
-  // ⚠️ readonly supprimé pour permettre la réassignation dans loadFilterLabels()
   roles: { value: UserRole | ''; label: string }[] = [];
   statuses: { value: '' | 'true' | 'false'; label: string }[] = [];
 
   constructor(
     private userService: UserService,
+    private agenceService: AgenceService,   // ← AJOUT
     private router: Router,
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
@@ -55,20 +60,31 @@ export class UserListComponent implements OnInit {
       this.loadFilterLabels();
       this.cdr.detectChanges();
     });
+    this.loadAgences();   // ← AJOUT
     this.loadUsers();
+  }
+
+  // ← AJOUT méthode complète
+  private loadAgences(): void {
+    this.agenceService.getAllAgencesActives().subscribe({
+      next: (res) => {
+        this.agences = res.content;
+        this.cdr.detectChanges();
+      },
+    });
   }
 
   private loadFilterLabels(): void {
     this.roles = [
-      { value: '', label: this.translate.instant('USERS.ALL_ROLES') },
-      { value: 'ADMIN', label: this.translate.instant('USERS.ROLES.ROLE_ADMIN') },
+      { value: '',        label: this.translate.instant('USERS.ALL_ROLES') },
+      { value: 'ADMIN',   label: this.translate.instant('USERS.ROLES.ROLE_ADMIN') },
       { value: 'MANAGER', label: this.translate.instant('USERS.ROLES.ROLE_MANAGER') },
-      { value: 'AGENT', label: this.translate.instant('USERS.ROLES.ROLE_AGENT') },
-      { value: 'CLIENT', label: this.translate.instant('USERS.ROLES.ROLE_CLIENT') },
+      { value: 'AGENT',   label: this.translate.instant('USERS.ROLES.ROLE_AGENT') },
+      { value: 'CLIENT',  label: this.translate.instant('USERS.ROLES.ROLE_CLIENT') },
     ];
     this.statuses = [
-      { value: '', label: this.translate.instant('USERS.ALL_STATUSES') },
-      { value: 'true', label: this.translate.instant('USERS.STATUS.ACTIVE') },
+      { value: '',      label: this.translate.instant('USERS.ALL_STATUSES') },
+      { value: 'true',  label: this.translate.instant('USERS.STATUS.ACTIVE') },
       { value: 'false', label: this.translate.instant('USERS.STATUS.SUSPENDED') },
     ];
   }
@@ -76,9 +92,10 @@ export class UserListComponent implements OnInit {
   loadUsers(): void {
     this.loading = true;
     this.error = '';
-    const filters: { role?: Role; active?: boolean } = {};
-    if (this.selectedRole) filters.role = this.selectedRole as Role;
+    const filters: { role?: Role; active?: boolean; agenceId?: number } = {};
+    if (this.selectedRole)    filters.role = this.selectedRole as Role;
     if (this.selectedStatus !== '') filters.active = this.selectedStatus === 'true';
+    if (this.selectedAgenceId !== '') filters.agenceId = +this.selectedAgenceId;  // ← AJOUT
 
     this.userService.getAllUsers(this.currentPage, this.pageSize, 'id', filters).subscribe({
       next: (res) => {
@@ -119,15 +136,9 @@ export class UserListComponent implements OnInit {
     this.loadUsers();
   }
 
-  goToCreate(): void {
-    this.router.navigate(['/admin/users/create']);
-  }
-  goToEdit(id: number): void {
-    this.router.navigate(['/admin/users', id, 'edit']);
-  }
-  goToDetail(id: number): void {
-    this.router.navigate(['/admin/users', id, 'detail']);
-  }
+  goToCreate(): void { this.router.navigate(['/admin/users/create']); }
+  goToEdit(id: number): void { this.router.navigate(['/admin/users', id, 'edit']); }
+  goToDetail(id: number): void { this.router.navigate(['/admin/users', id, 'detail']); }
 
   // ── Toggle status ─────────────────────────────────────────────────────────
   openStatusDialog(user: UserResponseDTO): void {

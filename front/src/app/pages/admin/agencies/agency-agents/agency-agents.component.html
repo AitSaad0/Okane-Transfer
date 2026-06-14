@@ -1,0 +1,166 @@
+<div class="page-wrapper">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="flex items-center gap-3">
+      <button (click)="goBack()" class="back-btn">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <div>
+        <h1 class="page-title">{{ 'AGENTS.TITLE' | translate }}</h1>
+        <p class="page-subtitle" *ngIf="agency">{{ agency.nom }} — {{ agency.ville }}, {{ agency.paysNom }}</p>
+      </div>
+    </div>
+    <button (click)="openAssignDialog()" class="btn-primary">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+      </svg>
+      {{ 'AGENTS.ASSIGN_BTN' | translate }}
+    </button>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="alert-error">{{ error }}</div>
+
+  <!-- Table -->
+  <div class="table-card">
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <span class="text-sm text-slate-400">{{ 'COMMON.LOADING' | translate }}</span>
+    </div>
+
+    <!-- Empty -->
+    <div *ngIf="!loading && agents.length === 0" class="empty-state">
+      <svg class="empty-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+      </svg>
+      <p class="font-medium text-slate-700">{{ 'AGENTS.EMPTY_TITLE' | translate }}</p>
+      <p class="text-sm text-slate-400 mt-1">{{ 'AGENTS.EMPTY_SUB' | translate }}</p>
+    </div>
+
+    <!-- Table -->
+    <table *ngIf="!loading && agents.length > 0" class="data-table">
+      <thead>
+      <tr>
+        <th>{{ 'AGENTS.COL_AGENT' | translate }}</th>
+        <th>{{ 'AGENTS.COL_STATUS' | translate }}</th>
+        <th>{{ 'AGENTS.COL_CAISSE' | translate }}</th>
+        <th>{{ 'AGENTS.COL_BALANCE' | translate }}</th>
+        <th class="text-right">{{ 'COMMON.ACTIONS' | translate }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let agent of agents" class="table-row">
+        <!-- Agent -->
+        <td>
+          <div class="flex items-center gap-3">
+            <div class="avatar">{{ agent.prenom[0] }}{{ agent.nom[0] }}</div>
+            <div>
+              <p class="font-medium text-slate-800 text-sm">{{ agent.prenom }} {{ agent.nom }}</p>
+              <p class="text-xs text-slate-400">{{ agent.email }}</p>
+              <p *ngIf="agent.telephone" class="text-xs text-slate-400">{{ agent.telephone }}</p>
+            </div>
+          </div>
+        </td>
+        <!-- Statut -->
+        <td>
+          <app-status-badge [status]="agent.active.toString()"></app-status-badge>
+        </td>
+        <!-- Caisse -->
+        <td>
+          <span *ngIf="agent.caisseOuverte" class="text-xs font-medium text-emerald-600">{{ 'AGENTS.CAISSE_OPEN' | translate }}</span>
+          <span *ngIf="!agent.caisseOuverte" class="text-xs text-slate-400">{{ 'AGENTS.CAISSE_CLOSED' | translate }}</span>
+          <p class="text-xs text-slate-400 mt-0.5">{{ formatDate(agent.dateOuvertureCaisse) }}</p>
+        </td>
+        <!-- Solde -->
+        <td>
+          <span *ngIf="agent.soldeCaisse != null" class="font-mono text-sm text-slate-700">
+            {{ agent.soldeCaisse | number:'1.2-2' }}
+          </span>
+          <span *ngIf="agent.soldeCaisse == null" class="text-sm text-slate-300">—</span>
+        </td>
+        <!-- Actions -->
+        <td>
+          <div class="flex items-center justify-end gap-1">
+            <button (click)="openStatusDialog(agent)"
+                    [title]="(agent.active ? 'AGENTS.ACTION_SUSPEND' : 'AGENTS.ACTION_ACTIVATE') | translate"
+                    [ngClass]="agent.active ? 'action-btn-warning' : 'action-btn-success'">
+              <svg *ngIf="agent.active" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
+              </svg>
+              <svg *ngIf="!agent.active" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+            </button>
+            <button (click)="openRemoveDialog(agent)"
+                    [title]="'AGENTS.ACTION_REMOVE' | translate"
+                    class="action-btn-danger">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6"/>
+              </svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Dialog : Affecter un agent -->
+<div *ngIf="showAssignDialog" class="fixed inset-0 z-50 flex items-center justify-center">
+  <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" (click)="showAssignDialog = false"></div>
+  <div class="relative bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6">
+    <h3 class="text-base font-semibold text-slate-800 mb-1">{{ 'AGENTS.DIALOG_ASSIGN_TITLE' | translate }}</h3>
+    <p class="text-sm text-slate-500 mb-4">{{ 'AGENTS.DIALOG_ASSIGN_SUB' | translate }}</p>
+
+    <div *ngIf="loadingAvailable" class="flex items-center justify-center py-8">
+      <div class="spinner"></div>
+    </div>
+
+    <div *ngIf="!loadingAvailable && availableAgents.length === 0" class="text-center py-6">
+      <p class="text-sm text-slate-500">{{ 'AGENTS.NO_AVAILABLE' | translate }}</p>
+      <p class="text-xs text-slate-400 mt-1">{{ 'AGENTS.NO_AVAILABLE_HINT' | translate }}</p>
+    </div>
+
+    <select *ngIf="!loadingAvailable && availableAgents.length > 0"
+            [(ngModel)]="selectedUserId" class="input mb-4">
+      <option [value]="null">{{ 'AGENTS.SELECT_PLACEHOLDER' | translate }}</option>
+      <option *ngFor="let u of availableAgents" [value]="u.id">{{ u.prenom }} {{ u.nom }} — {{ u.email }}</option>
+    </select>
+
+    <div class="flex gap-3 justify-end mt-2">
+      <button (click)="showAssignDialog = false" class="btn-secondary">{{ 'COMMON.CANCEL' | translate }}</button>
+      <button (click)="confirmAssign()" [disabled]="!selectedUserId || assigning" class="btn-primary">
+        {{ (assigning ? 'AGENTS.ASSIGNING' : 'AGENTS.ASSIGN_CONFIRM') | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Dialog : Suspendre / Activer -->
+<app-confirm-dialog
+  [visible]="showStatusDialog"
+  [title]="(targetAgent?.active ? 'AGENTS.DIALOG_SUSPEND_TITLE' : 'AGENTS.DIALOG_ACTIVATE_TITLE') | translate"
+  [message]="(targetAgent?.active ? 'AGENTS.DIALOG_SUSPEND_MSG' : 'AGENTS.DIALOG_ACTIVATE_MSG') | translate"
+  [confirmLabel]="(targetAgent?.active ? 'AGENTS.ACTION_SUSPEND' : 'AGENTS.ACTION_ACTIVATE') | translate"
+  [danger]="!!targetAgent?.active"
+  (confirmed)="confirmToggleStatus()"
+  (cancelled)="showStatusDialog = false">
+</app-confirm-dialog>
+
+<!-- Dialog : Retirer de l'agence -->
+<app-confirm-dialog
+  [visible]="showRemoveDialog"
+  [title]="'AGENTS.DIALOG_REMOVE_TITLE' | translate"
+  [message]="'AGENTS.DIALOG_REMOVE_MSG' | translate"
+  [confirmLabel]="'AGENTS.ACTION_REMOVE' | translate"
+  [danger]="true"
+  (confirmed)="confirmRemove()"
+  (cancelled)="showRemoveDialog = false">
+</app-confirm-dialog>
