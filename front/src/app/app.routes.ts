@@ -102,6 +102,15 @@ export const routes: Routes = [
             canActivate: [roleGuard],
             data: { roles: ['ADMIN'] }
           },
+          {
+            path: 'alerts',
+            loadComponent: () =>
+              import('./pages/admin/alerts/alerts.component')
+                .then(m => m.AlertsComponent),
+            canActivate: [roleGuard],
+            data: { roles: ['ADMIN'] }
+          },
+
           // ── Users ─────────────────────────────────────────────────────
           {
             path: 'users',
