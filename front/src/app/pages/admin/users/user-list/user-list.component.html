@@ -28,11 +28,21 @@
              [placeholder]="'USERS.SEARCH' | translate"
              class="search-input"/>
     </div>
+
+    <!-- Filtre rôle -->
     <select [(ngModel)]="selectedRole" (ngModelChange)="onFilterChange()" class="filter-select">
       <option *ngFor="let r of roles" [value]="r.value">{{ r.label }}</option>
     </select>
+
+    <!-- Filtre statut -->
     <select [(ngModel)]="selectedStatus" (ngModelChange)="onFilterChange()" class="filter-select">
       <option *ngFor="let s of statuses" [value]="s.value">{{ s.label }}</option>
+    </select>
+
+    <!-- Filtre agence ← AJOUT -->
+    <select [(ngModel)]="selectedAgenceId" (ngModelChange)="onFilterChange()" class="filter-select">
+      <option value="">{{ 'USERS.ALL_AGENCIES' | translate }}</option>
+      <option *ngFor="let a of agences" [value]="a.id">{{ a.nom }} — {{ a.ville }}</option>
     </select>
   </div>
 

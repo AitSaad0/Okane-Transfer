@@ -1,11 +1,14 @@
 package com.okane.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import jakarta.validation.ConstraintViolationException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.time.LocalDateTime;
@@ -107,4 +110,39 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(body(HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred", req));
     }
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<Map<String, String>> handleMissingParam(
+            MissingServletRequestParameterException ex,
+            HttpServletRequest request) {
+
+        log.warn("Missing request parameter on {}: {}", request.getRequestURI(), ex.getMessage());
+        Map<String, String> body = new LinkedHashMap<>();
+        body.put("error", "Paramètre manquant : " + ex.getParameterName());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+    }
+
+    // FIX 4 — handles @NotBlank / @Validated constraint violations (empty ref="")
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Map<String, String>> handleConstraintViolation(
+            ConstraintViolationException ex,
+            HttpServletRequest request) {
+
+        log.warn("Constraint violation on {}: {}", request.getRequestURI(), ex.getMessage());
+        Map<String, String> body = new LinkedHashMap<>();
+        body.put("error", ex.getConstraintViolations().stream()
+                .map(v -> v.getPropertyPath() + " — " + v.getMessage())
+                .collect(java.util.stream.Collectors.joining(", ")));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+    }
+    @ExceptionHandler(org.springframework.web.server.ResponseStatusException.class)
+    public ResponseEntity<Map<String, String>> handleResponseStatus(
+            org.springframework.web.server.ResponseStatusException ex,
+            HttpServletRequest request) {
+
+        log.warn("ResponseStatusException on {}: {}", request.getRequestURI(), ex.getReason());
+        Map<String, String> body = new LinkedHashMap<>();
+        body.put("error", ex.getReason());
+        return ResponseEntity.status(ex.getStatusCode()).body(body);
+    }
+
 }

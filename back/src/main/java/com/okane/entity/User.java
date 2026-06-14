@@ -64,6 +64,10 @@
         @JoinColumn(name = "agence_id")
         private Agence agence;
 
+        @OneToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "client_id")
+        private Client client;
+
         // ── UserDetails methods ───────────────────────────────────
 
         @Override
