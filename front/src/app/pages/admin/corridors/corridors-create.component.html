@@ -16,35 +16,47 @@
       <div class="space-y-4">
 
         <div class="grid grid-cols-2 gap-4">
+          <!-- Pays source -->
           <div>
             <label class="text-sm font-medium text-slate-600 block mb-1">Pays source *</label>
-            <input [formControl]="$any(form.get('sourceCountry'))"
-              placeholder="ex: Maroc"
-              class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"/>
+            <select [formControl]="$any(form.get('sourceCountryCode'))"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white">
+              <option value="">Sélectionner</option>
+              @for (c of countries; track c.code) {
+                <option [value]="c.code">{{ c.name }}</option>
+              }
+            </select>
           </div>
+          <!-- Pays destination -->
           <div>
             <label class="text-sm font-medium text-slate-600 block mb-1">Pays destination *</label>
-            <input [formControl]="$any(form.get('destinationCountry'))"
-              placeholder="ex: France"
-              class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"/>
+            <select [formControl]="$any(form.get('destinationCountryCode'))"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white">
+              <option value="">Sélectionner</option>
+              @for (c of countries; track c.code) {
+                <option [value]="c.code">{{ c.name }}</option>
+              }
+            </select>
           </div>
         </div>
 
         <div class="grid grid-cols-2 gap-4">
+          <!-- Devise envoi -->
           <div>
             <label class="text-sm font-medium text-slate-600 block mb-1">Devise envoi *</label>
             <select [formControl]="$any(form.get('sourceCurrencyCode'))"
-              class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white">
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white">
               <option value="">Sélectionner</option>
               @for (c of currencies(); track c.id) {
                 <option [value]="c.code">{{ c.code }} — {{ c.name }}</option>
               }
             </select>
           </div>
+          <!-- Devise réception -->
           <div>
             <label class="text-sm font-medium text-slate-600 block mb-1">Devise réception *</label>
             <select [formControl]="$any(form.get('destinationCurrencyCode'))"
-              class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white">
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white">
               <option value="">Sélectionner</option>
               @for (c of currencies(); track c.id) {
                 <option [value]="c.code">{{ c.code }} — {{ c.name }}</option>
@@ -55,11 +67,11 @@
 
         <div class="flex gap-3 pt-2">
           <button (click)="submit()" [disabled]="form.invalid || loading()"
-            class="flex-1 bg-primary text-white text-sm font-medium py-2 rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                  class="flex-1 bg-primary text-white text-sm font-medium py-2 rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
             {{ loading() ? 'Création...' : 'Créer le corridor' }}
           </button>
           <a routerLink="/admin/corridors"
-            class="flex-1 text-center border border-slate-200 text-slate-600 text-sm font-medium py-2 rounded-lg hover:bg-slate-50 transition-colors">
+             class="flex-1 text-center border border-slate-200 text-slate-600 text-sm font-medium py-2 rounded-lg hover:bg-slate-50 transition-colors">
             Annuler
           </a>
         </div>

@@ -12,6 +12,7 @@ public class DeviseConverter {
                 .code(dto.getCode())
                 .symbole(dto.getSymbole())
                 .nom(dto.getNom())
+                .countries(dto.getCountries())
                 .build();
     }
 
@@ -21,6 +22,8 @@ public class DeviseConverter {
                 .code(devise.getCode())
                 .symbole(devise.getSymbole())
                 .nom(devise.getNom())
+                .active(devise.isActive())
+                .countries(devise.getCountries())
                 .build();
     }
 }

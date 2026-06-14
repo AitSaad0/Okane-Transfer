@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import com.okane.service.DeviseService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/admin/currencies")
@@ -45,5 +46,9 @@ public class DeviseController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         deviseService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<DeviseResponseDTO> toggleStatus(@PathVariable Long id, @RequestBody Map<String, Boolean> body) {
+        return ResponseEntity.ok(deviseService.toggleStatus(id, body.get("active")));
     }
 }

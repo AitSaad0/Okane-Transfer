@@ -1,15 +1,15 @@
 package com.okane.controller;
 
 import com.okane.dto.requestDto.CorridorRequestDTO;
+import com.okane.dto.requestDto.CorridorByCodeRequestDTO;
 import com.okane.dto.responseDto.CorridorResponseDTO;
-import com.okane.service.CorridorService;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import com.okane.service.CorridorService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/admin/corridors")
@@ -37,12 +37,17 @@ public class CorridorController {
     }
 
     @PostMapping
-    public ResponseEntity<CorridorResponseDTO> create(@Valid @RequestBody CorridorRequestDTO dto) {
+    public ResponseEntity<CorridorResponseDTO> create(@RequestBody CorridorRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(corridorService.save(dto));
     }
 
+    @PostMapping("/by-code")
+    public ResponseEntity<CorridorResponseDTO> createByCode(@RequestBody CorridorByCodeRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(corridorService.saveByCode(dto));
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<CorridorResponseDTO> update(@PathVariable Long id, @Valid @RequestBody CorridorRequestDTO dto) {
+    public ResponseEntity<CorridorResponseDTO> update(@PathVariable Long id, @RequestBody CorridorRequestDTO dto) {
         return ResponseEntity.ok(corridorService.update(id, dto));
     }
 
@@ -53,8 +58,7 @@ public class CorridorController {
     }
 
     @PatchMapping("/{id}/status")
-    public ResponseEntity<CorridorResponseDTO> toggleStatus(@PathVariable Long id) {
-        corridorService.toggleStatus(id);
-        return ResponseEntity.ok(corridorService.findById(id));
+    public ResponseEntity<CorridorResponseDTO> toggleStatus(@PathVariable Long id, @RequestBody Map<String, Boolean> body) {
+        return ResponseEntity.ok(corridorService.toggleStatus(id, body.get("active")));
     }
 }

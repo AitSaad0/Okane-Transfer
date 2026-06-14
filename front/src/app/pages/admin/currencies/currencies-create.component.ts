@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { CurrencyService } from '../../../core/services/currency.service';
+import { CurrencyService, CurrencyCreateDTO } from '../../../core/services/currency.service';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -24,6 +24,7 @@ export class CurrenciesCreateComponent {
   form = this.fb.group({
     code: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
     name: ['', Validators.required],
+    symbol: [''],
     pays: this.fb.array([], Validators.minLength(1))
   });
 
@@ -70,14 +71,21 @@ export class CurrenciesCreateComponent {
     if (!this.canSubmit) return;
     this.loading.set(true);
     const v = this.form.value;
-    this.svc.create({
+
+    const dto: CurrencyCreateDTO = {
       code:      v.code!.toUpperCase(),
-      symbol:    '',
-      name:      v.name!,
+      symbole:   v.symbol || '',
+      nom:       v.name!,
       countries: this.pays.controls.map(c => c.get('nom')!.value)
-    }).subscribe({
+    };
+
+    this.svc.create(dto).subscribe({
       next: () => this.router.navigate(['/admin/currencies']),
-      error: () => { this.error.set('Erreur lors de la création'); this.loading.set(false); }
+      error: (err) => {
+        console.error(err);
+        this.error.set('Erreur lors de la création');
+        this.loading.set(false);
+      }
     });
   }
 }

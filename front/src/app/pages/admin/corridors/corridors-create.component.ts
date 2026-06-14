@@ -11,7 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule, TranslateModule],
   templateUrl: './corridors-create.component.html',
-  styleUrl: './corridors-create.component.css'
+  styleUrl: './corridors-create.component.css',
 })
 export class CorridorsCreateComponent implements OnInit {
   private fb = inject(FormBuilder);
@@ -23,25 +23,47 @@ export class CorridorsCreateComponent implements OnInit {
   error = signal('');
   currencies = signal<Currency[]>([]);
 
+  // Liste des pays (code ISO 3166)
+  countries = [
+    { code: 'MA', name: 'Maroc' },
+    { code: 'FR', name: 'France' },
+    { code: 'SN', name: 'Sénégal' },
+    { code: 'CI', name: "Côte d'Ivoire" },
+  ];
+
   form = this.fb.group({
-    sourceCountry:           ['', Validators.required],
-    destinationCountry:      ['', Validators.required],
-    sourceCurrencyCode:      ['', Validators.required],
-    destinationCurrencyCode: ['', Validators.required]
+    sourceCountryCode: ['', Validators.required],
+    destinationCountryCode: ['', Validators.required],
+    sourceCurrencyCode: ['', Validators.required],
+    destinationCurrencyCode: ['', Validators.required],
   });
 
   ngOnInit(): void {
     this.currSvc.getAll(0, 100, true).subscribe({
-      next: r => this.currencies.set(r.content)
+      next: (r) => this.currencies.set(r.content),
     });
   }
 
   submit(): void {
     if (this.form.invalid) return;
     this.loading.set(true);
-    this.svc.create(this.form.value as any).subscribe({
+
+    const v = this.form.value;
+
+    const dto = {
+      paysSourceCode: v.sourceCountryCode!,
+      paysDestinationCode: v.destinationCountryCode!,
+      deviseSourceCode: v.sourceCurrencyCode!,
+      deviseDestinationCode: v.destinationCurrencyCode!,
+    };
+
+    this.svc.create(dto).subscribe({
       next: () => this.router.navigate(['/admin/corridors']),
-      error: () => { this.error.set('Erreur lors de la création'); this.loading.set(false); }
+      error: (err) => {
+        console.error(err);
+        this.error.set('Erreur lors de la création');
+        this.loading.set(false);
+      },
     });
   }
 }

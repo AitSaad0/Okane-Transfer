@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface CorridorRepository extends JpaRepository<Corridor, Long> {
     List<Corridor> findByActifTrue();
+    boolean existsByPaysOrigineIdAndPaysDestinationId(Long paysOrigineId, Long paysDestinationId);
 }
