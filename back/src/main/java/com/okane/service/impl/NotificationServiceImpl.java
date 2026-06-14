@@ -16,6 +16,7 @@ import com.okane.service.EmailService;
 import com.okane.service.NotificationService;
 import com.okane.entity.enums.CanalNotification;
 import com.okane.entity.enums.TypeNotification;
+import com.okane.service.SmsService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,7 @@ public class NotificationServiceImpl
 
     private final UserRepository userRepository;
     private final EmailService emailService;
+    private final SmsService smsService;
 
     @Override
     public List<NotificationResponseDto> getUserNotifications(User user) {
@@ -99,7 +101,18 @@ public class NotificationServiceImpl
                         .build();
 
         notificationRepository.save(notification);
+        if (canal == CanalNotification.SMS
+                && user.getTelephone() != null) {
 
+            try {
+                smsService.sendSms(
+                        user.getTelephone(),
+                        contenu
+                );
+            } catch (Exception e) {
+                // log and continue
+            }
+        }
         if (canal == CanalNotification.EMAIL
                 && user.getEmail() != null) {
 
@@ -109,6 +122,7 @@ public class NotificationServiceImpl
                     contenu
             );
         }
+
 
         // PUSH
         // SMS

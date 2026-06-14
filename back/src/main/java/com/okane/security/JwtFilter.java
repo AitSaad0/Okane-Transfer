@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,19 +25,13 @@ public class JwtFilter extends OncePerRequestFilter {
                                     FilterChain chain) throws ServletException, IOException {
 
         String header = request.getHeader("Authorization");
-        System.out.println("=== JWT FILTER === path: " + request.getRequestURI());
-        System.out.println("=== JWT FILTER === header: " + header);
 
         if (header == null || !header.startsWith("Bearer ")) {
-            System.out.println("=== JWT FILTER === no token, skipping");
             chain.doFilter(request, response);
             return;
         }
 
         String token = header.substring(7);
-        System.out.println("=== JWT FILTER === isValid: " + jwtUtil.isValid(token));
-        System.out.println("=== JWT FILTER === isAccessToken: " + jwtUtil.isAccessToken(token));
-        System.out.println("=== JWT FILTER === email: " + jwtUtil.extractEmail(token));
 
         if (!jwtUtil.isValid(token)) {
             sendError(response, "Invalid or expired token");
@@ -67,9 +60,6 @@ public class JwtFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
 
-        // In your JWT filter, after setting the SecurityContext:
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("=== AUTHORITIES === " + auth.getAuthorities());
         chain.doFilter(request, response);
     }
 

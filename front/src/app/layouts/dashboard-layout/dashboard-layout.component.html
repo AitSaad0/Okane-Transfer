@@ -1,9 +1,12 @@
-<div class="min-h-screen bg-slate-50 flex">
-  <aside class="w-64 bg-white border-r border-slate-200">
-    <app-sidebar></app-sidebar>  </aside>
-  <main class="flex-1 p-6">
-      <app-navbar></app-navbar>
-    <router-outlet />
-  </main>
+<div class="layout">
+  <app-navbar></app-navbar>
+  <div class="layout__body">
+    <app-sidebar></app-sidebar>
+    <main class="layout__content">
+      <router-outlet />
+    </main>
+  </div>
 </div>
-<app-chatbot-widget *ngIf="isClient"></app-chatbot-widget>
+@if (isClient) {
+  <app-chatbot-widget></app-chatbot-widget>
+}

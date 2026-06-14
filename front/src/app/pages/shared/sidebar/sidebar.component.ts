@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router,RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '../../../core/services/auth.service';
 
@@ -23,35 +23,30 @@ export class SidebarComponent implements OnInit {
   userRole = '';
 
   allNavItems: NavItem[] = [
-    { label: 'USERS',         icon: '👥', route: '/admin/users',                   roles: ['ADMIN'] },
-    { label: 'AGENCIES',      icon: '🏢', route: '/admin/agencies',                roles: ['ADMIN'] },
-    { label: 'CURRENCIES',    icon: '💱', route: '/admin/currencies',              roles: ['ADMIN'] },
-    { label: 'CORRIDORS',     icon: '🔀', route: '/admin/corridors',               roles: ['ADMIN'] },
-    { label: 'RATES',         icon: '📈', route: '/admin/exchange-rates',          roles: ['ADMIN'] },
-    { label: 'FEES',          icon: '💰', route: '/admin/fee-grids',               roles: ['ADMIN'] },
-    { label: 'COMPLIANCE',    icon: '🛡️', route: '/admin/compliance/dashboard',    roles: ['ADMIN'] },
-    { label: 'Watchlist',    icon: '🛡️', route: '/admin/kyc/watchlist',    roles: ['ADMIN'] },
-    { label: 'AUDIT',         icon: '📋', route: '/admin/audit-logs',              roles: ['ADMIN'] },
-    { label: 'MOBILE_MONEY',  icon: '📱', route: '/admin/mobile-money',            roles: ['ADMIN'] },
-    { label: 'BROADCAST',     icon: '📣', route: '/admin/notifications/broadcast', roles: ['ADMIN'] },
-    { label: 'Alerts',     icon: '📣', route: '/admin/alerts', roles: ['ADMIN'] },
-    { label: 'Broadcast Notifications',     icon: '📣', route: '/admin/notif-broadcast', roles: ['ADMIN'] },
-
-    { label: 'TRANSFERS',     icon: '📦', route: '/admin/transfers',               roles: ['ADMIN', 'MANAGER'] },
-    { label: 'REPORTS',       icon: '📊', route: '/admin/reports',           roles: ['ADMIN', 'MANAGER'] },
-
-    { label: 'DASHBOARD',     icon: '🖥️', route: '/manager/dashboard',            roles: ['MANAGER'] },
-    { label: 'MGR_REPORTS',   icon: '📄', route: '/manager/reports',              roles: ['MANAGER'] },
-
-    { label: 'NEW_TRANSFER',   icon: '➕', route: '/agent/transfers/new',           roles: ['AGENT'] },
-    { label: 'WITHDRAWAL',     icon: '💵', route: '/agent/transfers/payment',       roles: ['AGENT'] },
-    { label: 'MOBILE_TRANSFER_SIDEBAR', icon: '📱', route: '/agent/transfers/mobile/new',  roles: ['AGENT'] },
-    { label: 'CASH_REGISTER',  icon: '🏦', route: '/agent/cash-register',           roles: ['AGENT'] },
-
-    { label: 'CHATBOT',       icon: '🤖', route: '/client/chatbot',                roles: ['CLIENT', 'AGENT'] },
-    { label: 'MY_DASHBOARD',  icon: '🏠', route: '/client/dashboard',              roles: ['CLIENT'] },
-    { label: 'MY_TRANSFERS',  icon: '📤', route: '/client/transfers',              roles: ['CLIENT'] },
-    { label: 'MY_PROFILE',    icon: '👤', route: '/client/profile',                roles: ['CLIENT'] },
+    { label: 'NAV_USERS',               icon: 'fa-solid fa-users',                  route: '/admin/users',                   roles: ['ADMIN'] },
+    { label: 'AGENCIES',                icon: 'fa-solid fa-building',               route: '/admin/agencies',                roles: ['ADMIN'] },
+    { label: 'CURRENCIES',              icon: 'fa-solid fa-coins',                  route: '/admin/currencies',              roles: ['ADMIN'] },
+    { label: 'CORRIDORS',               icon: 'fa-solid fa-route',                  route: '/admin/corridors',               roles: ['ADMIN'] },
+    { label: 'RATES',                   icon: 'fa-solid fa-chart-line',             route: '/admin/exchange-rates',          roles: ['ADMIN'] },
+    { label: 'FEES',                    icon: 'fa-solid fa-hand-holding-dollar',    route: '/admin/fee-grids',               roles: ['ADMIN'] },
+    { label: 'COMPLIANCE',              icon: 'fa-solid fa-shield-halved',          route: '/admin/compliance/dashboard',    roles: ['ADMIN'] },
+    { label: 'Watchlist',               icon: 'fa-solid fa-list-check',             route: '/admin/kyc/watchlist',           roles: ['ADMIN'] },
+    { label: 'AUDIT',                   icon: 'fa-solid fa-clipboard-list',         route: '/admin/audit-logs',              roles: ['ADMIN'] },
+    { label: 'MOBILE_MONEY',            icon: 'fa-solid fa-mobile-screen',          route: '/admin/mobile-money',            roles: ['ADMIN'] },
+    { label: 'Alerts',                  icon: 'fa-solid fa-triangle-exclamation',   route: '/admin/alerts',                  roles: ['ADMIN'] },
+    { label: 'Broadcast Notifications', icon: 'fa-solid fa-satellite-dish',         route: '/admin/notif-broadcast',         roles: ['ADMIN'] },
+    { label: 'TRANSFERS',               icon: 'fa-solid fa-arrow-right-arrow-left', route: '/admin/transfers',               roles: ['ADMIN', 'MANAGER'] },
+    { label: 'REPORTS',                 icon: 'fa-solid fa-chart-bar',              route: '/admin/reports',                 roles: ['ADMIN', 'MANAGER'] },
+    { label: 'DASHBOARD',               icon: 'fa-solid fa-gauge',                  route: '/manager/dashboard',             roles: ['MANAGER'] },
+    { label: 'MGR_REPORTS',             icon: 'fa-regular fa-file-lines',           route: '/manager/reports',               roles: ['MANAGER'] },
+    { label: 'NEW_TRANSFER',            icon: 'fa-solid fa-plus',                   route: '/agent/transfers/new',           roles: ['AGENT'] },
+    { label: 'WITHDRAWAL',              icon: 'fa-solid fa-money-bill-wave',        route: '/agent/transfers/payment',       roles: ['AGENT'] },
+    { label: 'MOBILE_TRANSFER_SIDEBAR', icon: 'fa-solid fa-mobile-screen',          route: '/agent/transfers/mobile/new',    roles: ['AGENT'] },
+    { label: 'CASH_REGISTER',           icon: 'fa-solid fa-cash-register',          route: '/agent/cash-register',           roles: ['AGENT'] },
+    { label: 'CHATBOT',                 icon: 'fa-solid fa-robot',                  route: '/client/chatbot',                roles: ['CLIENT', 'AGENT'] },
+    { label: 'MY_DASHBOARD',            icon: 'fa-solid fa-house',                  route: '/client/dashboard',              roles: ['CLIENT'] },
+    { label: 'MY_TRANSFERS',            icon: 'fa-solid fa-paper-plane',            route: '/client/transfers',              roles: ['CLIENT'] },
+    { label: 'MY_PROFILE',              icon: 'fa-regular fa-circle-user',          route: '/client/profile',                roles: ['CLIENT'] },
   ];
 
   constructor(public auth: AuthService, private router: Router) {}
@@ -62,8 +57,6 @@ export class SidebarComponent implements OnInit {
 
   private loadUserRole(): void {
     const role = this.auth.getRole();
-
-    // fallback safety (prevents empty UI issues)
     this.userRole = role ?? 'CLIENT';
   }
 
@@ -76,6 +69,6 @@ export class SidebarComponent implements OnInit {
   toggleCollapse() {
     this.isCollapsed = !this.isCollapsed;
   }
-  goHome(): void { this.router.navigate(['/login']); }
 
+  goHome(): void { this.router.navigate(['/login']); }
 }
