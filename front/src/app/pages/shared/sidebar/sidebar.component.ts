@@ -35,6 +35,7 @@ export class SidebarComponent implements OnInit {
     { label: 'MOBILE_MONEY',  icon: '📱', route: '/admin/mobile-money',            roles: ['ADMIN'] },
     { label: 'BROADCAST',     icon: '📣', route: '/admin/notifications/broadcast', roles: ['ADMIN'] },
     { label: 'Alerts',     icon: '📣', route: '/admin/alerts', roles: ['ADMIN'] },
+    { label: 'Broadcast Notifications',     icon: '📣', route: '/admin/notif-broadcast', roles: ['ADMIN'] },
 
     { label: 'TRANSFERS',     icon: '📦', route: '/admin/transfers',               roles: ['ADMIN', 'MANAGER'] },
     { label: 'REPORTS',       icon: '📊', route: '/admin/reports',           roles: ['ADMIN', 'MANAGER'] },

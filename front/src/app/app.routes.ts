@@ -93,6 +93,14 @@ export const routes: Routes = [
             canActivate: [roleGuard],
             data: { roles: ['ADMIN'] }
           },
+          {
+            path: 'notif-broadcast',
+            loadComponent: () =>
+              import('./pages/admin/notifications-broadcast/notifications-broadcast.component')
+                .then(m => m.BroadcastNotificationComponent),
+            canActivate: [roleGuard],
+            data: { roles: ['ADMIN'] }
+          },
           // ── Users ────────────────────────────────────────────────────────
           {
             path: 'users',

@@ -1,6 +1,7 @@
 package com.okane.service;
 
 
+import com.okane.dto.responseDto.BroadcastNotificationResponse;
 import com.okane.entity.Transfert;
 import com.okane.dto.NotificationPreferenceDto;
 import com.okane.dto.requestDto.BroadcastNotificationRequest;
@@ -31,4 +32,4 @@ public interface NotificationService {
     );
 
     void broadcast(BroadcastNotificationRequest request);
-}
+    List<BroadcastNotificationResponse> getAllBroadcasts();}
