@@ -1,4 +1,4 @@
-package com.okane.service.impl;
+package com.okane.service.Impl;
 
 import com.okane.dto.converter.AgenceConverter;
 import com.okane.dto.requestDto.CreateAgenceRequestDto;
@@ -15,6 +15,7 @@ import com.okane.entity.enums.StatutTransfert;
 import com.okane.pagination.PageResponseDto;
 import com.okane.repository.AgenceRepository;
 import com.okane.repository.PaysRepository;
+import com.okane.service.impl.AgenceServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
