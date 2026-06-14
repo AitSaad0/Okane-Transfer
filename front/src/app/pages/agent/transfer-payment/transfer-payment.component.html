@@ -1,0 +1,264 @@
+<div class="w-full max-w-5xl mx-auto bg-white rounded-2xl shadow-sm p-8">
+  <h1 class="text-2xl font-semibold text-slate-800 mb-6">{{ 'PAYMENT.TITLE' | translate }}</h1>
+
+  <div [class.hidden]="!error">
+    <div class="bg-danger/5 border border-danger/20 rounded-xl p-4 flex items-start gap-3 mb-6">
+      <div class="shrink-0 w-9 h-9 rounded-full bg-danger/10 flex items-center justify-center">
+        <svg class="w-5 h-5 text-danger" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="text-sm font-medium text-danger">{{ error | translate }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div [class.hidden]="!paySuccess || !transfert">
+    <div class="text-center space-y-4">
+      <div class="bg-success/10 text-success px-4 py-3 rounded-lg text-sm font-medium">
+        {{ 'PAYMENT.SUCCESS' | translate }}
+      </div>
+      <div class="bg-primary/5 border border-primary/20 rounded-xl p-6">
+        <p class="text-sm text-slate-500">{{ 'PAYMENT.REFERENCE' | translate }}</p>
+        <p class="text-2xl font-bold text-primary tracking-widest mt-1">{{ transfert?.reference }}</p>
+      </div>
+      <button (click)="downloadReceipt()"
+        class="border border-primary text-primary text-sm font-medium py-2 px-6 rounded-lg hover:bg-primary/5">
+        {{ 'PAYMENT.DOWNLOAD_RECEIPT' | translate }}
+      </button>
+      <button (click)="resetAll()"
+        class="bg-primary text-white text-sm font-medium py-2 px-6 rounded-lg hover:opacity-90">
+        {{ 'PAYMENT.NEW_SEARCH' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div [class.hidden]="paySuccess || !!transfert || transferts.length > 0">
+    <div class="mb-6">
+      <fieldset [formGroup]="searchForm">
+        <div class="flex gap-4 mb-4">
+          <button type="button" (click)="toggleSearchType()"
+            class="text-sm font-medium py-2 px-4 rounded-lg transition-colors"
+            [class.bg-primary]="searchType === 'code'"
+            [class.text-white]="searchType === 'code'"
+            [class.bg-slate-100]="searchType !== 'code'"
+            [class.text-slate-600]="searchType !== 'code'">
+            {{ 'PAYMENT.BY_CODE' | translate }}
+          </button>
+          <button type="button" (click)="toggleSearchType()"
+            class="text-sm font-medium py-2 px-4 rounded-lg transition-colors"
+            [class.bg-primary]="searchType === 'telephone'"
+            [class.text-white]="searchType === 'telephone'"
+            [class.bg-slate-100]="searchType !== 'telephone'"
+            [class.text-slate-600]="searchType !== 'telephone'">
+            {{ 'PAYMENT.BY_PHONE' | translate }}
+          </button>
+        </div>
+
+        <div [class.hidden]="searchType !== 'code'">
+          <div class="flex gap-2">
+            <input formControlName="codeRetrait" type="text" placeholder="{{ 'PAYMENT.CODE_PLACEHOLDER' | translate }}"
+              class="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-sm" />
+            <button type="button" (click)="search()" [disabled]="loading"
+              class="bg-primary text-white text-sm font-medium py-2 px-6 rounded-lg hover:opacity-90 disabled:opacity-50">
+              <span [class.hidden]="!loading">{{ 'ACTIONS.LOADING' | translate }}</span>
+              <span [class.hidden]="loading">{{ 'PAYMENT.SEARCH' | translate }}</span>
+            </button>
+          </div>
+        </div>
+        <div [class.hidden]="searchType !== 'telephone'">
+          <div class="flex gap-2">
+            <input formControlName="telephone" type="text" placeholder="{{ 'PAYMENT.PHONE_PLACEHOLDER' | translate }}"
+              class="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-sm" />
+            <button type="button" (click)="search()" [disabled]="loading"
+              class="bg-primary text-white text-sm font-medium py-2 px-6 rounded-lg hover:opacity-90 disabled:opacity-50">
+              <span [class.hidden]="!loading">{{ 'ACTIONS.LOADING' | translate }}</span>
+              <span [class.hidden]="loading">{{ 'PAYMENT.SEARCH' | translate }}</span>
+            </button>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+
+  <div [class.hidden]="transferts.length === 0 || !!transfert">
+    <div class="space-y-4">
+      <div class="flex items-center justify-between">
+        <p class="text-sm font-medium text-slate-600">{{ 'PAYMENT.MULTIPLE_RESULTS' | translate }} ({{ transferts.length }})</p>
+        <button type="button" (click)="resetAll()"
+          class="inline-flex items-center gap-1.5 text-sm font-medium text-primary border border-primary/30 rounded-lg py-2 px-4 hover:bg-primary/5 hover:border-primary/50 transition-colors duration-150">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          {{ 'PAYMENT.BACK_SEARCH' | translate }}
+        </button>
+      </div>
+      <div class="overflow-x-auto rounded-xl border border-slate-200">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-slate-50 text-left">
+              <th class="px-4 py-3 font-semibold text-slate-600">{{ 'PAYMENT.REFERENCE' | translate }}</th>
+              <th class="px-4 py-3 font-semibold text-slate-600">{{ 'PAYMENT.CODE_RETRAIT' | translate }}</th>
+              <th class="px-4 py-3 font-semibold text-slate-600">{{ 'PAYMENT.EXPEDITEUR' | translate }}</th>
+              <th class="px-4 py-3 font-semibold text-slate-600">{{ 'PAYMENT.BENEFICIAIRE' | translate }}</th>
+              <th class="px-4 py-3 font-semibold text-slate-600">{{ 'PAYMENT.STATUT' | translate }}</th>
+              <th class="px-4 py-3 font-semibold text-slate-600">{{ 'PAYMENT.ACTION' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr *ngFor="let t of transferts" class="hover:bg-slate-50/50 transition-colors">
+              <td class="px-4 py-3 font-medium text-slate-800">{{ t.reference }}</td>
+              <td class="px-4 py-3 font-bold text-primary">{{ t.codeRetrait }}</td>
+              <td class="px-4 py-3 text-slate-700">{{ t.expediteurNomComplet }}</td>
+              <td class="px-4 py-3 text-slate-700">{{ t.beneficiaireNomComplet }}</td>
+              <td class="px-4 py-3">
+                <span class="inline-block bg-success/10 text-success text-xs font-medium px-2 py-0.5 rounded-full">{{ t.statut }}</span>
+              </td>
+              <td class="px-4 py-3">
+                <button type="button" (click)="viewDetail(t)"
+                  class="text-xs font-medium text-primary border border-primary/30 rounded-lg py-1.5 px-3 hover:bg-primary/5 hover:border-primary/50 transition-colors duration-150">
+                  {{ 'PAYMENT.VIEW_DETAIL' | translate }}
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div [class.hidden]="!transfert || paySuccess">
+    <div class="space-y-6">
+      <div class="flex">
+        <button type="button" (click)="resetAll()"
+          class="inline-flex items-center gap-1.5 text-sm font-medium text-primary border border-primary/30 rounded-lg py-2 px-4 hover:bg-primary/5 hover:border-primary/50 transition-colors duration-150">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          {{ 'PAYMENT.BACK_SEARCH' | translate }}
+        </button>
+      </div>
+
+      <div [class.hidden]="!transfert?.paye">
+        <div class="bg-success/5 border border-success/20 rounded-xl p-4 flex items-start gap-3">
+          <div class="shrink-0 w-9 h-9 rounded-full bg-success/10 flex items-center justify-center">
+            <svg class="w-5 h-5 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+            </svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="font-semibold text-success text-sm">{{ 'PAYMENT.ALREADY_PAID' | translate }}</p>
+            <p class="text-xs text-slate-500 mt-0.5">
+              {{ 'PAYMENT.REFERENCE' | translate }}: {{ transfert?.reference }}
+              <span class="mx-1.5">&middot;</span>
+              {{ 'PAYMENT.CODE_RETRAIT' | translate }}: {{ transfert?.codeRetrait }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-slate-50 rounded-xl p-5 text-sm space-y-3">
+        <p class="font-semibold text-slate-700 mb-2">{{ 'PAYMENT.INFO_GENERALES' | translate }}</p>
+        <div class="grid grid-cols-2 gap-y-2">
+          <span class="text-slate-500">{{ 'PAYMENT.REFERENCE' | translate }}</span>
+          <span class="font-medium text-slate-800">{{ transfert?.reference }}</span>
+          <span class="text-slate-500">{{ 'PAYMENT.CODE_RETRAIT' | translate }}</span>
+          <span class="font-bold text-primary">{{ transfert?.codeRetrait }}</span>
+          <span class="text-slate-500">{{ 'PAYMENT.CORRIDOR' | translate }}</span>
+          <span class="font-medium text-slate-800">{{ transfert?.corridorDescription }}</span>
+          <span class="text-slate-500">{{ 'PAYMENT.DATE_ENVOI' | translate }}</span>
+          <span class="font-medium text-slate-800">{{ transfert?.dateEnvoi | date:'dd/MM/yyyy HH:mm' }}</span>
+          <span class="text-slate-500">{{ 'PAYMENT.STATUT' | translate }}</span>
+          <span class="font-medium text-success">{{ transfert?.statut }}</span>
+        </div>
+      </div>
+
+      <div class="bg-slate-50 rounded-xl p-5 text-sm space-y-3">
+        <p class="font-semibold text-slate-700 mb-2">{{ 'PAYMENT.EXPEDITEUR' | translate }}</p>
+        <div class="grid grid-cols-2 gap-y-2">
+          <span class="text-slate-500">{{ 'PAYMENT.NOM_COMPLET' | translate }}</span>
+          <span class="font-medium text-slate-800">{{ transfert?.expediteurNomComplet }}</span>
+          <span class="text-slate-500">{{ 'PAYMENT.TELEPHONE' | translate }}</span>
+          <span class="font-medium text-slate-800">{{ transfert?.expediteurTelephone }}</span>
+          <span class="text-slate-500">{{ 'PAYMENT.EMAIL' | translate }}</span>
+          <span class="font-medium text-slate-800">{{ transfert?.expediteurEmail }}</span>
+          <span class="text-slate-500">{{ 'PAYMENT.PIECE_IDENTITE' | translate }}</span>
+          <span class="font-medium text-slate-800">{{ transfert?.expediteurPieceIdentite }}</span>
+          <span class="text-slate-500">{{ 'PAYMENT.PAYS' | translate }}</span>
+          <span class="font-medium text-slate-800">{{ transfert?.expediteurPays }}</span>
+        </div>
+      </div>
+
+      <div class="bg-slate-50 rounded-xl p-5 text-sm space-y-3">
+        <p class="font-semibold text-slate-700 mb-2">{{ 'PAYMENT.BENEFICIAIRE' | translate }}</p>
+        <div class="grid grid-cols-2 gap-y-2">
+          <span class="text-slate-500">{{ 'PAYMENT.NOM_COMPLET' | translate }}</span>
+          <span class="font-medium text-slate-800">{{ transfert?.beneficiaireNomComplet }}</span>
+          <span class="text-slate-500">{{ 'PAYMENT.TELEPHONE' | translate }}</span>
+          <span class="font-medium text-slate-800">{{ transfert?.beneficiaireTelephone }}</span>
+          <span class="text-slate-500">{{ 'PAYMENT.PAYS' | translate }}</span>
+          <span class="font-medium text-slate-800">{{ transfert?.beneficiairePays }}</span>
+        </div>
+      </div>
+
+      <div class="bg-slate-50 rounded-xl p-5 text-sm space-y-3">
+        <p class="font-semibold text-slate-700 mb-2">{{ 'PAYMENT.FEES_DETAILS' | translate }}</p>
+        <div class="grid grid-cols-2 gap-y-2">
+          <span class="text-slate-500">{{ 'PAYMENT.MONTANT_DEPART' | translate }}</span>
+          <span class="font-medium text-slate-800">{{ transfert?.montantDepart | number:'1.2-2' }} {{ transfert?.deviseSource }}</span>
+          <span class="text-slate-500">{{ 'PAYMENT.FEES_FIXED' | translate }}</span>
+          <span class="font-medium text-slate-800">{{ transfert?.fraisFixes | number:'1.2-2' }} {{ transfert?.deviseSource }}</span>
+          <span class="text-slate-500">{{ 'PAYMENT.FEES_PROPORTIONAL' | translate }}</span>
+          <span class="font-medium text-slate-800">{{ transfert?.fraisProportionnels | number:'1.2-2' }} {{ transfert?.deviseSource }}</span>
+          <span class="text-slate-500">{{ 'PAYMENT.TOTAL_FEES' | translate }}</span>
+          <span class="font-medium text-danger">{{ transfert?.totalFrais | number:'1.2-2' }} {{ transfert?.deviseSource }}</span>
+          <span class="text-slate-500">{{ 'PAYMENT.MONTANT_NET' | translate }}</span>
+          <span class="font-medium text-slate-800">{{ transfert?.montantNet | number:'1.2-2' }} {{ transfert?.deviseSource }}</span>
+        </div>
+      </div>
+
+      <div class="bg-slate-50 rounded-xl p-5 text-sm space-y-3">
+        <p class="font-semibold text-slate-700 mb-2">{{ 'PAYMENT.EXCHANGE_RATE' | translate }}</p>
+        <div class="grid grid-cols-2 gap-y-2">
+          <span class="text-slate-500">{{ 'PAYMENT.TAUX' | translate }}</span>
+          <span class="font-medium text-slate-800">1 {{ transfert?.deviseSource }} = {{ transfert?.tauxChange }} {{ transfert?.deviseDestination }}</span>
+          <span class="text-slate-500">{{ 'PAYMENT.SOURCE_TAUX' | translate }}</span>
+          <span class="font-medium text-slate-800">{{ transfert?.sourceTaux }}</span>
+        </div>
+      </div>
+
+      <div class="bg-primary/5 border border-primary/20 rounded-xl p-5 text-sm">
+        <div class="flex justify-between items-center">
+          <span class="font-semibold text-slate-700">{{ 'PAYMENT.MONTANT_RECU' | translate }}</span>
+          <span class="text-lg font-bold text-primary">{{ transfert?.montantRecu | number:'1.2-2' }} {{ transfert?.deviseDestination }}</span>
+        </div>
+      </div>
+
+      <div [class.hidden]="transfert?.paye">
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-5">
+          <p class="font-semibold text-slate-700 mb-3">{{ 'PAYMENT.VALIDATION' | translate }}</p>
+          <fieldset [formGroup]="validationForm">
+            <label class="text-sm font-medium text-slate-600">{{ 'PAYMENT.IDENTITY_DOCUMENT' | translate }}</label>
+            <input formControlName="pieceIdentiteBeneficiaire" type="text"
+              class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm" />
+          </fieldset>
+          <button type="button" (click)="confirmPayment()" [disabled]="validationForm.invalid || paying"
+            class="mt-4 bg-primary text-white text-sm font-medium py-2.5 px-8 rounded-lg hover:opacity-90 disabled:opacity-50 w-full">
+            <span [class.hidden]="!paying">{{ 'ACTIONS.LOADING' | translate }}</span>
+            <span [class.hidden]="paying">{{ 'PAYMENT.VALIDATE' | translate }}</span>
+          </button>
+        </div>
+      </div>
+      <div class="flex">
+        <button type="button" (click)="resetAll()"
+          class="inline-flex items-center gap-1.5 text-sm font-medium text-primary border border-primary/30 rounded-lg py-2 px-4 hover:bg-primary/5 hover:border-primary/50 transition-colors duration-150">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          {{ 'PAYMENT.BACK_SEARCH' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

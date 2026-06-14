@@ -1,0 +1,30 @@
+<aside class="sidebar" [class.sidebar--collapsed]="isCollapsed" *ngIf="auth.isLoggedIn()">
+  <button class="sidebar__toggle" (click)="toggleCollapse()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="3" y1="12" x2="21" y2="12"/>
+      <line x1="3" y1="6"  x2="21" y2="6"/>
+      <line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+
+  <nav class="sidebar__nav">
+    <a
+      *ngFor="let item of navItems"
+      [routerLink]="item.route"
+      routerLinkActive="active"
+      class="sidebar__item">
+
+      <span class="sidebar__icon">{{ item.icon }}</span>
+
+      <span class="sidebar__label" *ngIf="!isCollapsed">
+      {{ item.label | translate }}
+    </span>
+
+    </a>
+    <button (click)="goHome()" class="mt-6 px-4 py-2 bg-primary text-white text-sm rounded-lg">
+      {{ 'Disconnect' | translate }}
+    </button>
+  </nav>
+
+
+</aside>

@@ -1,0 +1,70 @@
+<div class="p-6 bg-slate-50 min-h-screen">
+  <div class="max-w-lg mx-auto">
+
+    <div class="mb-6">
+      <a routerLink="/admin/corridors" class="text-sm text-secondary hover:text-primary transition-colors">← Retour aux corridors</a>
+      <h1 class="text-2xl font-semibold text-slate-800 mt-2">Nouveau corridor</h1>
+      <p class="text-sm text-slate-500 mt-1">Définir une route source → destination</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+
+      @if (error()) {
+        <div class="mb-4 p-3 bg-rose-50 border border-rose-200 rounded-lg text-sm text-danger">{{ error() }}</div>
+      }
+
+      <div class="space-y-4">
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="text-sm font-medium text-slate-600 block mb-1">Pays source *</label>
+            <input [formControl]="$any(form.get('sourceCountry'))"
+              placeholder="ex: Maroc"
+              class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"/>
+          </div>
+          <div>
+            <label class="text-sm font-medium text-slate-600 block mb-1">Pays destination *</label>
+            <input [formControl]="$any(form.get('destinationCountry'))"
+              placeholder="ex: France"
+              class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"/>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="text-sm font-medium text-slate-600 block mb-1">Devise envoi *</label>
+            <select [formControl]="$any(form.get('sourceCurrencyCode'))"
+              class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white">
+              <option value="">Sélectionner</option>
+              @for (c of currencies(); track c.id) {
+                <option [value]="c.code">{{ c.code }} — {{ c.name }}</option>
+              }
+            </select>
+          </div>
+          <div>
+            <label class="text-sm font-medium text-slate-600 block mb-1">Devise réception *</label>
+            <select [formControl]="$any(form.get('destinationCurrencyCode'))"
+              class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white">
+              <option value="">Sélectionner</option>
+              @for (c of currencies(); track c.id) {
+                <option [value]="c.code">{{ c.code }} — {{ c.name }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <div class="flex gap-3 pt-2">
+          <button (click)="submit()" [disabled]="form.invalid || loading()"
+            class="flex-1 bg-primary text-white text-sm font-medium py-2 rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+            {{ loading() ? 'Création...' : 'Créer le corridor' }}
+          </button>
+          <a routerLink="/admin/corridors"
+            class="flex-1 text-center border border-slate-200 text-slate-600 text-sm font-medium py-2 rounded-lg hover:bg-slate-50 transition-colors">
+            Annuler
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

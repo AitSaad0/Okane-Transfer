@@ -1,0 +1,43 @@
+<div *ngIf="visible" class="fixed inset-0 z-50 flex items-center justify-center">
+  <!-- Backdrop -->
+  <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" (click)="onCancel()"></div>
+
+  <!-- Dialog -->
+  <div class="relative bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6">
+    <!-- Icon -->
+    <div class="flex items-center gap-4 mb-4">
+      <div [ngClass]="danger ? 'bg-rose-50' : 'bg-indigo-50'"
+           class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
+        <svg *ngIf="danger" class="w-6 h-6 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+        </svg>
+        <svg *ngIf="!danger" class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+      </div>
+      <div>
+        <h3 class="text-base font-semibold text-slate-800">{{ title }}</h3>
+        <p class="text-sm text-slate-500 mt-0.5">{{ message }}</p>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex gap-3 justify-end mt-6">
+      <button
+        (click)="onCancel()"
+        class="px-4 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">
+        Annuler
+      </button>
+      <button
+        (click)="onConfirm()"
+        [ngClass]="danger
+          ? 'bg-rose-600 hover:bg-rose-700 text-white'
+          : 'bg-indigo-600 hover:bg-indigo-700 text-white'"
+        class="px-4 py-2 text-sm font-medium rounded-lg transition-colors">
+        {{ confirmLabel }}
+      </button>
+    </div>
+  </div>
+</div>
