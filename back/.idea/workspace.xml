@@ -9,17 +9,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5d0b6b24-9853-4a25-9490-2799f2096f20" name="Changes" comment="added interface that shows all notifications and update notifications preferences based on client need">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/okane/dto/responseDto/BroadcastNotificationResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/notifications-broadcast/models/broadcast-notification.model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/notifications-broadcast/service/notification.service.ts" afterDir="false" />
+    <list default="true" id="5d0b6b24-9853-4a25-9490-2799f2096f20" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/reports/models/report.model.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/reports/services/report.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/controller/AdminNotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/controller/AdminNotificationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/repository/NotificationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/repository/NotificationRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/service/NotificationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/NotificationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/NotificationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/security/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/security/JwtUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/JournalAuditServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/JournalAuditServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/app.routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/core/interceptors/jwt.interceptor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/core/interceptors/jwt.interceptor.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front/src/app/pages/shared/sidebar/sidebar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/shared/sidebar/sidebar.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,25 +40,20 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$/.." value="feature/audit-logs-interface" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;med202y&quot;
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "med202y"
   }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/AitSaad0/Okane-Transfer.git&quot;,
-    &quot;accountId&quot;: &quot;9f2fe764-2c24-45c2-be3d-6372c9cde4c5&quot;
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/AitSaad0/Okane-Transfer.git",
+    "accountId": "9f2fe764-2c24-45c2-be3d-6372c9cde4c5"
   }
-}</component>
+}]]></component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -73,9 +65,6 @@
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1,
   &quot;fromUser&quot;: false
@@ -85,34 +74,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Okane-Transfer [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Okane-Transfer [package].executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;Tomcat Server.Tomcat 10.1.52.executor&quot;: &quot;Run&quot;,
-    &quot;Tomcat Server.Tomcat 11.0.18.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/notifications-interface&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/Desktop/Okane-Transfer-develop/Okane-Transfer/back&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2025.2.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "Tomcat Server.Tomcat 10.1.52.executor": "Run",
+    "Tomcat Server.Tomcat 11.0.18.executor": "Run",
+    "git-widget-placeholder": "feature/navbar-improvements",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/User/Desktop/Okane-Transfer-develop/Okane-Transfer/back",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.okane.service" />
@@ -246,60 +232,12 @@
       <workItem from="1780472691185" duration="1000" />
       <workItem from="1780654908121" duration="6083000" />
       <workItem from="1780737881493" duration="6979000" />
-      <workItem from="1780758501012" duration="14662000" />
-      <workItem from="1781191852797" duration="36668000" />
+      <workItem from="1780758501012" duration="13713000" />
     </task>
-    <task id="LOCAL-00001" summary="export issues fixed">
-      <option name="closed" value="true" />
-      <created>1781196291042</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1781196291042</updated>
-    </task>
-    <task id="LOCAL-00002" summary="export issues fixed">
-      <option name="closed" value="true" />
-      <created>1781196294752</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1781196294752</updated>
-    </task>
-    <task id="LOCAL-00003" summary="added interface that shows all alerts">
-      <option name="closed" value="true" />
-      <created>1781208928805</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1781208928805</updated>
-    </task>
-    <task id="LOCAL-00004" summary="added interface that shows all alerts">
-      <option name="closed" value="true" />
-      <created>1781270737195</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1781270737195</updated>
-    </task>
-    <task id="LOCAL-00005" summary="added interface that shows all notifications and update notifications preferences based on client need">
-      <option name="closed" value="true" />
-      <created>1781385202993</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1781385202994</updated>
-    </task>
-    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="export issues fixed" />
-    <MESSAGE value="added interface that shows all alerts" />
-    <MESSAGE value="added interface that shows all notifications and update notifications preferences based on client need" />
-    <option name="LAST_COMMIT_MESSAGE" value="added interface that shows all notifications and update notifications preferences based on client need" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
