@@ -89,6 +89,7 @@
     "SEARCH": "Search by name, email…",
     "ALL_ROLES": "All roles",
     "ALL_STATUSES": "All statuses",
+    "ALL_AGENCIES": "All agencies",
     "NO_USERS": "No users found",
     "NO_USERS_SUB": "Adjust your filters or create a new user.",
     "LOADING": "Loading…",
@@ -287,5 +288,152 @@
   },
   "COMMON": {
     "EMPTY": "—"
+  },
+  "AGENCIES": {
+    "TITLE": "Agency Management",
+    "SUBTITLE_ONE": "agency total",
+    "SUBTITLE_OTHER": "agencies total",
+    "CREATE": "Create agency",
+    "SEARCH": "Search by name, city, country…",
+    "ALL_COUNTRIES": "All countries",
+    "ALL_STATUSES": "All statuses",
+    "STATUS": {
+      "ACTIVE": "Active",
+      "SUSPENDED": "Suspended"
+    },
+    "COLS": {
+      "AGENCY": "Agency",
+      "LOCATION": "Location",
+      "CEILING": "Daily ceiling",
+      "STATUS": "Status",
+      "ACTIONS": "Actions"
+    },
+    "NO_AGENCIES": "No agencies found",
+    "NO_AGENCIES_SUB": "Adjust your filters or create a new agency.",
+    "LOADING": "Loading…",
+    "ACTIONS": {
+      "DASHBOARD": "Dashboard",
+      "AGENTS": "Manage agents",
+      "EDIT": "Edit",
+      "SUSPEND": "Suspend",
+      "ACTIVATE": "Activate"
+    },
+    "DIALOG": {
+      "SUSPEND_TITLE": "Suspend agency",
+      "SUSPEND_MSG": "The agency will no longer be able to process new operations. Historical data remains accessible.",
+      "ACTIVATE_TITLE": "Activate agency",
+      "ACTIVATE_MSG": "The agency will be able to process operations again.",
+      "SUSPEND_CONFIRM": "Suspend",
+      "ACTIVATE_CONFIRM": "Activate"
+    },
+    "FORM": {
+      "CREATE_TITLE": "Create agency",
+      "EDIT_TITLE": "Edit agency",
+      "SUBTITLE": "Fill in the agency information",
+      "SECTION_IDENTITY": "Agency identity",
+      "SECTION_LOCATION": "Location",
+      "SECTION_PARAMS": "Operational parameters",
+      "NAME": "Agency name",
+      "NAME_PLACEHOLDER": "e.g. OkaneTransfer Casablanca Centre",
+      "NAME_REQUIRED": "Name is required.",
+      "COUNTRY": "Country",
+      "COUNTRY_PLACEHOLDER": "— Select a country —",
+      "COUNTRY_REQUIRED": "Country is required.",
+      "CITY": "City",
+      "CITY_PLACEHOLDER": "e.g. Casablanca",
+      "CITY_REQUIRED": "City is required.",
+      "ADDRESS": "Address",
+      "ADDRESS_PLACEHOLDER": "e.g. 12 Rue Mohammed V",
+      "ADDRESS_REQUIRED": "Address is required.",
+      "POSTAL_CODE": "Postal code",
+      "POSTAL_CODE_PLACEHOLDER": "e.g. 20000",
+      "POSTAL_CODE_REQUIRED": "Postal code is required.",
+      "CEILING": "Daily ceiling",
+      "CEILING_PLACEHOLDER": "e.g. 100000",
+      "CEILING_REQUIRED": "Ceiling must be a positive number.",
+      "CANCEL": "Cancel",
+      "SAVE": "Save changes",
+      "CREATE_BTN": "Create agency",
+      "SAVING": "Saving…"
+    },
+    "AGENTS": {
+      "TITLE": "Agency agents",
+      "ASSIGN": "Assign agent",
+      "NO_AGENTS": "No agents assigned",
+      "NO_AGENTS_SUB": "Assign an available agent to this agency.",
+      "COLS": {
+        "AGENT": "Agent",
+        "STATUS": "Status",
+        "CASH": "Cash register",
+        "BALANCE": "Balance",
+        "ACTIONS": "Actions"
+      },
+      "CASH_OPEN": "Open",
+      "CASH_CLOSED": "Closed",
+      "ACTIONS": {
+        "SUSPEND": "Suspend",
+        "ACTIVATE": "Activate",
+        "REMOVE": "Remove from agency"
+      },
+      "DIALOG": {
+        "ASSIGN_TITLE": "Assign agent",
+        "ASSIGN_SUBTITLE": "Select an available agent (AGENT role, unassigned).",
+        "NO_AVAILABLE": "No agents available.",
+        "NO_AVAILABLE_SUB": "Create a user with the Agent role from user management.",
+        "SELECT_PLACEHOLDER": "— Select an agent —",
+        "ASSIGNING": "Assigning…",
+        "ASSIGN_BTN": "Assign",
+        "SUSPEND_TITLE": "Suspend agent",
+        "SUSPEND_MSG": "The agent will no longer be able to perform operations.",
+        "ACTIVATE_TITLE": "Activate agent",
+        "ACTIVATE_MSG": "The agent will be able to perform operations again.",
+        "SUSPEND_CONFIRM": "Suspend",
+        "ACTIVATE_CONFIRM": "Activate",
+        "REMOVE_TITLE": "Remove agent from agency",
+        "REMOVE_MSG": "The agent will be removed from this agency. You can reassign them later.",
+        "REMOVE_CONFIRM": "Remove"
+      }
+    },
+    "DASHBOARD": {
+      "TITLE": "Agency dashboard",
+      "KPI": {
+        "SEND_VOLUME": "Send volume (day)",
+        "PAY_VOLUME": "Payment volume (day)",
+        "TRANSFERS_COUNT": "Transfers today",
+        "COMMISSIONS": "Commissions generated"
+      },
+      "SUCCESS_RATE": "Success rate",
+      "STATUS": {
+        "PAID": "Paid",
+        "PENDING": "Pending",
+        "CANCELLED": "Cancelled",
+        "EXPIRED": "Expired"
+      },
+      "CEILING_USAGE": "Daily ceiling usage",
+      "CEILING_CONFIG": "Configured daily ceiling:",
+      "CASH_OPEN": "Cash register open",
+      "CASH_CLOSED": "Cash register closed"
+    }
+  },
+  "CLIENT_PROFILE": {
+    "TITLE": "My profile",
+    "SUBTITLE": "Manage your personal information and preferences",
+    "TAB_PROFILE": "Profile",
+    "TAB_ACTIVITY": "Activity",
+    "FIRSTNAME": "First name",
+    "LASTNAME": "Last name",
+    "PHONE": "Phone",
+    "FIELD_REQUIRED": "This field is required",
+    "NOTIF_PREFS": "Notification preferences",
+    "NOTIF_EMAIL": "Email notifications",
+    "NOTIF_PUSH": "Push notifications",
+    "SAVE": "Save",
+    "SAVING": "Saving…",
+    "SUCCESS": "Profile updated successfully",
+    "NO_ACTIVITY": "No recent activity",
+    "COL_IP": "IP address",
+    "COL_ACTION": "Action",
+    "COL_DATE": "Date",
+    "NOTIF_SMS": "SMS notifications"
   }
 }

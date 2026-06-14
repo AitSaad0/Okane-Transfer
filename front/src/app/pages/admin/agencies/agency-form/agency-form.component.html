@@ -1,0 +1,109 @@
+<div class="page-wrapper">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="flex items-center gap-3">
+      <button (click)="onCancel()" class="back-btn">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <div>
+        <h1 class="page-title">{{ (isEdit ? 'AGENCIES.FORM.EDIT_TITLE' : 'AGENCIES.FORM.CREATE_TITLE') | translate }}</h1>
+        <p class="page-subtitle">{{ 'AGENCIES.FORM.SUBTITLE' | translate }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="alert-error">{{ error }}</div>
+
+  <!-- Loading skeleton -->
+  <div *ngIf="loading" class="form-card flex items-center justify-center py-16">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Form -->
+  <form *ngIf="!loading" [formGroup]="form" (ngSubmit)="onSubmit()" class="form-card">
+
+    <!-- Section : Identité -->
+    <div class="section-title">{{ 'AGENCIES.FORM.SECTION_IDENTITY' | translate }}</div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+      <!-- Nom -->
+      <div class="field sm:col-span-2">
+        <label class="label">{{ 'AGENCIES.FORM.NAME' | translate }} <span class="text-rose-500">*</span></label>
+        <input formControlName="nom" type="text"
+               [placeholder]="'AGENCIES.FORM.NAME_PLACEHOLDER' | translate"
+               [ngClass]="{'input-error': hasError('nom')}" class="input"/>
+        <span *ngIf="hasError('nom')" class="error-msg">{{ 'AGENCIES.FORM.NAME_REQUIRED' | translate }}</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Section : Localisation -->
+    <div class="section-title">{{ 'AGENCIES.FORM.SECTION_LOCATION' | translate }}</div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+      <!-- Pays -->
+      <div class="field">
+        <label class="label">{{ 'AGENCIES.FORM.COUNTRY' | translate }} <span class="text-rose-500">*</span></label>
+        <select formControlName="paysId" [ngClass]="{'input-error': hasError('paysId')}" class="input">
+          <option [value]="null">{{ 'AGENCIES.FORM.COUNTRY_PLACEHOLDER' | translate }}</option>
+          <option *ngFor="let p of pays" [value]="p.id">{{ p.nom }} ({{ p.codeIso }})</option>
+        </select>
+        <span *ngIf="hasError('paysId')" class="error-msg">{{ 'AGENCIES.FORM.COUNTRY_REQUIRED' | translate }}</span>
+      </div>
+      <!-- Ville -->
+      <div class="field">
+        <label class="label">{{ 'AGENCIES.FORM.CITY' | translate }} <span class="text-rose-500">*</span></label>
+        <input formControlName="ville" type="text"
+               [placeholder]="'AGENCIES.FORM.CITY_PLACEHOLDER' | translate"
+               [ngClass]="{'input-error': hasError('ville')}" class="input"/>
+        <span *ngIf="hasError('ville')" class="error-msg">{{ 'AGENCIES.FORM.CITY_REQUIRED' | translate }}</span>
+      </div>
+      <!-- Adresse -->
+      <div class="field sm:col-span-2">
+        <label class="label">{{ 'AGENCIES.FORM.ADDRESS' | translate }} <span class="text-rose-500">*</span></label>
+        <input formControlName="adresse" type="text"
+               [placeholder]="'AGENCIES.FORM.ADDRESS_PLACEHOLDER' | translate"
+               [ngClass]="{'input-error': hasError('adresse')}" class="input"/>
+        <span *ngIf="hasError('adresse')" class="error-msg">{{ 'AGENCIES.FORM.ADDRESS_REQUIRED' | translate }}</span>
+      </div>
+      <!-- Code postal -->
+      <div class="field">
+        <label class="label">{{ 'AGENCIES.FORM.POSTAL_CODE' | translate }} <span class="text-rose-500">*</span></label>
+        <input formControlName="codePostal" type="text"
+               [placeholder]="'AGENCIES.FORM.POSTAL_CODE_PLACEHOLDER' | translate"
+               [ngClass]="{'input-error': hasError('codePostal')}" class="input"/>
+        <span *ngIf="hasError('codePostal')" class="error-msg">{{ 'AGENCIES.FORM.POSTAL_CODE_REQUIRED' | translate }}</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Section : Paramètres -->
+    <div class="section-title">{{ 'AGENCIES.FORM.SECTION_PARAMS' | translate }}</div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+      <!-- Plafond journalier -->
+      <div class="field">
+        <label class="label">{{ 'AGENCIES.FORM.CEILING' | translate }} <span class="text-rose-500">*</span></label>
+        <input formControlName="plafondJournalier" type="number" min="1" step="0.01"
+               [placeholder]="'AGENCIES.FORM.CEILING_PLACEHOLDER' | translate"
+               [ngClass]="{'input-error': hasError('plafondJournalier')}" class="input font-mono"/>
+        <span *ngIf="hasError('plafondJournalier')" class="error-msg">{{ 'AGENCIES.FORM.CEILING_REQUIRED' | translate }}</span>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+      <button type="button" (click)="onCancel()" class="btn-secondary">{{ 'AGENCIES.FORM.CANCEL' | translate }}</button>
+      <button type="submit" [disabled]="saving" class="btn-primary">
+        <svg *ngIf="saving" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+        </svg>
+        {{ saving ? ('AGENCIES.FORM.SAVING' | translate) : (isEdit ? ('AGENCIES.FORM.SAVE' | translate) : ('AGENCIES.FORM.CREATE_BTN' | translate)) }}
+      </button>
+    </div>
+  </form>
+</div>

@@ -89,6 +89,7 @@
     "SEARCH": "البحث بالاسم أو البريد الإلكتروني…",
     "ALL_ROLES": "جميع الأدوار",
     "ALL_STATUSES": "جميع الحالات",
+    "ALL_AGENCIES": "جميع الوكالات",
     "NO_USERS": "لم يتم العثور على مستخدمين",
     "NO_USERS_SUB": "عدّل الفلاتر أو أنشئ مستخدماً جديداً.",
     "LOADING": "جارٍ التحميل…",
@@ -287,5 +288,152 @@
   },
   "COMMON": {
     "EMPTY": "—"
+  },
+  "AGENCIES": {
+    "TITLE": "إدارة الوكالات",
+    "SUBTITLE_ONE": "وكالة في المجموع",
+    "SUBTITLE_OTHER": "وكالات في المجموع",
+    "CREATE": "إنشاء وكالة",
+    "SEARCH": "البحث بالاسم أو المدينة أو البلد…",
+    "ALL_COUNTRIES": "جميع البلدان",
+    "ALL_STATUSES": "جميع الحالات",
+    "STATUS": {
+      "ACTIVE": "نشط",
+      "SUSPENDED": "موقوف"
+    },
+    "COLS": {
+      "AGENCY": "الوكالة",
+      "LOCATION": "الموقع",
+      "CEILING": "السقف اليومي",
+      "STATUS": "الحالة",
+      "ACTIONS": "الإجراءات"
+    },
+    "NO_AGENCIES": "لا توجد وكالات",
+    "NO_AGENCIES_SUB": "عدّل الفلاتر أو أنشئ وكالة جديدة.",
+    "LOADING": "جارٍ التحميل…",
+    "ACTIONS": {
+      "DASHBOARD": "لوحة القيادة",
+      "AGENTS": "إدارة الوكلاء",
+      "EDIT": "تعديل",
+      "SUSPEND": "إيقاف",
+      "ACTIVATE": "تفعيل"
+    },
+    "DIALOG": {
+      "SUSPEND_TITLE": "إيقاف الوكالة",
+      "SUSPEND_MSG": "لن تتمكن الوكالة من معالجة عمليات جديدة. تبقى البيانات التاريخية متاحة.",
+      "ACTIVATE_TITLE": "تفعيل الوكالة",
+      "ACTIVATE_MSG": "ستتمكن الوكالة من معالجة العمليات مجدداً.",
+      "SUSPEND_CONFIRM": "إيقاف",
+      "ACTIVATE_CONFIRM": "تفعيل"
+    },
+    "FORM": {
+      "CREATE_TITLE": "إنشاء وكالة",
+      "EDIT_TITLE": "تعديل الوكالة",
+      "SUBTITLE": "أدخل معلومات الوكالة",
+      "SECTION_IDENTITY": "هوية الوكالة",
+      "SECTION_LOCATION": "الموقع الجغرافي",
+      "SECTION_PARAMS": "المعاملات التشغيلية",
+      "NAME": "اسم الوكالة",
+      "NAME_PLACEHOLDER": "مثال: OkaneTransfer الدار البيضاء",
+      "NAME_REQUIRED": "الاسم مطلوب.",
+      "COUNTRY": "البلد",
+      "COUNTRY_PLACEHOLDER": "— اختر بلداً —",
+      "COUNTRY_REQUIRED": "البلد مطلوب.",
+      "CITY": "المدينة",
+      "CITY_PLACEHOLDER": "مثال: الدار البيضاء",
+      "CITY_REQUIRED": "المدينة مطلوبة.",
+      "ADDRESS": "العنوان",
+      "ADDRESS_PLACEHOLDER": "مثال: 12 شارع محمد الخامس",
+      "ADDRESS_REQUIRED": "العنوان مطلوب.",
+      "POSTAL_CODE": "الرمز البريدي",
+      "POSTAL_CODE_PLACEHOLDER": "مثال: 20000",
+      "POSTAL_CODE_REQUIRED": "الرمز البريدي مطلوب.",
+      "CEILING": "السقف اليومي",
+      "CEILING_PLACEHOLDER": "مثال: 100000",
+      "CEILING_REQUIRED": "يجب أن يكون السقف رقماً موجباً.",
+      "CANCEL": "إلغاء",
+      "SAVE": "حفظ التعديلات",
+      "CREATE_BTN": "إنشاء الوكالة",
+      "SAVING": "جارٍ الحفظ…"
+    },
+    "AGENTS": {
+      "TITLE": "وكلاء الوكالة",
+      "ASSIGN": "تعيين وكيل",
+      "NO_AGENTS": "لا يوجد وكلاء معينون",
+      "NO_AGENTS_SUB": "عيّن وكيلاً متاحاً لهذه الوكالة.",
+      "COLS": {
+        "AGENT": "الوكيل",
+        "STATUS": "الحالة",
+        "CASH": "الصندوق",
+        "BALANCE": "الرصيد",
+        "ACTIONS": "الإجراءات"
+      },
+      "CASH_OPEN": "مفتوح",
+      "CASH_CLOSED": "مغلق",
+      "ACTIONS": {
+        "SUSPEND": "إيقاف",
+        "ACTIVATE": "تفعيل",
+        "REMOVE": "إزالة من الوكالة"
+      },
+      "DIALOG": {
+        "ASSIGN_TITLE": "تعيين وكيل",
+        "ASSIGN_SUBTITLE": "اختر وكيلاً متاحاً (دور AGENT، غير مرتبط بوكالة).",
+        "NO_AVAILABLE": "لا يوجد وكلاء متاحون.",
+        "NO_AVAILABLE_SUB": "أنشئ مستخدماً بدور وكيل من إدارة المستخدمين.",
+        "SELECT_PLACEHOLDER": "— اختر وكيلاً —",
+        "ASSIGNING": "جارٍ التعيين…",
+        "ASSIGN_BTN": "تعيين",
+        "SUSPEND_TITLE": "إيقاف الوكيل",
+        "SUSPEND_MSG": "لن يتمكن الوكيل من تنفيذ العمليات.",
+        "ACTIVATE_TITLE": "تفعيل الوكيل",
+        "ACTIVATE_MSG": "سيتمكن الوكيل من تنفيذ العمليات مجدداً.",
+        "SUSPEND_CONFIRM": "إيقاف",
+        "ACTIVATE_CONFIRM": "تفعيل",
+        "REMOVE_TITLE": "إزالة الوكيل من الوكالة",
+        "REMOVE_MSG": "سيتم فصل الوكيل عن هذه الوكالة. يمكنك إعادة تعيينه لاحقاً.",
+        "REMOVE_CONFIRM": "إزالة"
+      }
+    },
+    "DASHBOARD": {
+      "TITLE": "لوحة قيادة الوكالة",
+      "KPI": {
+        "SEND_VOLUME": "حجم الإرسال (اليوم)",
+        "PAY_VOLUME": "حجم الدفع (اليوم)",
+        "TRANSFERS_COUNT": "تحويلات اليوم",
+        "COMMISSIONS": "العمولات المحققة"
+      },
+      "SUCCESS_RATE": "معدل النجاح",
+      "STATUS": {
+        "PAID": "مدفوع",
+        "PENDING": "قيد الانتظار",
+        "CANCELLED": "ملغى",
+        "EXPIRED": "منتهي"
+      },
+      "CEILING_USAGE": "استخدام السقف اليومي",
+      "CEILING_CONFIG": "السقف اليومي المحدد:",
+      "CASH_OPEN": "الصندوق مفتوح",
+      "CASH_CLOSED": "الصندوق مغلق"
+    }
+  },
+  "CLIENT_PROFILE": {
+    "TITLE": "ملفي الشخصي",
+    "SUBTITLE": "إدارة معلوماتك الشخصية وتفضيلاتك",
+    "TAB_PROFILE": "الملف الشخصي",
+    "TAB_ACTIVITY": "النشاط",
+    "FIRSTNAME": "الاسم الأول",
+    "LASTNAME": "اللقب",
+    "PHONE": "الهاتف",
+    "FIELD_REQUIRED": "هذا الحقل مطلوب",
+    "NOTIF_PREFS": "تفضيلات الإشعارات",
+    "NOTIF_EMAIL": "إشعارات البريد الإلكتروني",
+    "NOTIF_PUSH": "الإشعارات الفورية",
+    "SAVE": "حفظ",
+    "SAVING": "جارٍ الحفظ…",
+    "SUCCESS": "تم تحديث الملف الشخصي بنجاح",
+    "NO_ACTIVITY": "لا يوجد نشاط حديث",
+    "COL_IP": "عنوان IP",
+    "COL_ACTION": "الإجراء",
+    "COL_DATE": "التاريخ",
+    "NOTIF_SMS": "إشعارات الرسائل القصيرة"
   }
 }
