@@ -53,7 +53,8 @@ export const routes: Routes = [
               import('./pages/admin/reports/report.component').then((m) => m.ReportComponent),
             canActivate: [roleGuard],
             data: { roles: ['ADMIN', 'MANAGER'] },
-          },{
+          },
+          {
             path: 'compliance/dashboard',
             loadComponent: () =>
               import('./pages/admin/compliance/compliance-dashboard/compliance-dashboard.component')
@@ -101,7 +102,7 @@ export const routes: Routes = [
             canActivate: [roleGuard],
             data: { roles: ['ADMIN'] }
           },
-          // ── Users ────────────────────────────────────────────────────────
+          // ── Users ─────────────────────────────────────────────────────
           {
             path: 'users',
             children: [
@@ -134,6 +135,50 @@ export const routes: Routes = [
                   ),
               },
             ],
+          },
+          // ── Currencies ────────────────────────────────────────────────
+          {
+            path: 'currencies',
+            loadComponent: () =>
+              import('./pages/admin/currencies/currencies.component').then(m => m.CurrenciesComponent),
+          },
+          {
+            path: 'currencies/create',
+            loadComponent: () =>
+              import('./pages/admin/currencies/currencies-create.component').then(m => m.CurrenciesCreateComponent),
+          },
+          // ── Corridors ─────────────────────────────────────────────────
+          {
+            path: 'corridors',
+            loadComponent: () =>
+              import('./pages/admin/corridors/corridors.component').then(m => m.CorridorsComponent),
+          },
+          {
+            path: 'corridors/create',
+            loadComponent: () =>
+              import('./pages/admin/corridors/corridors-create.component').then(m => m.CorridorsCreateComponent),
+          },
+          // ── Exchange Rates ────────────────────────────────────────────
+          {
+            path: 'exchange-rates',
+            loadComponent: () =>
+              import('./pages/admin/exchange-rates/exchange-rates.component').then(m => m.ExchangeRatesComponent),
+          },
+          {
+            path: 'exchange-rates/history',
+            loadComponent: () =>
+              import('./pages/admin/exchange-rates/exchange-rates-history.component').then(m => m.ExchangeRatesHistoryComponent),
+          },
+          // ── Fee Grids ─────────────────────────────────────────────────
+          {
+            path: 'fee-grids',
+            loadComponent: () =>
+              import('./pages/admin/fee-grids/fee-grids.component').then(m => m.FeeGridsComponent),
+          },
+          {
+            path: 'fee-grids/create',
+            loadComponent: () =>
+              import('./pages/admin/fee-grids/fee-grids-create.component').then(m => m.FeeGridsCreateComponent),
           },
         ],
       },
