@@ -33,7 +33,6 @@ export class SidebarComponent implements OnInit {
     { label: 'Watchlist',               icon: 'fa-solid fa-list-check',             route: '/admin/kyc/watchlist',           roles: ['ADMIN'] },
     { label: 'AUDIT',                   icon: 'fa-solid fa-clipboard-list',         route: '/admin/audit-logs',              roles: ['ADMIN'] },
     { label: 'MOBILE_MONEY',            icon: 'fa-solid fa-mobile-screen',          route: '/admin/mobile-money',            roles: ['ADMIN'] },
-    { label: 'BROADCAST',               icon: 'fa-solid fa-bullhorn',               route: '/admin/notifications/broadcast', roles: ['ADMIN'] },
     { label: 'Alerts',                  icon: 'fa-solid fa-triangle-exclamation',   route: '/admin/alerts',                  roles: ['ADMIN'] },
     { label: 'Broadcast Notifications', icon: 'fa-solid fa-satellite-dish',         route: '/admin/notif-broadcast',         roles: ['ADMIN'] },
     { label: 'TRANSFERS',               icon: 'fa-solid fa-arrow-right-arrow-left', route: '/admin/transfers',               roles: ['ADMIN', 'MANAGER'] },
