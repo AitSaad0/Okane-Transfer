@@ -1,49 +1,62 @@
-<nav class="navbar" *ngIf="auth.isLoggedIn()">
-  <div class="navbar__brand">
-    <span class="navbar__logo">💸</span>
-    <span class="navbar__title">OkaneTransfer</span>
-  </div>
-
-  <div class="navbar__actions">
-    <div class="navbar__lang">
-      <button
-        *ngFor="let lang of languages"
-        (click)="switchLang(lang)"
-        [class.active]="currentLang === lang"
-        class="lang-btn">
-        {{ lang.toUpperCase() }}
-      </button>
+@if (auth.isLoggedIn()) {
+  <nav class="navbar">
+    <div class="navbar__brand">
+      <i class="fa-solid fa-arrow-right-arrow-left navbar__logo-icon"></i>
+      <span class="navbar__title">OkaneTransfer</span>
     </div>
+    <div class="navbar__actions">
 
-    <a routerLink="/notifications" class="navbar__notif">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-      </svg>
-      <span class="badge" *ngIf="unreadNotifications > 0">{{ unreadNotifications }}</span>
-    </a>
-
-    <div class="navbar__user" (click)="toggleDropdown()">
-      <div class="avatar">{{ initials }}</div>
-      <div class="navbar__userinfo">
-        <span class="navbar__username">{{ user.name }}</span>
-      </div>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <polyline points="6 9 12 15 18 9"/>
-      </svg>
-
-      <div class="dropdown" *ngIf="isDropdownOpen">
-        <a routerLink="/profile/security" class="dropdown__item">
-          {{ 'NAV.PROFILE' | translate }}
-        </a>
-        <a routerLink="client/notifications/preferences" class="dropdown__item">
-          {{ 'Notifications Preferences' | translate }}
-        </a>
-        <hr>
-        <button (click)="logout()" class="dropdown__item dropdown__item--danger">
-          {{ 'NAV.LOGOUT' | translate }}
+      <div class="navbar__lang-wrapper">
+        <button class="lang-toggle" (click)="toggleLangDropdown()">
+          <i class="fa-solid fa-globe"></i>
+          <span>{{ currentLang.toUpperCase() }}</span>
+          <i class="fa-solid fa-chevron-down lang-chevron"></i>
         </button>
+        @if (isLangDropdownOpen) {
+          <div class="lang-dropdown">
+            @for (lang of languages; track lang) {
+              <button
+                (click)="switchLang(lang)"
+                [class.active]="currentLang === lang"
+                class="lang-option">
+                <i class="fa-solid fa-check lang-check" [class.visible]="currentLang === lang"></i>
+                {{ lang.toUpperCase() }}
+              </button>
+            }
+          </div>
+        }
       </div>
+
+      <a routerLink="/notifications" class="navbar__notif">
+        <i class="fa-regular fa-bell" style="font-size: 18px;"></i>
+        @if (unreadNotifications > 0) {
+          <span class="badge">{{ unreadNotifications }}</span>
+        }
+      </a>
+
+      <div class="navbar__user" (click)="toggleDropdown()">
+        <div class="avatar">{{ initials }}</div>
+        <span class="navbar__username">{{ fullName }}</span>
+        <i class="fa-solid fa-chevron-down" style="font-size: 11px;"></i>
+        @if (isDropdownOpen) {
+          <div class="dropdown">
+            <a routerLink="/profile/security" class="dropdown__item">
+              <i class="fa-regular fa-user"></i>
+              {{ 'NAV.PROFILE' | translate }}
+            </a>
+            <a routerLink="client/notifications/preferences" class="dropdown__item">
+              <i class="fa-regular fa-bell"></i>
+              {{ 'Notifications Preferences' | translate }}
+            </a>
+            <hr>
+            <button (click)="logout()" class="dropdown__item dropdown__item--danger">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              {{ 'NAV.LOGOUT' | translate }}
+            </button>
+          </div>
+        }
+      </div>
+
     </div>
-  </div>
-</nav>
+  </nav>
+}

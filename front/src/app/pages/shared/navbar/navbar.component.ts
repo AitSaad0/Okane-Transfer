@@ -1,5 +1,4 @@
-// navbar.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -16,13 +15,9 @@ export class NavbarComponent implements OnInit {
   currentLang = 'fr';
   languages = ['fr', 'en', 'ar'];
   isDropdownOpen = false;
+  isLangDropdownOpen = false;
   unreadNotifications = 3;
-
-  user: any = {
-    name: '',
-    role: '',
-    avatar: null
-  };
+  user: any = { nom: '', prenom: '', role: '' };
 
   constructor(
     private translate: TranslateService,
@@ -33,22 +28,14 @@ export class NavbarComponent implements OnInit {
     this.currentLang = localStorage.getItem('lang') || 'fr';
     this.translate.use(this.currentLang);
     this.applyDir(this.currentLang);
-
     this.loadUser();
   }
 
   loadUser(): void {
     this.auth.me().subscribe({
-      next: (user) => {
-        this.user = user;
-      },
+      next: (user) => { this.user = user; },
       error: () => {
-        // fallback if API fails or token invalid
-        this.user = {
-          name: 'User',
-          role: this.auth.getRole() || 'UNKNOWN',
-          avatar: null
-        };
+        this.user = { nom: 'User', prenom: '', role: this.auth.getRole() || 'UNKNOWN' };
       }
     });
   }
@@ -58,30 +45,43 @@ export class NavbarComponent implements OnInit {
     this.translate.use(lang);
     localStorage.setItem('lang', lang);
     this.applyDir(lang);
+    this.isLangDropdownOpen = false;
   }
 
   applyDir(lang: string) {
-    document.documentElement.setAttribute(
-      'dir',
-      lang === 'ar' ? 'rtl' : 'ltr'
-    );
+    document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
   }
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
+    this.isLangDropdownOpen = false;
   }
 
-  logout() {
-    this.auth.logout();
+  toggleLangDropdown() {
+    this.isLangDropdownOpen = !this.isLangDropdownOpen;
+    this.isDropdownOpen = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.navbar__user') && !target.closest('.navbar__lang-wrapper')) {
+      this.isDropdownOpen = false;
+      this.isLangDropdownOpen = false;
+    }
+  }
+
+  logout() { this.auth.logout(); }
+
+  get fullName(): string {
+    const prenom = this.user?.prenom || '';
+    const nom = this.user?.nom || '';
+    return `${prenom} ${nom}`.trim() || 'User';
   }
 
   get initials(): string {
-    if (!this.user?.name) return 'U';
-
-    return this.user.name
-      .split(' ')
-      .map((n: string) => n[0])
-      .join('')
-      .toUpperCase();
+    const p = this.user?.prenom?.[0] || '';
+    const n = this.user?.nom?.[0] || '';
+    return (p + n).toUpperCase() || 'U';
   }
 }
