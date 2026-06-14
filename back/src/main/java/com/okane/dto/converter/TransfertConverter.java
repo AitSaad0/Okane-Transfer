@@ -39,7 +39,7 @@ public class TransfertConverter {
                 .montantEnvoye(transfert.getMontantEnvoye())
                 .frais(transfert.getFrais())
                 .montantNet(transfert.getMontantNet())
-                .statut(transfert.getStatut().name())
+                .statut(transfert.getStatut())
                 .expediteurNom(transfert.getExpediteur() != null ? transfert.getExpediteur().getNom() : null)
                 .expediteurPrenom(transfert.getExpediteur() != null ? transfert.getExpediteur().getPrenom() : null)
                 .expediteurTelephone(transfert.getExpediteur() != null ? transfert.getExpediteur().getTelephone() : null)
