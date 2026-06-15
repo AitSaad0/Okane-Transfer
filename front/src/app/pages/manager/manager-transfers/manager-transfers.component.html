@@ -1,0 +1,55 @@
+<!-- manager-transfers.component.html -->
+<div class="transfers-container">
+
+  <div class="transfers-header">
+    <h2>Transferts de l'agence</h2>
+
+    <div class="filters">
+      <select [(ngModel)]="selectedStatut" (ngModelChange)="onFilterChange()">
+        <option value="">Tous les statuts</option>
+        <option *ngFor="let s of statutOptions" [value]="s">{{ s }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading">Chargement...</div>
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+
+  <div *ngIf="!loading && !error">
+    <table class="data-table" *ngIf="transferts.length; else noData">
+      <thead>
+      <tr>
+        <th>Référence</th>
+        <th>Expéditeur</th>
+        <th>Bénéficiaire</th>
+        <th>Montant</th>
+        <th>Frais</th>
+        <th>Statut</th>
+        <th>Date</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let t of transferts">
+        <td>{{ t.reference }}</td>
+        <td>{{ t.expediteurNom }} {{ t.expediteurPrenom }}</td>
+        <td>{{ t.beneficiaireNom }} {{ t.beneficiairePrenom }}</td>
+        <td>{{ t.montantEnvoye | number:'1.2-2' }} MAD</td>
+        <td>{{ t.frais | number:'1.2-2' }} MAD</td>
+        <td><span class="badge" [ngClass]="statutClass(t.statut)">{{ t.statut }}</span></td>
+        <td>
+          {{ parseDate(t.dateCreation) | date:'dd/MM/yyyy HH:mm' }}
+        </td>      </tr>
+      </tbody>/    </table>
+
+    <ng-template #noData>
+      <p class="empty-state">Aucun transfert trouvé</p>
+    </ng-template>
+
+    <div class="pagination" *ngIf="transferts.length">
+      <button (click)="prevPage()" [disabled]="page === 0">← Précédent</button>
+      <span>Page {{ page + 1 }} / {{ totalPages }} ({{ totalElements }} résultats)</span>
+      <button (click)="nextPage()" [disabled]="page >= totalPages - 1">Suivant →</button>
+    </div>
+  </div>
+
+</div>

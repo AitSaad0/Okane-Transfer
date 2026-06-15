@@ -1,0 +1,94 @@
+<!-- manager-reports.component.html -->
+<div class="reports-container">
+
+  <div class="reports-header">
+    <h2>Rapports de l'agence</h2>
+
+    <div class="controls">
+      <label>
+        Date :
+        <input type="date" [(ngModel)]="selectedDate" (change)="onDateChange()" [max]="formatDate(today)">
+      </label>
+
+      <div class="export-buttons">
+        <button class="btn-export csv" (click)="export('csv')" [disabled]="exporting || loading">
+          ⬇ Export CSV
+        </button>
+        <button class="btn-export pdf" (click)="export('pdf')" [disabled]="exporting || loading">
+          ⬇ Export PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading">Chargement...</div>
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+
+  <div *ngIf="report && !loading" class="report-content">
+
+    <div class="report-summary">
+      <h3>{{ report.agenceNom }} — {{ report.agenceVille }}, {{ report.agencePays }}</h3>
+      <p class="report-date">Rapport du {{ selectedDate | date:'dd/MM/yyyy' }}</p>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <span class="kpi-label">Volume du jour</span>
+        <span class="kpi-value">{{ report.volumeJour | number:'1.2-2' }} MAD</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Commissions du jour</span>
+        <span class="kpi-value">{{ report.commissionsJour | number:'1.2-2' }} MAD</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Taux de succès</span>
+        <span class="kpi-value">{{ report.tauxSucces }}%</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Agents actifs</span>
+        <span class="kpi-value">{{ report.nombreAgentsActifs }}</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Transferts</span>
+        <span class="kpi-value">{{ report.nombreTransfertsJour }}</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">En attente</span>
+        <span class="kpi-value warning">{{ report.nombreTransfertsEnAttente }}</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Solde caisse total</span>
+        <span class="kpi-value">{{ report.soldeCaisseTotal | number:'1.2-2' }} MAD</span>
+      </div>
+    </div>
+
+    <div class="top-agents-section">
+      <h3>Top Agents</h3>
+      <table class="data-table" *ngIf="report.topAgents?.length; else noAgents">
+        <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Transferts</th>
+          <th>Volume traité</th>
+          <th>Commissions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let agent of report.topAgents">
+          <td>{{ agent.agentNom }}</td>
+          <td>{{ agent.agentPrenom }}</td>
+          <td>{{ agent.nombreTransferts }}</td>
+          <td>{{ agent.volumeTraite | number:'1.2-2' }} MAD</td>
+          <td>{{ agent.commissionsGenerees | number:'1.2-2' }} MAD</td>
+        </tr>
+        </tbody>
+      </table>
+      <ng-template #noAgents>
+        <p class="empty-state">Aucune donnée pour cette date</p>
+      </ng-template>
+    </div>
+
+  </div>
+
+</div>

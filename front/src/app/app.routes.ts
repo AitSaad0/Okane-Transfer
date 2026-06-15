@@ -284,7 +284,27 @@ export const routes: Routes = [
         path: 'manager',
         canActivate: [roleGuard],
         data: { roles: ['ADMIN', 'MANAGER'] },
-        children: [],
+        children: [
+          { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // ← ajouter
+          {
+            path: 'dashboard',
+            loadComponent: () =>
+              import('./pages/manager/manager-dashboard/manager-dashboard.component')
+                .then(m => m.ManagerDashboardComponent),
+          },
+          {
+            path: 'transfer',
+            loadComponent: () =>
+              import('./pages/manager/manager-transfers/manager-transfers.component')
+                .then(m => m.ManagerTransfersComponent),
+          },
+          {
+            path: 'reports',
+            loadComponent: () =>
+              import('./pages/manager/manager-reports/manager-reports.component')
+                .then(m => m.ManagerReportsComponent),
+          }
+        ],
       },
 
       // ── Agent routes ──────────────────────────────────────────────────
