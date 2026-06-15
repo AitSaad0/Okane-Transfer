@@ -25,6 +25,7 @@ export class ResetPasswordComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.form = this.fb.group({
+      code: ['', [Validators.required, Validators.minLength(6)]],
       newPassword: ['', [Validators.required, Validators.minLength(8)]],
       confirm:     ['', Validators.required]
     });
@@ -43,7 +44,7 @@ export class ResetPasswordComponent implements OnInit {
     this.loading = true;
     this.error = '';
 
-    this.authService.resetPassword(this.token, this.form.value.newPassword).subscribe({
+    this.authService.resetPassword(this.form.value.code, this.form.value.newPassword).subscribe({
       next: () => {
         this.success = true;
         this.loading = false;

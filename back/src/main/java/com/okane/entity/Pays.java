@@ -17,9 +17,9 @@ public class Pays {
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
-    @Column(name = "code_iso", nullable = false, unique = true, length = 3)
+    @Column(name = "code_iso", nullable = false, unique = true, length = 2)
     private String codeIso;
 
-    @Column(nullable = false)
+    @Column(name = "nom", nullable = false)
     private String nom;
 }

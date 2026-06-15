@@ -11,7 +11,7 @@ public class RateLimiterService {
     private final Map<String, TokenBucket> buckets = new ConcurrentHashMap<>();
 
     public boolean isAllowed(String clientKey) {
-        TokenBucket bucket = buckets.computeIfAbsent(clientKey, k -> new TokenBucket(10, 10));
+        TokenBucket bucket = buckets.computeIfAbsent(clientKey, k -> new TokenBucket(50, 50));
         return bucket.tryConsume();
     }
 

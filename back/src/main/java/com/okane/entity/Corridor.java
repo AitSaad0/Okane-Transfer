@@ -24,6 +24,7 @@ public class Corridor {
     private BigDecimal tauxChange;
 
     @Column(name = "actif", nullable = false)
+    @Builder.Default
     private Boolean actif = true;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -42,11 +43,9 @@ public class Corridor {
     @JoinColumn(name = "devise_destination_id", nullable = false)
     private Devise deviseDestination;
 
-    // historique des taux (1 corridor → N historiques)
     @OneToMany(mappedBy = "corridor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TauxChangeHistorique> historiqueTaux;
 
-    // grilles tarifaires (1 corridor → N grilles)
     @OneToMany(mappedBy = "corridor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GrilleTarifaire> grilles;
 }

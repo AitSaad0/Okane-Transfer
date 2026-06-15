@@ -37,6 +37,11 @@ public class AuditAspect {
     @Pointcut("!execution(* com.okane.service.impl.JournalAuditServiceImpl.*(..))")
     public void excludeAuditSelf() {}
 
+    @Pointcut("execution(public * com.okane.service.impl.AuthServiceImpl.me(..)) || " +
+            "execution(public * com.okane.service.impl.AuthServiceImpl.login(..)) || " +
+            "execution(public * com.okane.service.impl.AuthServiceImpl.refresh(..))")
+    public void excludeReadOnlyAuth() {}
+
     // ------------------------------------------------------------------ //
     //  Advice
     // ------------------------------------------------------------------ //
@@ -48,7 +53,7 @@ public class AuditAspect {
      * @param returnValue the value returned by the service method
      */
     @AfterReturning(
-            pointcut  = "sensitiveServices() && excludeAuditSelf()",
+            pointcut  = "sensitiveServices() && excludeAuditSelf() && !excludeReadOnlyAuth()",
             returning = "returnValue"
     )
     public void logAfterReturning(JoinPoint joinPoint, Object returnValue) {

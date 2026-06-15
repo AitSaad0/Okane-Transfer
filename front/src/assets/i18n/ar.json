@@ -51,6 +51,7 @@
   "FIELDS": {
     "EMAIL": "البريد الإلكتروني",
     "PASSWORD": "كلمة المرور",
+    "RESET_CODE": "رمز إعادة التعيين",
     "NEW_PASSWORD": "كلمة المرور الجديدة",
     "CURRENT_PASSWORD": "كلمة المرور الحالية",
     "CONFIRM_PASSWORD": "تأكيد كلمة المرور",
