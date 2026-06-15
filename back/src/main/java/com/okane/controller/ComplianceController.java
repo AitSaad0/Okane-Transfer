@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -55,6 +56,13 @@ public class ComplianceController {
 
         return ResponseEntity.ok(
                 "AML threshold updated successfully"
+        );
+    }
+    @GetMapping("/thresholds/latest")
+    public ResponseEntity<BigDecimal> getLatestThreshold() {
+
+        return ResponseEntity.ok(
+                complianceService.getLatestThreshold()
         );
     }
 }

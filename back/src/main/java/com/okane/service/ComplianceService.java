@@ -5,6 +5,7 @@ import com.okane.dto.ComplianceDashboardDto;
 import com.okane.dto.SarDto;
 import com.okane.dto.requestDto.ThresholdRequest;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface ComplianceService {
@@ -18,4 +19,5 @@ public interface ComplianceService {
     ComplianceDashboardDto getDashboard();
 
     void updateThreshold(ThresholdRequest request);
+    BigDecimal getLatestThreshold();
 }

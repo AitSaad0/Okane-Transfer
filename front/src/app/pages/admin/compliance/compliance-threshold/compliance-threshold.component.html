@@ -1,6 +1,14 @@
 <div class="threshold-container">
   <div class="threshold-card">
+
     <h2>AML Threshold Settings</h2>
+
+    <div class="threshold-info">
+      <span class="threshold-label">Current Threshold</span>
+      <span class="threshold-value">
+        {{ form.sarThreshold | number:'1.2-2' }}
+      </span>
+    </div>
 
     <div *ngIf="errorMessage" class="alert error">
       {{ errorMessage }}
@@ -12,7 +20,9 @@
 
     <form (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="sarThreshold">Threshold Amount</label>
+        <label for="sarThreshold">
+          New Threshold Amount
+        </label>
 
         <input
           id="sarThreshold"
@@ -26,15 +36,17 @@
       </div>
 
       <button
-        type="button"
+        type="submit"
         class="submit-btn"
-        [class.saved]="saved"
-        (click)="onSubmit()"
+        [disabled]="loading"
       >
         <span *ngIf="loading">Saving...</span>
         <span *ngIf="saved">✓ Saved</span>
-        <span *ngIf="!loading && !saved">Update Threshold</span>
+        <span *ngIf="!loading && !saved">
+          Update Threshold
+        </span>
       </button>
     </form>
+
   </div>
 </div>
