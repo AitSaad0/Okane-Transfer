@@ -43,7 +43,7 @@
           <tr class="hover:bg-slate-50 transition-colors">
             <td class="px-4 py-3 font-mono font-medium text-slate-800">{{ r.fromCurrency }} → {{ r.toCurrency }}</td>
             <td class="px-4 py-3">
-              @if (editingId() === r.id) {
+              @if (editingRate()?.id === r.id) {
                 <input type="number" step="0.0001" [formControl]="$any(editForm.get('rate'))"
                   class="w-28 border border-primary rounded px-2 py-1 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary"/>
               } @else {
@@ -59,7 +59,7 @@
             </td>
             <td class="px-4 py-3 text-slate-500 text-xs">{{ r.updatedAt | date:'dd/MM/yyyy HH:mm' }}</td>
             <td class="px-4 py-3 text-right">
-              @if (editingId() === r.id) {
+              @if (editingRate()?.id === r.id) {
                 <div class="flex gap-2 justify-end">
                   <button (click)="saveEdit()" class="text-xs font-medium px-3 py-1 rounded-lg bg-primary text-white hover:bg-indigo-700 transition-colors">Sauver</button>
                   <button (click)="cancelEdit()" class="text-xs font-medium px-3 py-1 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors">Annuler</button>
