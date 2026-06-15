@@ -37,7 +37,6 @@ public class ManagerController {
     }
 
     @GetMapping("/api/v1/manager/transfers")
-    @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Transferts de l'agence du manager connecté")
     public ResponseEntity<PageResponseDto<TransfertResponseDTO>> getTransfertsAgence(
             @RequestParam(required = false) String statut,
@@ -52,7 +51,6 @@ public class ManagerController {
     }
 
     @GetMapping("/api/v1/manager/dashboard")
-    @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "KPIs temps réel de l'agence du manager connecté")
     public ResponseEntity<ManagerDashboardResponseDTO> getDashboard() {
         String email = getCurrentUserEmail();
@@ -61,7 +59,6 @@ public class ManagerController {
     }
 
     @GetMapping("/api/v1/manager/reports/daily")
-    @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Rapport journalier de l'agence (par défaut : aujourd'hui)")
     public ResponseEntity<ManagerDashboardResponseDTO> getRapportJournalier(
             @RequestParam(required = false) String date) {
