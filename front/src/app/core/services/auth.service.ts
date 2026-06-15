@@ -67,11 +67,11 @@ export class AuthService {
   }
 
   forgotPassword(email: string): Observable<void> {
-    return this.http.post<void>(`${this.BASE}/forgot-password`, { email });
+    return this.http.post<void>(`${this.BASE}/password/forgot`, { email });
   }
 
   resetPassword(token: string, newPassword: string): Observable<void> {
-    return this.http.post<void>(`${this.BASE}/reset-password`, { token, newPassword });
+    return this.http.post<void>(`${this.BASE}/password/reset`, { token, newPassword });
   }
 
   refresh(): Observable<AuthResponse> {

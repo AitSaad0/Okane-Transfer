@@ -7,8 +7,8 @@ import { catchError, switchMap, throwError } from 'rxjs';
 const PUBLIC_URLS = [
   '/api/auth/login',
   '/api/auth/register',
-  '/api/auth/forgot-password',
-  '/api/auth/reset-password',
+  '/api/auth/password/forgot',
+  '/api/auth/password/reset',
   '/api/auth/refresh',
 ];
 
