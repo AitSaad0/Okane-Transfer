@@ -46,6 +46,13 @@ export const routes: Routes = [
     ],
   },
 
+  // ── PUBLIC — track (pas d'AuthGuard) ─────────────────────────────────
+  {
+    path: 'track',
+    loadComponent: () =>
+      import('./pages/client/track/track.component').then((m) => m.TrackComponent),
+  },
+
   // ── Dashboard Layout ──────────────────────────────────────────────────
   {
     path: '',
@@ -137,7 +144,8 @@ export const routes: Routes = [
             canActivate: [roleGuard],
             data: { roles: ['ADMIN'] },
           },
-          // ── Users ────────────────────────────────────────────────────────
+
+          // ── Users ─────────────────────────────────────────────────────
           {
             path: 'users',
             children: [
@@ -171,16 +179,17 @@ export const routes: Routes = [
               },
             ],
           },
+
+          // ── Alerts ────────────────────────────────────────────────────
           {
             path: 'alerts',
             loadComponent: () =>
-              import('./pages/admin/alerts/alerts.component')
-                .then(m => m.AlertsComponent),
+              import('./pages/admin/alerts/alerts.component').then((m) => m.AlertsComponent),
             canActivate: [roleGuard],
-            data: { roles: ['ADMIN'] }
+            data: { roles: ['ADMIN'] },
           },
-          // À ajouter dans app.routes.ts, dans children de 'admin' (au même niveau que 'users')
 
+          // ── Agencies ──────────────────────────────────────────────────
           {
             path: 'agencies',
             children: [
@@ -221,60 +230,80 @@ export const routes: Routes = [
               },
             ],
           },
-          // ── Currencies ────────────────────────────────────────────
+
+          // ── Currencies ────────────────────────────────────────────────
           {
             path: 'currencies',
             loadComponent: () =>
-              import('./pages/admin/currencies/currencies.component')
-                .then(m => m.CurrenciesComponent),
+              import('./pages/admin/currencies/currencies.component').then(
+                (m) => m.CurrenciesComponent,
+              ),
           },
           {
             path: 'currencies/create',
             loadComponent: () =>
-              import('./pages/admin/currencies/currencies-create.component')
-                .then(m => m.CurrenciesCreateComponent),
+              import('./pages/admin/currencies/currencies-create.component').then(
+                (m) => m.CurrenciesCreateComponent,
+              ),
           },
 
-// ── Corridors ─────────────────────────────────────────────
+          // ── Corridors ─────────────────────────────────────────────────
           {
             path: 'corridors',
             loadComponent: () =>
-              import('./pages/admin/corridors/corridors.component')
-                .then(m => m.CorridorsComponent),
+              import('./pages/admin/corridors/corridors.component').then(
+                (m) => m.CorridorsComponent,
+              ),
           },
           {
             path: 'corridors/create',
             loadComponent: () =>
-              import('./pages/admin/corridors/corridors-create.component')
-                .then(m => m.CorridorsCreateComponent),
+              import('./pages/admin/corridors/corridors-create.component').then(
+                (m) => m.CorridorsCreateComponent,
+              ),
           },
 
-// ── Exchange Rates ────────────────────────────────────────
+          // ── Exchange Rates ────────────────────────────────────────────
           {
             path: 'exchange-rates',
             loadComponent: () =>
-              import('./pages/admin/exchange-rates/exchange-rates.component')
-                .then(m => m.ExchangeRatesComponent),
+              import('./pages/admin/exchange-rates/exchange-rates.component').then(
+                (m) => m.ExchangeRatesComponent,
+              ),
           },
           {
             path: 'exchange-rates/history',
             loadComponent: () =>
-              import('./pages/admin/exchange-rates/exchange-rates-history.component')
-                .then(m => m.ExchangeRatesHistoryComponent),
+              import('./pages/admin/exchange-rates/exchange-rates-history.component').then(
+                (m) => m.ExchangeRatesHistoryComponent,
+              ),
           },
 
-// ── Fee Grids ─────────────────────────────────────────────
+          // ── Fee Grids ─────────────────────────────────────────────────
           {
             path: 'fee-grids',
             loadComponent: () =>
-              import('./pages/admin/fee-grids/fee-grids.component')
-                .then(m => m.FeeGridsComponent),
+              import('./pages/admin/fee-grids/fee-grids.component').then(
+                (m) => m.FeeGridsComponent,
+              ),
           },
           {
             path: 'fee-grids/create',
             loadComponent: () =>
-              import('./pages/admin/fee-grids/fee-grids-create.component')
-                .then(m => m.FeeGridsCreateComponent),
+              import('./pages/admin/fee-grids/fee-grids-create.component').then(
+                (m) => m.FeeGridsCreateComponent,
+              ),
+          },
+
+          // ── Transfers (MEMBRE 5) ──────────────────────────────────────
+          {
+            path: 'transfers',
+            canActivate: [roleGuard],
+            data: { roles: ['ADMIN', 'MANAGER'] },
+            loadComponent: () =>
+              import('./pages/admin/transfers/admin-transfers.component').then(
+                (m) => m.AdminTransfersComponent,
+              ),
           },
         ],
       },
@@ -334,6 +363,34 @@ export const routes: Routes = [
                 (m) => m.TransferPaymentComponent,
               ),
           },
+
+          // ── Cash Register (MEMBRE 5) ──────────────────────────────────
+          {
+            path: 'cash-register',
+            children: [
+              {
+                path: '',
+                loadComponent: () =>
+                  import('./pages/agent/cash-register/cash-register.component').then(
+                    (m) => m.CashRegisterComponent,
+                  ),
+              },
+              {
+                path: 'close',
+                loadComponent: () =>
+                  import('./pages/agent/cash-register-close/cash-register-close.component').then(
+                    (m) => m.CashRegisterCloseComponent,
+                  ),
+              },
+              {
+                path: 'discrepancy',
+                loadComponent: () =>
+                  import('./pages/agent/cash-register-discrepancy/cash-register-discrepancy.component').then(
+                    (m) => m.CashRegisterDiscrepancyComponent,
+                  ),
+              },
+            ],
+          },
         ],
       },
 
@@ -356,6 +413,34 @@ export const routes: Routes = [
               import('./pages/client/client-profile/client-profile.component').then(
                 (m) => m.ClientProfileComponent,
               ),
+          },
+
+          // ── MEMBRE 5 ──────────────────────────────────────────────────
+          {
+            path: 'dashboard',
+            loadComponent: () =>
+              import('./pages/client/dashboard/client-dashboard.component').then(
+                (m) => m.ClientDashboardComponent,
+              ),
+          },
+          {
+            path: 'transfers',
+            children: [
+              {
+                path: '',
+                loadComponent: () =>
+                  import('./pages/client/transfers/transfer-list/transfer-list.component').then(
+                    (m) => m.ClientTransfersComponent,
+                  ),
+              },
+              {
+                path: ':id',
+                loadComponent: () =>
+                  import('./pages/client/transfers/transfer-detail/transfer-detail.component').then(
+                    (m) => m.ClientTransferDetailComponent,
+                  ),
+              },
+            ],
           },
         ],
       },

@@ -12,6 +12,7 @@ import com.okane.exception.UnauthorizedException;
 import com.okane.pagination.PageResponseDto;
 import com.okane.repository.TransfertRepository;
 import com.okane.repository.UserRepository;
+import com.okane.repository.ClientRepository;
 import com.okane.service.ClientTransfertService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,11 +30,14 @@ public class ClientTransfertServiceImpl implements ClientTransfertService {
 
     private final TransfertRepository transfertRepository;
     private final UserRepository userRepository;
+    private final ClientRepository clientRepository;
 
     public ClientTransfertServiceImpl(TransfertRepository transfertRepository,
-                                      UserRepository userRepository) {
+                                      UserRepository userRepository,
+                                      ClientRepository clientRepository) {
         this.transfertRepository = transfertRepository;
         this.userRepository = userRepository;
+        this.clientRepository = clientRepository;
     }
 
     // =========================================================
@@ -45,7 +49,8 @@ public class ClientTransfertServiceImpl implements ClientTransfertService {
         User user = findUserByEmail(userEmail);
 
         // Récupérer le client associé à cet utilisateur
-        Client client = user.getClient();
+        Client client = clientRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new BadRequestException("Aucun profil client associé"));
         if (client == null) {
             throw new BadRequestException("Aucun profil client associé à cet utilisateur");
         }
@@ -60,7 +65,8 @@ public class ClientTransfertServiceImpl implements ClientTransfertService {
         Transfert t = findTransfertById(id);
 
         // Vérification que le transfert appartient bien au client connecté
-        Client client = user.getClient();
+        Client client = clientRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new BadRequestException("Aucun profil client associé à cet utilisateur"));
         boolean isOwner = (t.getExpediteur() != null && client != null && t.getExpediteur().getId().equals(client.getId()))
                 || (t.getBeneficiaire() != null && client != null && t.getBeneficiaire().getId().equals(client.getId()));
 

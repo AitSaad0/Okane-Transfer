@@ -83,6 +83,54 @@
       "FORGOT_TEXT": "Pas de souci, ça arrive à tout le monde. Entrez votre email et nous vous enverrons un code pour réinitialiser votre mot de passe."
     }
   },
+
+  "Disconnect": "Déconnexion",
+
+  "NAV_USERS":               "Utilisateurs",
+  "AGENCIES":                "Agences",
+  "CURRENCIES":              "Devises",
+  "CORRIDORS":               "Corridors",
+  "RATES":                   "Taux de change",
+  "FEES":                    "Grilles tarifaires",
+  "COMPLIANCE":              "Conformité",
+  "Watchlist":               "Watchlist",
+  "AUDIT":                   "Journal d'audit",
+  "MOBILE_MONEY":            "Mobile Money",
+  "Alerts":                  "Alertes",
+  "Broadcast Notifications": "Diffusion",
+  "TRANSFERS":               "Transferts",
+  "REPORTS":                 "Rapports",
+  "MGR_DASHBOARD":           "Tableau de bord",
+  "MGR_REPORTS":             "Rapports",
+  "NEW_TRANSFER":            "Nouveau transfert",
+  "WITHDRAWAL":              "Retrait",
+  "MOBILE_TRANSFER_SIDEBAR": "Transfert Mobile",
+  "CASH_REGISTER":           "Caisse",
+  "CHATBOT":                 "Assistant IA",
+  "MY_DASHBOARD":            "Mon tableau de bord",
+  "MY_TRANSFERS":            "Mes transferts",
+  "MY_PROFILE":              "Mon profil",
+
+  "DASHBOARD": {
+    "GREETING":        "Bonjour,",
+    "SUBTITLE":        "Voici un résumé de votre activité",
+    "STAT_TOTAL":      "Total transferts",
+    "STAT_PENDING":    "En cours",
+    "BTN_NEW":         "Nouveau transfert",
+    "BTN_MY_TRANSFERS":"Mes transferts",
+    "BTN_TRACK":       "Suivre un transfert",
+    "RECENT_TITLE":    "Transferts récents",
+    "SEE_ALL":         "Voir tout",
+    "NO_TRANSFERS":    "Aucun transfert pour le moment.",
+    "ERROR_TRANSFERS": "Impossible de charger les transferts.",
+    "COL_REF":         "Référence",
+    "COL_BENEFICIARY": "Bénéficiaire",
+    "COL_AMOUNT":      "Montant",
+    "COL_STATUS":      "Statut",
+    "COL_DATE":        "Date",
+    "COL_DETAIL":      "Détail"
+  },
+
   "TRANSFER": {
     "TITLE": "Nouveau transfert",
     "EXPEDITEUR": "Expéditeur",
@@ -120,7 +168,6 @@
     "DOWNLOAD_PDF": "Télécharger le reçu PDF",
     "DOWNLOAD_PDF_ERROR": "Erreur lors du téléchargement du reçu"
   },
-  "MOBILE_TRANSFER_SIDEBAR": "Transfert Mobile",
   "MOBILE_TRANSFER": {
     "TITLE": "Transfert Mobile Money",
     "CHOOSE_OPERATEUR": "Choisissez un opérateur",
@@ -143,7 +190,6 @@
     "PHONE_INVALID": "Numéro de téléphone invalide (6 à 15 chiffres)",
     "EMAIL_INVALID": "Adresse email invalide"
   },
-  "WITHDRAWAL": "Retrait",
   "PAYMENT": {
     "TITLE": "Paiement de transfert",
     "BY_CODE": "Par code retrait",
@@ -471,4 +517,3 @@
     "NOTIF_SMS": "Notifications par SMS"
   }
 }
-

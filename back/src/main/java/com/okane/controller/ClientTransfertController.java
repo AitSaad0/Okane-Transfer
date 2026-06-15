@@ -44,7 +44,7 @@ public class ClientTransfertController {
      * PageRequest.of() throw IllegalArgumentException → 500.
      */
     @GetMapping("/api/v1/clients/transfers")
-    @PreAuthorize("hasRole('CLIENT')")
+    @PreAuthorize("hasAnyAuthority('ROLE_CLIENT', 'CLIENT')")
     public ResponseEntity<PageResponseDto<TransfertResponseDTO>> getMyTransferts(
             @RequestParam(defaultValue = "0")  int page,
             @RequestParam(defaultValue = "10") int size) {
@@ -61,7 +61,7 @@ public class ClientTransfertController {
     }
 
     @GetMapping("/api/v1/clients/transfers/{id}")
-    @PreAuthorize("hasRole('CLIENT')")
+    @PreAuthorize("hasAnyAuthority('ROLE_CLIENT', 'CLIENT')")
     public ResponseEntity<TransfertResponseDTO> getMyTransfertById(@PathVariable Long id) {
         String email = getCurrentUserEmail();
         TransfertResponseDTO result = clientTransfertService.getTransfertClientById(id, email);

@@ -1,0 +1,84 @@
+<div class="min-h-screen bg-slate-50 p-6">
+  <div class="mb-6">
+    <h1 class="text-2xl font-semibold text-slate-800">Mes transferts</h1>
+    <p class="text-sm text-slate-500 mt-1">{{ totalElements() }} transfert(s) au total</p>
+  </div>
+
+  <!-- Filters -->
+  <div class="bg-white rounded-xl border border-slate-200 p-4 mb-6 flex flex-wrap gap-3 items-end shadow-sm">
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1">Statut</label>
+      <select [(ngModel)]="statutFilter"
+              class="border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary">
+        <option *ngFor="let s of statuts" [value]="s.value">{{ s.label }}</option>
+      </select>
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1">Du</label>
+      <input type="date" [(ngModel)]="dateDebut"
+             class="border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary" />
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1">Au</label>
+      <input type="date" [(ngModel)]="dateFin"
+             class="border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary" />
+    </div>
+    <button (click)="search()"
+            class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-800 transition-colors">
+      Filtrer
+    </button>
+  </div>
+
+  <!-- Table -->
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm">
+    <div *ngIf="loading()" class="p-8 text-center text-slate-400 text-sm">Chargement...</div>
+    <div *ngIf="!loading() && transfers().length === 0" class="p-8 text-center text-slate-400 text-sm">
+      Aucun transfert trouvé. Essayez d'autres filtres.
+    </div>
+
+    <table *ngIf="!loading() && transfers().length > 0" class="w-full text-sm">
+      <thead class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wide">
+      <tr>
+        <th class="text-left px-6 py-3 font-medium">Référence</th>
+        <th class="text-left px-6 py-3 font-medium">Bénéficiaire</th>
+        <th class="text-left px-6 py-3 font-medium">Envoyé</th>
+        <th class="text-left px-6 py-3 font-medium">Reçu</th>
+        <th class="text-left px-6 py-3 font-medium">Statut</th>
+        <th class="text-left px-6 py-3 font-medium">Date</th>
+        <th class="px-6 py-3">Actions</th>
+      </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100">
+      <tr *ngFor="let t of transfers()" class="hover:bg-slate-50 transition-colors">
+        <td class="px-6 py-4 font-mono text-slate-800 text-xs">{{ t.reference }}</td>
+        <td class="px-6 py-4 text-slate-700">{{ t.beneficiaire.prenom }} {{ t.beneficiaire.nom }}</td>
+        <td class="px-6 py-4 font-mono text-slate-800">{{ t.montantEnvoye | number:'1.2-2' }} {{ t.deviseEnvoi }}</td>
+        <td class="px-6 py-4 font-mono text-emerald-700">{{ t.montantRecu | number:'1.2-2' }} {{ t.deviseReception }}</td>
+        <td class="px-6 py-4">
+            <span [class]="'rounded-full px-3 py-1 text-xs font-medium ' + statusClass(t.statut)">
+              {{ statusLabel(t.statut) }}
+            </span>
+        </td>
+        <td class="px-6 py-4 text-slate-500">{{ t.dateCreation | date:'dd/MM/yyyy' }}</td>
+        <td class="px-6 py-4 flex gap-2">
+          <a [routerLink]="['/client/transfers', t.id]"
+             class="text-indigo-600 hover:underline text-xs font-medium">Détail</a>
+          <button *ngIf="t.statut === 'PAYE'" (click)="downloadReceipt(t.id)"
+                  class="text-slate-500 hover:text-slate-700 text-xs font-medium">Reçu ↓</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div *ngIf="totalPages() > 1" class="flex justify-center gap-1 py-4 border-t border-slate-100">
+      <button *ngFor="let p of pages"
+              (click)="goToPage(p)"
+              [class]="p === filters.page
+                ? 'bg-primary text-white px-3 py-1.5 rounded-lg text-xs font-medium'
+                : 'text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg text-xs font-medium'">
+        {{ p + 1 }}
+      </button>
+    </div>
+  </div>
+</div>

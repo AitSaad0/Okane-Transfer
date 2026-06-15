@@ -1,0 +1,55 @@
+/* cash-register.component.css */
+:host {
+  display: block;
+}
+
+/* KPI cards hover lift */
+.kpi-card {
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.kpi-card:hover {
+  box-shadow: 0 4px 16px rgba(55, 48, 163, 0.09);
+  transform: translateY(-1px);
+}
+
+/* Operation type color dots */
+.op-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+.op-dot-pay    { background: #10b981; }
+.op-dot-send   { background: #e11d48; }
+.op-dot-adjust { background: #d97706; }
+
+/* Table row hover */
+tr.op-row {
+  transition: background-color 0.1s ease;
+}
+
+/* Caisse status indicator */
+.caisse-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.caisse-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: blink 2s ease-in-out infinite;
+}
+
+.caisse-status-dot.open  { background: #10b981; }
+.caisse-status-dot.closed { background: #94a3b8; animation: none; }
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}

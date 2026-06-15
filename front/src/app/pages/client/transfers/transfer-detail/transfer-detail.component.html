@@ -1,0 +1,85 @@
+<div class="min-h-screen bg-slate-50 p-6">
+  <a routerLink="/client/transfers" class="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700 mb-6">
+    ← Retour à mes transferts
+  </a>
+
+  <div *ngIf="loading()" class="text-center text-slate-400 py-20">Chargement...</div>
+  <div *ngIf="error()" class="text-center text-rose-500 py-20">{{ error() }}</div>
+
+  <ng-container *ngIf="transfer() as t">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-2xl font-semibold text-slate-800">Transfert {{ t.reference }}</h1>
+        <p class="text-sm text-slate-500 mt-1">Créé le {{ t.dateCreation | date:'dd/MM/yyyy à HH:mm' }}</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <span [class]="'rounded-full px-4 py-1.5 text-sm font-medium ' + statusClass(t.statut)">
+          {{ statusLabel(t.statut) }}
+        </span>
+        <button *ngIf="t.statut === 'PAYE'" (click)="downloadReceipt()"
+                class="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">
+          ↓ Télécharger le reçu
+        </button>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Montants -->
+      <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+        <h2 class="text-lg font-medium text-slate-700 mb-4">Détails financiers</h2>
+        <div class="space-y-3">
+          <div class="flex justify-between text-sm">
+            <span class="text-slate-500">Montant envoyé</span>
+            <span class="font-mono font-semibold text-slate-800">{{ t.montantEnvoye | number:'1.2-2' }} {{ t.deviseEnvoi }}</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-slate-500">Frais</span>
+            <span class="font-mono text-slate-700">{{ t.frais | number:'1.2-2' }} {{ t.deviseEnvoi }}</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-slate-500">Taux de change</span>
+            <span class="font-mono text-slate-700">{{ t.tauxChange }}</span>
+          </div>
+          <div class="border-t border-slate-100 pt-3 flex justify-between text-sm">
+            <span class="text-slate-600 font-medium">Montant reçu</span>
+            <span class="font-mono font-bold text-emerald-700 text-base">{{ t.montantRecu | number:'1.2-2' }} {{ t.deviseReception }}</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-slate-500">Corridor</span>
+            <span class="text-slate-700">{{ t.corridor }}</span>
+          </div>
+          <div *ngIf="t.motif" class="flex justify-between text-sm">
+            <span class="text-slate-500">Motif</span>
+            <span class="text-slate-700">{{ t.motif }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Personnes -->
+      <div class="space-y-4">
+        <!-- Expéditeur -->
+        <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+          <h2 class="text-base font-medium text-slate-700 mb-3">Expéditeur</h2>
+          <div class="space-y-2 text-sm">
+            <p class="text-slate-800 font-medium">{{ t.expediteur.prenom }} {{ t.expediteur.nom }}</p>
+            <p class="text-slate-500">{{ t.expediteur.telephone }}</p>
+            <p *ngIf="t.expediteur.email" class="text-slate-500">{{ t.expediteur.email }}</p>
+            <p *ngIf="t.expediteur.numeroPiece" class="text-slate-500 font-mono text-xs">
+              {{ t.expediteur.typePiece }} : {{ t.expediteur.numeroPiece }}
+            </p>
+          </div>
+        </div>
+        <!-- Bénéficiaire -->
+        <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+          <h2 class="text-base font-medium text-slate-700 mb-3">Bénéficiaire</h2>
+          <div class="space-y-2 text-sm">
+            <p class="text-slate-800 font-medium">{{ t.beneficiaire.prenom }} {{ t.beneficiaire.nom }}</p>
+            <p class="text-slate-500">{{ t.beneficiaire.telephone }}</p>
+            <p *ngIf="t.beneficiaire.adresse" class="text-slate-500">{{ t.beneficiaire.adresse }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

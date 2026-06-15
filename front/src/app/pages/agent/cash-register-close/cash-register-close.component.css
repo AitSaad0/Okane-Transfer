@@ -1,0 +1,36 @@
+/* cash-register-close.component.css */
+:host {
+  display: block;
+}
+
+/* Ecart indicator color transitions */
+.ecart-box {
+  transition: background-color 0.2s ease, color 0.2s ease;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.ecart-ok      { background: #ecfdf5; color: #065f46; }
+.ecart-surplus { background: #fffbeb; color: #92400e; }
+.ecart-deficit { background: #fff1f2; color: #9f1239; }
+
+/* System solde summary box */
+.solde-summary {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+/* Confirm button shake on invalid */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+.btn-shake {
+  animation: shake 0.35s ease;
+}
