@@ -1,6 +1,7 @@
 package com.okane.dto.responseDto;
 
 import lombok.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -12,4 +13,6 @@ public class DeviseResponseDTO {
     private String code;
     private String symbole;
     private String nom;
+    private boolean active;
+    private List<String> countries;
 }

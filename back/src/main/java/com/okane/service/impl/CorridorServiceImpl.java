@@ -2,6 +2,7 @@ package com.okane.service.impl;
 
 import com.okane.dto.converter.CorridorConverter;
 import com.okane.dto.requestDto.CorridorRequestDTO;
+import com.okane.dto.requestDto.CorridorByCodeRequestDTO;
 import com.okane.dto.responseDto.CorridorResponseDTO;
 import com.okane.entity.Corridor;
 import com.okane.entity.Devise;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.math.BigDecimal;
 
 @Service
 @Transactional
@@ -70,6 +72,41 @@ public class CorridorServiceImpl implements CorridorService {
         return corridorConverter.toResponseDTO(saved);
     }
 
+   @Override
+   public CorridorResponseDTO saveByCode(CorridorByCodeRequestDTO dto) {
+       Pays paysOrigine = paysRepository.findByCodeIso(dto.getPaysSourceCode())
+           .orElseThrow(() -> new ResourceNotFoundException("Pays source not found: " + dto.getPaysSourceCode()));
+
+       Pays paysDestination = paysRepository.findByCodeIso(dto.getPaysDestinationCode())
+           .orElseThrow(() -> new ResourceNotFoundException("Pays destination not found: " + dto.getPaysDestinationCode()));
+
+       Devise deviseSource = deviseRepository.findByCode(dto.getDeviseSourceCode())
+           .orElseThrow(() -> new ResourceNotFoundException("Devise source not found: " + dto.getDeviseSourceCode()));
+
+       Devise deviseDestination = deviseRepository.findByCode(dto.getDeviseDestinationCode())
+           .orElseThrow(() -> new ResourceNotFoundException("Devise destination not found: " + dto.getDeviseDestinationCode()));
+
+      // Vérification simple par requête manuelle
+      List<Corridor> existing = corridorRepository.findAll();
+      boolean exists = existing.stream()
+          .anyMatch(c -> c.getPaysOrigine().getId().equals(paysOrigine.getId())
+                    && c.getPaysDestination().getId().equals(paysDestination.getId()));
+      if (exists) {
+          throw new RuntimeException("Corridor already exists");
+      }
+
+       // Create corridor with entity objects
+       Corridor corridor = new Corridor();
+       corridor.setPaysOrigine(paysOrigine);           // ← objet, pas ID
+       corridor.setPaysDestination(paysDestination);   // ← objet, pas ID
+       corridor.setDeviseSource(deviseSource);         // ← objet, pas ID
+       corridor.setDeviseDestination(deviseDestination); // ← objet, pas ID
+       corridor.setActif(true);
+       corridor.setTauxChange(BigDecimal.ONE);
+
+       return corridorConverter.toResponseDTO(corridorRepository.save(corridor));
+   }
+
     @Override
     public CorridorResponseDTO update(Long id, CorridorRequestDTO dto) {
         Corridor corridor = corridorRepository.findById(id)
@@ -100,7 +137,14 @@ public class CorridorServiceImpl implements CorridorService {
         corridorRepository.save(corridor);
     }
 
-    // Helper methods
+    @Override
+    public CorridorResponseDTO toggleStatus(Long id, boolean active) {
+        Corridor corridor = corridorRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Corridor not found with id: " + id));
+        corridor.setActif(active);
+        return corridorConverter.toResponseDTO(corridorRepository.save(corridor));
+    }
+
     private Pays findPaysById(Long id, String type) {
         return paysRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Pays " + type + " not found: " + id));

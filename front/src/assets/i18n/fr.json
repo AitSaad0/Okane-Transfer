@@ -51,6 +51,7 @@
   "FIELDS": {
     "EMAIL": "Adresse email",
     "PASSWORD": "Mot de passe",
+    "RESET_CODE": "Code de réinitialisation",
     "NEW_PASSWORD": "Nouveau mot de passe",
     "CURRENT_PASSWORD": "Mot de passe actuel",
     "CONFIRM_PASSWORD": "Confirmer le mot de passe",

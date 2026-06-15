@@ -171,6 +171,14 @@ export const routes: Routes = [
               },
             ],
           },
+          {
+            path: 'alerts',
+            loadComponent: () =>
+              import('./pages/admin/alerts/alerts.component')
+                .then(m => m.AlertsComponent),
+            canActivate: [roleGuard],
+            data: { roles: ['ADMIN'] }
+          },
           // À ajouter dans app.routes.ts, dans children de 'admin' (au même niveau que 'users')
 
           {
@@ -212,6 +220,61 @@ export const routes: Routes = [
                   ),
               },
             ],
+          },
+          // ── Currencies ────────────────────────────────────────────
+          {
+            path: 'currencies',
+            loadComponent: () =>
+              import('./pages/admin/currencies/currencies.component')
+                .then(m => m.CurrenciesComponent),
+          },
+          {
+            path: 'currencies/create',
+            loadComponent: () =>
+              import('./pages/admin/currencies/currencies-create.component')
+                .then(m => m.CurrenciesCreateComponent),
+          },
+
+// ── Corridors ─────────────────────────────────────────────
+          {
+            path: 'corridors',
+            loadComponent: () =>
+              import('./pages/admin/corridors/corridors.component')
+                .then(m => m.CorridorsComponent),
+          },
+          {
+            path: 'corridors/create',
+            loadComponent: () =>
+              import('./pages/admin/corridors/corridors-create.component')
+                .then(m => m.CorridorsCreateComponent),
+          },
+
+// ── Exchange Rates ────────────────────────────────────────
+          {
+            path: 'exchange-rates',
+            loadComponent: () =>
+              import('./pages/admin/exchange-rates/exchange-rates.component')
+                .then(m => m.ExchangeRatesComponent),
+          },
+          {
+            path: 'exchange-rates/history',
+            loadComponent: () =>
+              import('./pages/admin/exchange-rates/exchange-rates-history.component')
+                .then(m => m.ExchangeRatesHistoryComponent),
+          },
+
+// ── Fee Grids ─────────────────────────────────────────────
+          {
+            path: 'fee-grids',
+            loadComponent: () =>
+              import('./pages/admin/fee-grids/fee-grids.component')
+                .then(m => m.FeeGridsComponent),
+          },
+          {
+            path: 'fee-grids/create',
+            loadComponent: () =>
+              import('./pages/admin/fee-grids/fee-grids-create.component')
+                .then(m => m.FeeGridsCreateComponent),
           },
         ],
       },

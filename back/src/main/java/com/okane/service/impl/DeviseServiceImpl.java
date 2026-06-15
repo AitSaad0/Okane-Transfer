@@ -58,6 +58,7 @@ public class DeviseServiceImpl implements DeviseService {
         existing.setCode(dto.getCode());
         existing.setSymbole(dto.getSymbole());
         existing.setNom(dto.getNom());
+        existing.setCountries(dto.getCountries());
         return deviseConverter.toDTO(deviseRepository.save(existing));
     }
 
@@ -68,5 +69,13 @@ public class DeviseServiceImpl implements DeviseService {
             throw new RuntimeException("Devise not found: " + id);
         }
         deviseRepository.deleteById(id);
+    }
+    @Override
+    @Transactional
+    public DeviseResponseDTO toggleStatus(Long id, boolean active) {  // ← AJOUTÉ
+            Devise devise = deviseRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Devise not found: " + id));
+            devise.setActive(active);
+            return deviseConverter.toDTO(deviseRepository.save(devise));
     }
 }

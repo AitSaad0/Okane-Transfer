@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '../../core/services/auth.service';
 
@@ -19,7 +19,8 @@ export class ForgotPasswordComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
@@ -35,6 +36,7 @@ export class ForgotPasswordComponent {
       next: () => {
         this.success = true;
         this.loading = false;
+        this.router.navigate(['/reset-password']);
       },
       error: err => {
         this.error = err.error?.message ?? 'FORGOT_PASSWORD.ERROR';

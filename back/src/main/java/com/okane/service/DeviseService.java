@@ -11,4 +11,5 @@ public interface DeviseService {
     DeviseResponseDTO save(DeviseRequestDTO dto);
     DeviseResponseDTO update(Long id, DeviseRequestDTO dto);
     void delete(Long id);
+    DeviseResponseDTO toggleStatus(Long id, boolean active);
 }

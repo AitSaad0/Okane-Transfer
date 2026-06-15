@@ -2,6 +2,10 @@ package com.okane.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
+import java.util.List;
 
 @Entity
 @Table(name = "devise")
@@ -25,5 +29,12 @@ public class Devise {
 
     @Column(name = "nom", nullable = false)
     private String nom;
+    @Column(name = "active")
+    @Builder.Default
+    private boolean active = true;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "countries")
+    private List<String> countries;
 
 }

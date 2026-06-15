@@ -51,6 +51,7 @@
   "FIELDS": {
     "EMAIL": "Email address",
     "PASSWORD": "Password",
+    "RESET_CODE": "Reset code",
     "NEW_PASSWORD": "New password",
     "CURRENT_PASSWORD": "Current password",
     "CONFIRM_PASSWORD": "Confirm password",

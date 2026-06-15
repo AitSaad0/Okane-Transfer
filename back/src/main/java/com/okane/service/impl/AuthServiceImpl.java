@@ -52,7 +52,7 @@ public class AuthServiceImpl {
     }
 
 
-    @Transactional(readOnly = true)
+    @Transactional
     public AuthResponseDTO login(AuthRequestDTO dto) {
         User user = userRepository.findByEmail(dto.getEmail())
                 .orElseThrow(() -> new BadCredentialsException("Invalid email or password"));
@@ -66,7 +66,7 @@ public class AuthServiceImpl {
         return buildTokens(user);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public AuthResponseDTO refresh(RefreshRequestDTO dto) {
         String token = dto.getRefreshToken();
 
