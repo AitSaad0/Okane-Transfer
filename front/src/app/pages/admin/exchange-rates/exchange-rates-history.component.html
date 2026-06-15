@@ -15,12 +15,12 @@
   <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
     <table class="w-full text-sm">
       <thead class="bg-slate-50 border-b border-slate-200">
-        <tr>
-          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Paire</th>
-          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Taux</th>
-          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Source</th>
-          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Date</th>
-        </tr>
+      <tr>
+        <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Paire</th>
+        <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Taux</th>
+        <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Source</th>
+        <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Date</th>
+      </tr>
       </thead>
       <tbody class="divide-y divide-slate-100">
         @if (loading()) {
@@ -28,7 +28,10 @@
         }
         @for (h of history(); track h.id) {
           <tr class="hover:bg-slate-50 transition-colors">
-            <td class="px-4 py-3 font-mono font-medium text-slate-800">{{ h.fromCurrency }} → {{ h.toCurrency }}</td>
+            <td class="px-4 py-3 font-medium text-slate-800">
+              {{ h.paysOrigineNom }} → {{ h.paysDestinationNom }}
+              <span class="text-xs text-slate-400 ml-1">({{ h.fromCurrency }}/{{ h.toCurrency }})</span>
+            </td>
             <td class="px-4 py-3 font-mono text-slate-800">{{ h.rate | number:'1.4-4' }}</td>
             <td class="px-4 py-3">
               @if (h.source === 'API') {
@@ -37,7 +40,7 @@
                 <span class="bg-amber-50 text-warning border border-amber-200 rounded-full px-3 py-1 text-xs font-medium">MANUEL</span>
               }
             </td>
-            <td class="px-4 py-3 text-slate-500 text-xs">{{ h.recordedAt | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td class="px-4 py-3 text-slate-500 text-xs">{{ h.updatedAt | javaDate }}</td>
           </tr>
         }
         @empty {

@@ -1,27 +1,26 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
-export interface FeeSlice {
-  minAmount: number;
-  maxAmount: number;
-  fixedFee: number;
-  agencyShare: number;
-  centralShare: number;
-}
+import { Observable, map } from 'rxjs';
 
 export interface FeeGrid {
   id: number;
   corridorId: number;
-  corridorLabel: string;
-  slices: FeeSlice[];
-  active: boolean;
-  createdAt: string;
+  corridorLabel: string;  // ← On va le construire dans le mapper
+  montantMin: number;
+  montantMax: number;
+  fraisFixe: number;
+  pourcentageFrais: number;
+  partAgence: number;
+  partCentrale: number; // ← 100 - partAgence
 }
 
 export interface FeeGridCreateDTO {
   corridorId: number;
-  slices: FeeSlice[];
+  montantMin: number;
+  montantMax: number;
+  fraisFixe: number;
+  pourcentageFrais: number;
+  partAgence: number;
 }
 
 export interface FeeSimulateRequest {
@@ -36,7 +35,10 @@ export interface FeeSimulateResult {
   centralShare: number;
   amountReceived: number;
   corridorLabel: string;
-  appliedSlice: FeeSlice;
+  montantMin: number;
+  montantMax: number;
+  fraisFixe: number;
+  pourcentageFrais: number;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -45,27 +47,63 @@ export class FeeGridService {
   private readonly base = '/api/v1/admin/fee-grids';
 
   getAll(): Observable<FeeGrid[]> {
-    return this.http.get<FeeGrid[]>(this.base);
-  }
+  return this.http.get<any[]>(this.base).pipe(
+    map(list => list.map(g => ({
+  id: g.id,
+  corridorId: g.corridorId,
+  corridorLabel: `${g.corridorPaysOrigineNom || ''} → ${g.corridorPaysDestinationNom || ''}`,
+  montantMin: g.montantMin,
+  montantMax: g.montantMax,
+  fraisFixe: g.fraisFixe,
+  pourcentageFrais: g.pourcentageFrais,
+  partAgence: g.partAgence,
+  partCentrale: 100 - (g.partAgence || 0)
+})))
+);
+}
 
-  create(dto: FeeGridCreateDTO): Observable<FeeGrid> {
-    return this.http.post<FeeGrid>(this.base, dto);
-  }
+create(dto: FeeGridCreateDTO): Observable<FeeGrid> {
+  return this.http.post<any>(this.base, dto).pipe(
+    map(g => ({
+      id: g.id,
+      corridorId: g.corridorId,
+      corridorLabel: `${g.corridorPaysOrigineNom || ''} → ${g.corridorPaysDestinationNom || ''}`,
+      montantMin: g.montantMin,
+      montantMax: g.montantMax,
+      fraisFixe: g.fraisFixe,
+      pourcentageFrais: g.pourcentageFrais,
+      partAgence: g.partAgence,
+      partCentrale: 100 - (g.partAgence || 0)
+    }))
+  );
+}
 
-  update(id: number, dto: Partial<FeeGridCreateDTO>): Observable<FeeGrid> {
-    return this.http.put<FeeGrid>(`${this.base}/${id}`, dto);
-  }
+update(id: number, dto: Partial<FeeGridCreateDTO>): Observable<FeeGrid> {
+  return this.http.put<any>(`${this.base}/${id}`, dto).pipe(
+    map(g => ({
+      id: g.id,
+      corridorId: g.corridorId,
+      corridorLabel: `${g.corridorPaysOrigineNom || ''} → ${g.corridorPaysDestinationNom || ''}`,
+      montantMin: g.montantMin,
+      montantMax: g.montantMax,
+      fraisFixe: g.fraisFixe,
+      pourcentageFrais: g.pourcentageFrais,
+      partAgence: g.partAgence,
+      partCentrale: 100 - (g.partAgence || 0)
+    }))
+  );
+}
 
-  delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.base}/${id}`);
-  }
+delete(id: number): Observable<void> {
+  return this.http.delete<void>(`${this.base}/${id}`);
+}
 
-  export(format: 'csv' | 'pdf'): Observable<Blob> {
-    const params = new HttpParams().set('format', format);
-    return this.http.get(`${this.base}/export`, { params, responseType: 'blob' });
-  }
+export(format: 'csv' | 'pdf'): Observable<Blob> {
+  const params = new HttpParams().set('format', format);
+  return this.http.get(`${this.base}/export`, { params, responseType: 'blob' });
+}
 
-  simulate(req: FeeSimulateRequest): Observable<FeeSimulateResult> {
-    return this.http.post<FeeSimulateResult>('/api/v1/fees/simulate', req);
-  }
+simulate(req: FeeSimulateRequest): Observable<FeeSimulateResult> {
+return this.http.post<FeeSimulateResult>('/api/v1/fees/simulate', req);
+}
 }
