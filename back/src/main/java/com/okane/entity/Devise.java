@@ -34,7 +34,7 @@ public class Devise {
     private boolean active = true;
 
     @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "countries", columnDefinition = "json")
+    @Column(name = "countries")
     private List<String> countries;
 
 }
