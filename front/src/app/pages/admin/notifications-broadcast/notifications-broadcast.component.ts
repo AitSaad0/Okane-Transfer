@@ -88,4 +88,13 @@ export class BroadcastNotificationComponent implements OnInit {
       }
     });
   }
+  toDate(value: any): Date | null {
+    if (!value) return null;
+    if (Array.isArray(value)) {
+      // [year, month, day, hour, min, sec] — month est 1-based côté Java
+      const [year, month, day, hour = 0, min = 0, sec = 0] = value;
+      return new Date(year, month - 1, day, hour, min, sec);
+    }
+    return new Date(value); // string ISO ou timestamp
+  }
 }
