@@ -1,19 +1,19 @@
 <div *ngIf="error()">{{ error() }}</div>
 
 <div *ngIf="!selectedSar()">
-  <h2>SAR Reports</h2>
+  <h2>{{ 'COMPLIANCE.SAR_TITLE' | translate }}</h2>
   <div *ngIf="loadingList()">Loading...</div>
   <table *ngIf="!loadingList()">
     <thead>
     <tr>
-      <th>Reference</th>
-      <th>Reason</th>
-      <th>Transfer Amount</th>
-      <th>Threshold Amount</th>
-      <th>Status</th>
-      <th>Transfer Code</th>
-      <th>Created At</th>
-      <th>Actions</th>
+      <th>{{ 'COMPLIANCE.COL_REFERENCE' | translate }}</th>
+      <th>{{ 'COMPLIANCE.COL_REASON' | translate }}</th>
+      <th>{{ 'COMPLIANCE.COL_TX_AMOUNT' | translate }}</th>
+      <th>{{ 'COMPLIANCE.COL_TH_AMOUNT' | translate }}</th>
+      <th>{{ 'COMPLIANCE.COL_STATUS' | translate }}</th>
+      <th>{{ 'COMPLIANCE.COL_TX_CODE' | translate }}</th>
+      <th>{{ 'COMPLIANCE.COL_CREATED_AT' | translate }}</th>
+      <th>{{ 'COMPLIANCE.COL_ACTIONS' | translate }}</th>
     </tr>
     </thead>
     <tbody>
@@ -30,7 +30,7 @@
       </td>
     </tr>
     <tr *ngIf="sars().length === 0">
-      <td colspan="8">No SAR reports found.</td>
+      <td colspan="8">{{ 'COMPLIANCE.EMPTY_SAR' | translate }}.</td>
     </tr>
     </tbody>
   </table>

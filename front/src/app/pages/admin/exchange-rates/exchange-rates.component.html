@@ -2,17 +2,17 @@
 
   <div class="flex items-center justify-between mb-6">
     <div>
-      <h1 class="text-2xl font-semibold text-slate-800">Taux de change</h1>
-      <p class="text-sm text-slate-500 mt-1">Gestion manuelle et synchronisation automatique</p>
+      <h1 class="text-2xl font-semibold text-slate-800">{{ 'EXCHANGE_RATES.TITLE' | translate }}</h1>
+      <p class="text-sm text-slate-500 mt-1">{{ 'EXCHANGE_RATES.SUBTITLE' | translate }}</p>
     </div>
     <div class="flex gap-3">
       <a routerLink="/admin/exchange-rates/history"
          class="border border-slate-200 text-slate-600 text-sm font-medium px-4 py-2 rounded-lg hover:bg-slate-50 transition-colors">
-        Historique
+        {{ 'EXCHANGE_RATES.HISTORY_BTN' | translate }}
       </a>
       <button (click)="sync()" [disabled]="syncing()"
         class="bg-primary text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50">
-        {{ syncing() ? 'Sync...' : 'Synchroniser API' }}
+        {{ syncing() ? 'Sync...' : ('EXCHANGE_RATES.SYNC_BTN' | translate) }}
       </button>
     </div>
   </div>
@@ -28,10 +28,10 @@
     <table class="w-full text-sm">
       <thead class="bg-slate-50 border-b border-slate-200">
         <tr>
-          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Paire</th>
-          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Taux</th>
-          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Source</th>
-          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Mis à jour</th>
+          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'EXCHANGE_RATES.COL_PAIR' | translate }}</th>
+          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'EXCHANGE_RATES.COL_RATE' | translate }}</th>
+          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'EXCHANGE_RATES.COL_SOURCE' | translate }}</th>
+          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'EXCHANGE_RATES.COL_UPDATE' | translate }}</th>
           <th class="px-4 py-3"></th>
         </tr>
       </thead>

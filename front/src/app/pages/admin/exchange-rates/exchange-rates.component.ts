@@ -15,8 +15,8 @@ import { TranslateModule } from '@ngx-translate/core';
 export class ExchangeRatesComponent implements OnInit {
   private svc = inject(ExchangeRateService);
   private fb = inject(FormBuilder);
+  rates = signal<any[]>([]);
 
-  rates = signal<ExchangeRate[]>([]);
   loading = signal(false);
   syncing = signal(false);
   error = signal('');

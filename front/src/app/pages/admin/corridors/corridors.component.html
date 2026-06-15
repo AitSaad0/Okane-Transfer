@@ -2,12 +2,12 @@
 
   <div class="flex items-center justify-between mb-6">
     <div>
-      <h1 class="text-2xl font-semibold text-slate-800">Corridors</h1>
-      <p class="text-sm text-slate-500 mt-1">Routes de transfert source → destination</p>
+      <h1 class="text-2xl font-semibold text-slate-800">{{ 'CREATE_CORRIDOR.TITLE' | translate }}</h1>
+      <p class="text-sm text-slate-500 mt-1">{{ 'CREATE_CORRIDOR.SUBTITLE' | translate }}</p>
     </div>
     <a routerLink="/admin/corridors/create"
        class="inline-flex items-center gap-2 bg-primary text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
-      + Nouveau corridor
+      {{ 'CREATE_CORRIDOR.NEW' | translate }}
     </a>
   </div>
 
@@ -19,44 +19,15 @@
     <table class="w-full text-sm">
       <thead class="bg-slate-50 border-b border-slate-200">
         <tr>
-          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Source</th>
-          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Destination</th>
-          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Devise envoi</th>
-          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Devise réception</th>
-          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Statut</th>
+          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'CREATE_CORRIDOR.COL_SOURCE' | translate }}</th>
+          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'CREATE_CORRIDOR.COL_DEST' | translate }}</th>
+          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'CREATE_CORRIDOR.COL_SEND_CURRENCY' | translate }}</th>
+          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'CREATE_CORRIDOR.COL_REC_CURRENCY' | translate }}</th>
+          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'CREATE_CORRIDOR.COL_STATUS' | translate }}</th>
           <th class="px-4 py-3"></th>
         </tr>
       </thead>
       <tbody class="divide-y divide-slate-100">
         @if (loading()) {
-          <tr><td colspan="6" class="px-4 py-8 text-center text-slate-400">Chargement...</td></tr>
+          <tr><td colspan="6" class="px-4 py-8 text-center text-slate-400">{{ 'CURRENCIES.LOADING' | translate }}</td></tr>
         }
-        @for (c of corridors(); track c.id) {
-          <tr class="hover:bg-slate-50 transition-colors">
-            <td class="px-4 py-3 text-slate-700 font-medium">{{ c.sourceCountry }}</td>
-            <td class="px-4 py-3 text-slate-700">{{ c.destinationCountry }}</td>
-            <td class="px-4 py-3 font-mono text-slate-800">{{ c.sourceCurrencyCode }}</td>
-            <td class="px-4 py-3 font-mono text-slate-800">{{ c.destinationCurrencyCode }}</td>
-            <td class="px-4 py-3">
-              @if (c.active) {
-                <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full px-3 py-1 text-xs font-medium">ACTIF</span>
-              } @else {
-                <span class="bg-slate-100 text-slate-500 border border-slate-200 rounded-full px-3 py-1 text-xs font-medium">INACTIF</span>
-              }
-            </td>
-            <td class="px-4 py-3 text-right">
-              <button (click)="toggle(c)"
-                class="text-xs font-medium px-3 py-1 rounded-lg border transition-colors"
-                [class]="c.active ? 'border-rose-200 text-danger hover:bg-rose-50' : 'border-emerald-200 text-success hover:bg-emerald-50'">
-                {{ c.active ? 'Désactiver' : 'Activer' }}
-              </button>
-            </td>
-          </tr>
-        }
-        @empty {
-          <tr><td colspan="6" class="px-4 py-8 text-center text-slate-400">Aucun corridor trouvé.</td></tr>
-        }
-      </tbody>
-    </table>
-  </div>
-</div>

@@ -3,8 +3,8 @@ import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { importProvidersFrom } from '@angular/core';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader, provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { routes } from './app.routes';
 import { jwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { httpErrorInterceptor } from './core/interceptors/http-error.interceptor';
@@ -18,15 +18,11 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     importProvidersFrom(
       TranslateModule.forRoot({
-        fallbackLang: 'fr',
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateHttpLoader
-        }
+        defaultLanguage: 'fr'
       })
     ),
     ...provideTranslateHttpLoader({
-      prefix: './assets/i18n/',
+      prefix: '/assets/i18n/',
       suffix: '.json'
     })
   ]

@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { NotificationService } from './service/notification.service';
 import {
   TypeNotification,
@@ -11,7 +12,7 @@ import {
 @Component({
   selector: 'app-broadcast-notification',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './notifications-broadcast.component.html',
   styleUrls: ['./notifications-broadcast.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

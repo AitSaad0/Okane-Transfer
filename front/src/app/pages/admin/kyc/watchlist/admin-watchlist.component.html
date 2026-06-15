@@ -4,16 +4,16 @@
   <div class="page-header">
     <div class="header-left">
       <h2 class="page-title">
-        <span class="icon">🚨</span> KYC Watchlist
+        <span class="icon">🚨</span> {{ 'KYC.TITLE' | translate }}
       </h2>
-      <span class="entry-count">{{ entries.length }} entries</span>
+      <span class="entry-count">{{ entries.length }} {{ 'KYC.ENTRIES' | translate }}</span>
     </div>
     <div class="header-actions">
       <button class="btn btn-outline" (click)="openModal('add-existing')">
-        + Add Existing Client
+        {{ 'KYC.BTN_EXISTING' | translate }}
       </button>
       <button class="btn btn-danger" (click)="openModal('add-new')">
-        + New Manual Entry
+        {{ 'KYC.BTN_MANUAL' | translate }}
       </button>
     </div>
   </div>
@@ -22,7 +22,7 @@
   <div class="search-bar">
     <input
       type="text"
-      placeholder="Search by name, ID number or source..."
+      [placeholder]="'KYC.SEARCH' | translate"
       [value]="searchTerm"
       (input)="onSearch($any($event.target).value)"
       class="search-input"
@@ -34,12 +34,12 @@
     <table class="watchlist-table" *ngIf="filteredEntries.length > 0; else emptyState">
       <thead>
       <tr>
-        <th>Full Name</th>
-        <th>ID Number</th>
-        <th>Source</th>
-        <th>Reason</th>
-        <th>Added At</th>
-        <th>Added By</th>
+        <th>{{ 'KYC.FIELD_NAME' | translate }}</th>
+        <th>{{ 'KYC.FIELD_ID' | translate }}</th>
+        <th>{{ 'KYC.FIELD_SOURCE' | translate }}</th>
+        <th>{{ 'KYC.FIELD_REASON' | translate }}</th>
+        <th>{{ 'KYC.FIELD_ADDED_AT' | translate }}</th>
+        <th>{{ 'KYC.FIELD_ADDED_BY' | translate }}</th>
       </tr>
       </thead>
       <tbody>
@@ -63,13 +63,13 @@
 
     <ng-template #emptyState>
       <div class="empty-state">
-        <p>No watchlist entries found.</p>
+        <p>{{ 'KYC.EMPTY' | translate }}</p>
       </div>
     </ng-template>
   </div>
 
   <ng-template #spinner>
-    <div class="loading-state">Loading watchlist…</div>
+    <div class="loading-state">{{ 'ACTIONS.LOADING' | translate }}</div>
   </ng-template>
 
 </div>
@@ -85,7 +85,7 @@
     <!-- ── Modal: Add Existing Client ── -->
     <ng-container *ngIf="modalMode === 'add-existing'">
       <div class="modal-header">
-        <h3>Add Existing Client to Watchlist</h3>
+        <h3>{{ 'KYC.MODAL_EXISTING' | translate }}</h3>
         <button class="close-btn" (click)="closeModal()">✕</button>
       </div>
 
@@ -93,11 +93,11 @@
 
         <!-- Client search -->
         <div class="form-group">
-          <label>Search Client</label>
+          <label>{{ 'KYC.SEARCH_CLIENT' | translate }}</label>
           <input
             type="text"
             class="form-control"
-            placeholder="Type name or ID…"
+            [placeholder]="'KYC.SEARCH_CLIENT_PH' | translate"
             [value]="clientSearchTerm"
             (input)="onClientSearch($any($event.target).value)"
           />
@@ -111,15 +111,15 @@
               <span class="client-meta">{{ c.numPieceIdentite }} · {{ c.email }}</span>
             </div>
           </div>
-          <div class="searching-hint" *ngIf="clientSearching">Searching…</div>
+          <div class="searching-hint" *ngIf="clientSearching">{{ 'KYC.SEARCHING' | translate }}</div>
         </div>
 
         <!-- Selected client chip -->
         <div class="selected-client" *ngIf="selectedClient">
           <div class="client-chip">
             <div class="chip-info">
-              <strong>{{ selectedClient?.prenom }} {{ selectedClient?.nom }}</strong>
-              <span>{{ selectedClient?.numPieceIdentite }}</span>
+              <strong>{{ selectedClient.prenom }} {{ selectedClient.nom }}</strong>
+              <span>{{ selectedClient.numPieceIdentite }}</span>
             </div>
             <button class="chip-remove" (click)="clearSelectedClient()">✕</button>
           </div>
@@ -128,18 +128,18 @@
         <!-- Source & Reason -->
         <form [formGroup]="existingClientForm">
           <div class="form-group">
-            <label>Source <span class="required">*</span></label>
+            <label>{{ 'KYC.FIELD_SOURCE' | translate }} <span class="required">*</span></label>
             <select formControlName="source" class="form-control">
               <option *ngFor="let s of sourceOptions" [value]="s">{{ s }}</option>
             </select>
           </div>
           <div class="form-group">
-            <label>Reason</label>
+            <label>{{ 'KYC.FIELD_REASON' | translate }}</label>
             <textarea
               formControlName="reason"
               class="form-control"
               rows="3"
-              placeholder="Optional reason for adding to watchlist…"
+              [placeholder]="'KYC.REASON_PH_EXISTING' | translate"
             ></textarea>
           </div>
         </form>
@@ -149,13 +149,13 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-outline" (click)="closeModal()">Cancel</button>
+        <button class="btn btn-outline" (click)="closeModal()">{{ 'KYC.BTN_CANCEL' | translate }}</button>
         <button
           class="btn btn-danger"
           [disabled]="!selectedClient || existingClientForm.invalid || submitting"
           (click)="submitExistingClient()"
         >
-          {{ submitting ? 'Adding…' : 'Add to Watchlist' }}
+          {{ submitting ? ('KYC.BTN_ADDING' | translate) : ('KYC.BTN_ADD_WATCHLIST' | translate) }}
         </button>
       </div>
     </ng-container>
@@ -164,43 +164,43 @@
     <!-- ── Modal: New Manual Entry ── -->
     <ng-container *ngIf="modalMode === 'add-new'">
       <div class="modal-header">
-        <h3>New Manual Watchlist Entry</h3>
+        <h3>{{ 'KYC.MODAL_MANUAL' | translate }}</h3>
         <button class="close-btn" (click)="closeModal()">✕</button>
       </div>
 
       <div class="modal-body">
         <form [formGroup]="newEntryForm">
           <div class="form-group">
-            <label>Full Name <span class="required">*</span></label>
+            <label>{{ 'KYC.FIELD_NAME' | translate }} <span class="required">*</span></label>
             <input
               formControlName="fullName"
               type="text"
               class="form-control"
-              placeholder="e.g. John William Doe"
+              [placeholder]="'KYC.FIELD_NAME_PH' | translate"
             />
           </div>
           <div class="form-group">
-            <label>ID Number</label>
+            <label>{{ 'KYC.FIELD_ID' | translate }}</label>
             <input
               formControlName="idNumber"
               type="text"
               class="form-control"
-              placeholder="Passport / national ID"
+              [placeholder]="'KYC.FIELD_ID_PH' | translate"
             />
           </div>
           <div class="form-group">
-            <label>Source <span class="required">*</span></label>
+            <label>{{ 'KYC.FIELD_SOURCE' | translate }} <span class="required">*</span></label>
             <select formControlName="source" class="form-control">
               <option *ngFor="let s of sourceOptions" [value]="s">{{ s }}</option>
             </select>
           </div>
           <div class="form-group">
-            <label>Reason</label>
+            <label>{{ 'KYC.FIELD_REASON' | translate }}</label>
             <textarea
               formControlName="reason"
               class="form-control"
               rows="3"
-              placeholder="Optional reason…"
+              [placeholder]="'KYC.REASON_PH' | translate"
             ></textarea>
           </div>
         </form>
@@ -210,13 +210,13 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-outline" (click)="closeModal()">Cancel</button>
+        <button class="btn btn-outline" (click)="closeModal()">{{ 'KYC.BTN_CANCEL' | translate }}</button>
         <button
           class="btn btn-danger"
           [disabled]="newEntryForm.invalid || submitting"
           (click)="submitNewEntry()"
         >
-          {{ submitting ? 'Adding…' : 'Add Entry' }}
+          {{ submitting ? ('KYC.BTN_ADDING' | translate) : ('KYC.BTN_ADD' | translate) }}
         </button>
       </div>
     </ng-container>

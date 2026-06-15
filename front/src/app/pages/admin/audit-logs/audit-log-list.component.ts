@@ -1,12 +1,13 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { AuditLogService } from './service/audit-logs.service';
 import { JournalAudit } from './models/journal-audit.model';
 
 @Component({
   selector: 'app-audit-log-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './audit-log-list.component.html',
   styleUrl: './audit-log-list.component.css'
 })

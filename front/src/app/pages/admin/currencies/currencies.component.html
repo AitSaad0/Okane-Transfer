@@ -3,12 +3,12 @@
   <!-- Header -->
   <div class="flex items-center justify-between mb-6">
     <div>
-      <h1 class="text-2xl font-semibold text-slate-800">Devises</h1>
-      <p class="text-sm text-slate-500 mt-1">Gestion du référentiel ISO 4217</p>
+      <h1 class="text-2xl font-semibold text-slate-800">{{ 'CURRENCIES.TITLE' | translate }}</h1>
+      <p class="text-sm text-slate-500 mt-1">{{ 'CURRENCIES.SUBTITLE' | translate }}</p>
     </div>
     <a routerLink="/admin/currencies/create"
        class="inline-flex items-center gap-2 bg-primary text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
-      + Nouvelle devise
+      {{ 'CURRENCIES.NEW' | translate }}
     </a>
   </div>
 
@@ -22,34 +22,34 @@
     <table class="w-full text-sm">
       <thead class="bg-slate-50 border-b border-slate-200">
       <tr>
-        <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Code</th>
-        <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Nom</th>
-        <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Pays</th>
-        <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Statut</th>
+        <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'CURRENCIES.COL_CODE' | translate }}</th>
+        <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'CURRENCIES.COL_NAME' | translate }}</th>
+        <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'CURRENCIES.COL_COUNTRIES' | translate }}</th>
+        <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'CURRENCIES.COL_STATUS' | translate }}</th>
         <th class="px-4 py-3"></th>
       </tr>
       </thead>
       <tbody class="divide-y divide-slate-100">
         @if (loading()) {
-          <tr><td colspan="5" class="px-4 py-8 text-center text-slate-400 text-sm">Chargement...</td></tr>
+          <tr><td colspan="5" class="px-4 py-8 text-center text-slate-400 text-sm">{{ 'CURRENCIES.LOADING' | translate }}</td></tr>
         }
         @for (c of data().content; track c.id) {
           <tr class="hover:bg-slate-50 transition-colors">
             <td class="px-4 py-3 font-mono text-sm text-slate-800 font-medium">{{ c.code }}</td>
             <td class="px-4 py-3 text-slate-700">{{ c.name }}</td>
-            <td class="px-4 py-3 text-slate-500">{{ c.countries?.length ? c.countries.join(', ') : '-' }}</td>
+            <td class="px-4 py-3 text-slate-500">{{ c.countries.length ? c.countries.join(', ') : '-' }}</td>
             <td class="px-4 py-3">
               @if (c.active) {
-                <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full px-3 py-1 text-xs font-medium">ACTIF</span>
+                <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full px-3 py-1 text-xs font-medium">{{ 'CURRENCIES.ACTIVE' | translate }}</span>
               } @else {
-                <span class="bg-slate-100 text-slate-500 border border-slate-200 rounded-full px-3 py-1 text-xs font-medium">INACTIF</span>
+                <span class="bg-slate-100 text-slate-500 border border-slate-200 rounded-full px-3 py-1 text-xs font-medium">{{ 'CURRENCIES.INACTIVE' | translate }}</span>
               }
             </td>
             <td class="px-4 py-3 text-right">
               <button (click)="toggle(c)"
                       class="text-xs font-medium px-3 py-1 rounded-lg border transition-colors"
                       [class]="c.active ? 'border-rose-200 text-danger hover:bg-rose-50' : 'border-emerald-200 text-success hover:bg-emerald-50'">
-                {{ c.active ? 'Désactiver' : 'Activer' }}
+                {{ c.active ? ('CURRENCIES.DEACTIVATE' | translate) : ('CURRENCIES.ACTIVATE' | translate) }}
               </button>
             </td>
           </tr>
@@ -62,16 +62,16 @@
 
     <!-- Pagination -->
     <div class="flex items-center justify-between px-4 py-3 border-t border-slate-100">
-      <span class="text-xs text-slate-500">Total : {{ data().totalElements }} devises</span>
+      <span class="text-xs text-slate-500">{{ 'CURRENCIES.TOTAL' | translate }} : {{ data().totalElements }}</span>
       <div class="flex gap-2">
         <button (click)="prevPage()" [disabled]="page() === 0"
                 class="px-3 py-1 text-xs font-medium rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed">
-          Précédent
+          {{ 'CURRENCIES.PREVIOUS' | translate }}
         </button>
         <span class="px-3 py-1 text-xs text-slate-500">{{ page() + 1 }} / {{ data().totalPages }}</span>
         <button (click)="nextPage()" [disabled]="page() >= data().totalPages - 1"
                 class="px-3 py-1 text-xs font-medium rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed">
-          Suivant
+          {{ 'CURRENCIES.NEXT' | translate }}
         </button>
       </div>
     </div>

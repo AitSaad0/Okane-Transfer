@@ -5,6 +5,7 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { takeUntil, finalize } from 'rxjs/operators';
@@ -19,7 +20,7 @@ export interface AlertDto {
 @Component({
   selector: 'app-alerts',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './alerts.component.html',
   styleUrls: ['./alerts.component.css']
 })
