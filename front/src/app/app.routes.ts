@@ -112,7 +112,7 @@ export const routes: Routes = [
             path: 'compliance/threshold',
             loadComponent: () =>
               import('./pages/admin/compliance/compliance-threshold/compliance-threshold.component').then(
-                (m) => m.ComplianceThresholdsComponent,
+                (m) => m.ComplianceThresholdComponent,
               ),
             canActivate: [roleGuard],
             data: { roles: ['ADMIN'] },

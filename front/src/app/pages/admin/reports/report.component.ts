@@ -3,12 +3,13 @@ import { ReportService } from './services/report.service';
 import { DailyReportDto, MonthlyReportDto, CorridorPerformanceDto } from './models/report.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslateModule],
   styleUrls: ['./report.component.css'],
 })
 export class ReportComponent {

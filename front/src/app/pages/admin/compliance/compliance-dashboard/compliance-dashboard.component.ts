@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -14,7 +15,7 @@ interface ComplianceDashboardDto {
 @Component({
   selector: 'app-compliance-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TranslateModule],
   templateUrl: './compliance-dashboard.component.html',
   styleUrls: ['./compliance-dashboard.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

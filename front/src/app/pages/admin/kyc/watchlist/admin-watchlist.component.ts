@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { WatchlistEntryResponse, WatchlistEntryRequest, Client } from './models/watchlist.model';
 
 type ModalMode = 'none' | 'add-existing' | 'add-new';
@@ -10,7 +11,7 @@ type ModalMode = 'none' | 'add-existing' | 'add-new';
 @Component({
   selector: 'app-admin-watchlist',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, TranslateModule],
   templateUrl: './admin-watchlist.component.html',
   styleUrls: ['./admin-watchlist.component.css']
 })

@@ -1,42 +1,32 @@
 <div class="report-container">
-
-  <h2>Admin Reports Dashboard</h2>
-
+  <h2>{{ 'REPORTS_PAGE.TITLE' | translate }}</h2>
   <!-- REPORT TYPE -->
-  <label>Report Type</label>
+  <label>{{ 'REPORTS_PAGE.REPORT_TYPE' | translate }}</label>
   <select [(ngModel)]="reportType">
-    <option value="daily">Daily Report</option>
-    <option value="monthly">Yearly Report</option>
-    <option value="corridor">Corridor Performance</option>
+    <option value="daily">{{ 'REPORTS_PAGE.DAILY' | translate }}</option>
+    <option value="monthly">{{ 'REPORTS_PAGE.YEARLY' | translate }}</option>
+    <option value="corridor">{{ 'REPORTS_PAGE.CORRIDOR' | translate }}</option>
   </select>
-
   <hr />
-
   <!-- DAILY -->
   <div *ngIf="reportType === 'daily'">
     <input type="date" [(ngModel)]="date" />
-    <input placeholder="Corridor ID (optional)" [(ngModel)]="corridorId" />
-    <input placeholder="Agence ID (optional)" [(ngModel)]="agenceId" />
+    <input [placeholder]="'REPORTS_PAGE.CORRIDOR_ID' | translate" [(ngModel)]="corridorId" />
+    <input [placeholder]="'REPORTS_PAGE.AGENCE_ID' | translate" [(ngModel)]="agenceId" />
   </div>
-
   <!-- MONTHLY -->
   <div *ngIf="reportType === 'monthly'">
-    <input type="number" placeholder="Year" [(ngModel)]="year" />
+    <input type="number" [placeholder]="'REPORTS_PAGE.YEAR' | translate" [(ngModel)]="year" />
   </div>
-
   <!-- CORRIDOR -->
   <div *ngIf="reportType === 'corridor'">
     <input type="date" [(ngModel)]="startDate" />
     <input type="date" [(ngModel)]="endDate" />
   </div>
-
-  <button (click)="generateReport()">Generate Report</button>
-
-  <div *ngIf="loading">Loading...</div>
-
+  <button (click)="generateReport()">{{ 'REPORTS_PAGE.GENERATE' | translate }}</button>
+  <div *ngIf="loading">{{ 'ACTIONS.LOADING' | translate }}</div>
   <!-- TABLE -->
   <table *ngIf="data.length > 0">
-
     <thead>
     <tr>
       <th *ngFor="let key of getKeys(data[0])">
@@ -44,7 +34,6 @@
       </th>
     </tr>
     </thead>
-
     <tbody>
     <tr *ngFor="let row of data">
       <td *ngFor="let key of getKeys(row)">
@@ -52,13 +41,10 @@
       </td>
     </tr>
     </tbody>
-
   </table>
-
   <!-- EXPORT -->
   <div *ngIf="data.length > 0">
-    <button (click)="export('csv')">Export CSV</button>
-    <button (click)="export('pdf')">Export PDF</button>
+    <button (click)="export('csv')">{{ 'REPORTS_PAGE.EXPORT_CSV' | translate }}</button>
+    <button (click)="export('pdf')">{{ 'REPORTS_PAGE.EXPORT_PDF' | translate }}</button>
   </div>
-
 </div>

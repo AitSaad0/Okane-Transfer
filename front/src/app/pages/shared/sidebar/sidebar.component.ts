@@ -11,6 +11,7 @@ interface NavItem {
   roles: string[];
 }
 
+// Updated labels
 @Component({
   selector: 'app-sidebar',
   standalone: true,
@@ -24,12 +25,12 @@ export class SidebarComponent implements OnInit {
 
   allNavItems: NavItem[] = [
     { label: 'NAV_USERS',               icon: 'fa-solid fa-users',                  route: '/admin/users',                   roles: ['ADMIN'] },
-    { label: 'AGENCIES',                icon: 'fa-solid fa-building',               route: '/admin/agencies',                roles: ['ADMIN'] },
-    { label: 'CURRENCIES',              icon: 'fa-solid fa-coins',                  route: '/admin/currencies',              roles: ['ADMIN'] },
+    { label: 'AGENCIES_NAV',                icon: 'fa-solid fa-building',               route: '/admin/agencies',                roles: ['ADMIN'] },
+    { label: 'CURRENCIES.TITLE',              icon: 'fa-solid fa-coins',                  route: '/admin/currencies',              roles: ['ADMIN'] },
     { label: 'CORRIDORS',               icon: 'fa-solid fa-route',                  route: '/admin/corridors',               roles: ['ADMIN'] },
     { label: 'RATES',                   icon: 'fa-solid fa-chart-line',             route: '/admin/exchange-rates',          roles: ['ADMIN'] },
-    { label: 'FEES',                    icon: 'fa-solid fa-hand-holding-dollar',    route: '/admin/fee-grids',               roles: ['ADMIN'] },
-    { label: 'COMPLIANCE',              icon: 'fa-solid fa-shield-halved',          route: '/admin/compliance/dashboard',    roles: ['ADMIN'] },
+    { label: 'SIDEBAR_FEES',                    icon: 'fa-solid fa-hand-holding-dollar',    route: '/admin/fee-grids',               roles: ['ADMIN'] },
+    { label: 'SIDEBAR_COMPLIANCE',              icon: 'fa-solid fa-shield-halved',          route: '/admin/compliance/dashboard',    roles: ['ADMIN'] },
     { label: 'Watchlist',               icon: 'fa-solid fa-list-check',             route: '/admin/kyc/watchlist',           roles: ['ADMIN'] },
     { label: 'AUDIT',                   icon: 'fa-solid fa-clipboard-list',         route: '/admin/audit-logs',              roles: ['ADMIN'] },
     { label: 'MOBILE_MONEY',            icon: 'fa-solid fa-mobile-screen',          route: '/admin/mobile-money',            roles: ['ADMIN'] },

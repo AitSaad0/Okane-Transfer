@@ -3,9 +3,9 @@
 
     <!-- Header -->
     <div class="mb-6">
-      <a routerLink="/admin/currencies" class="text-sm text-secondary hover:text-primary transition-colors">← Retour aux devises</a>
-      <h1 class="text-2xl font-semibold text-slate-800 mt-2">Nouvelle devise</h1>
-      <p class="text-sm text-slate-500 mt-1">Ajouter une devise selon la norme ISO 4217</p>
+      <a routerLink="/admin/currencies" class="text-sm text-secondary hover:text-primary transition-colors">← {{ 'CREATE_CURRENCY.BACK' | translate }}</a>
+      <h1 class="text-2xl font-semibold text-slate-800 mt-2">{{ 'CREATE_CURRENCY.TITLE' | translate }}</h1>
+      <p class="text-sm text-slate-500 mt-1">{{ 'CREATE_CURRENCY.SUBTITLE' | translate }}</p>
     </div>
 
     <!-- Card principale -->
@@ -19,25 +19,25 @@
 
         <!-- Code ISO 4217 -->
         <div>
-          <label class="text-sm font-medium text-slate-600 block mb-1">Code ISO 4217 *</label>
+          <label class="text-sm font-medium text-slate-600 block mb-1">{{ 'CREATE_CURRENCY.CODE_LABEL' | translate }}</label>
           <input [formControl]="$any(form.get('code'))"
-                 placeholder="ex: MAD"
+                 [placeholder]="'CREATE_CURRENCY.CODE_PH' | translate"
                  maxlength="3"
                  class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm font-mono text-slate-800 uppercase focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                  (input)="form.get('code')?.setValue($any($event.target).value.toUpperCase())"/>
           @if (form.get('code')?.invalid && form.get('code')?.touched) {
-            <p class="text-xs text-danger mt-1">Code requis — exactement 3 lettres (ex: MAD, EUR, USD)</p>
+            <p class="text-xs text-danger mt-1">{{ 'CREATE_CURRENCY.CODE_ERR' | translate }}</p>
           }
         </div>
 
         <!-- Nom -->
         <div>
-          <label class="text-sm font-medium text-slate-600 block mb-1">Nom complet *</label>
+          <label class="text-sm font-medium text-slate-600 block mb-1">{{ 'CREATE_CURRENCY.NAME_LABEL' | translate }}</label>
           <input [formControl]="$any(form.get('name'))"
-                 placeholder="ex: Dirham marocain"
+                 [placeholder]="'CREATE_CURRENCY.NAME_PH' | translate"
                  class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"/>
           @if (form.get('name')?.invalid && form.get('name')?.touched) {
-            <p class="text-xs text-danger mt-1">Nom requis</p>
+            <p class="text-xs text-danger mt-1">{{ 'CREATE_CURRENCY.NAME_ERR' | translate }}</p>
           }
         </div>
 
@@ -47,20 +47,20 @@
           <!-- Header pays -->
           <div class="flex items-center justify-between mb-3">
             <div>
-              <label class="text-sm font-medium text-slate-600">Pays associés *</label>
-              <p class="text-xs text-slate-400 mt-0.5">Au moins 1 pays requis avant de créer la devise</p>
+              <label class="text-sm font-medium text-slate-600">{{ 'CREATE_CURRENCY.COUNTRIES_LABEL' | translate }}</label>
+              <p class="text-xs text-slate-400 mt-0.5">{{ 'CREATE_CURRENCY.COUNTRIES_HINT' | translate }}</p>
             </div>
             <button type="button" (click)="openCountryForm()"
                     class="text-xs font-medium px-3 py-1.5 rounded-lg border border-primary text-primary hover:bg-indigo-50 transition-colors">
-              + Ajouter un pays
+              {{ 'CREATE_CURRENCY.ADD_COUNTRY' | translate }}
             </button>
           </div>
 
           <!-- Aucun pays -->
           @if (pays.length === 0 && !showCountryForm()) {
             <div class="border-2 border-dashed border-slate-200 rounded-lg p-4 text-center">
-              <p class="text-sm text-slate-400">Aucun pays ajouté</p>
-              <p class="text-xs text-slate-300 mt-1">Cliquez sur "+ Ajouter un pays" pour commencer</p>
+              <p class="text-sm text-slate-400">{{ 'CREATE_CURRENCY.NO_COUNTRY' | translate }}</p>
+              <p class="text-xs text-slate-300 mt-1">{{ 'CREATE_CURRENCY.NO_COUNTRY_HINT' | translate }}</p>
             </div>
           }
 
@@ -76,7 +76,7 @@
                     <span class="text-sm text-slate-700">{{ p.get('nom')?.value }}</span>
                   </div>
                   <button type="button" (click)="removeCountry($index)"
-                          class="text-xs text-danger hover:underline">Supprimer</button>
+                          class="text-xs text-danger hover:underline">{{ 'CREATE_CURRENCY.DELETE_COUNTRY' | translate }}</button>
                 </div>
               }
             </div>
@@ -85,35 +85,35 @@
           <!-- Mini-formulaire pays -->
           @if (showCountryForm()) {
             <div class="border border-indigo-200 bg-indigo-50 rounded-xl p-4 space-y-3 mt-2">
-              <p class="text-sm font-medium text-primary">Nouveau pays</p>
+              <p class="text-sm font-medium text-primary">{{ 'CREATE_CURRENCY.NEW_COUNTRY_TITLE' | translate }}</p>
 
               <div>
-                <label class="text-xs font-medium text-slate-600 block mb-1">Nom du pays *</label>
+                <label class="text-xs font-medium text-slate-600 block mb-1">{{ 'CREATE_CURRENCY.COUNTRY_NAME_LABEL' | translate }}</label>
                 <input [formControl]="$any(countryForm.get('nom'))"
-                       placeholder="ex: Maroc"
+                       [placeholder]="'CREATE_CURRENCY.COUNTRY_NAME_PH' | translate"
                        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"/>
                 @if (countryForm.get('nom')?.invalid && countryForm.get('nom')?.touched) {
-                  <p class="text-xs text-danger mt-1">Nom requis</p>
+                  <p class="text-xs text-danger mt-1">{{ 'CREATE_CURRENCY.COUNTRY_NAME_ERR' | translate }}</p>
                 }
               </div>
 
               <div>
-                <label class="text-xs font-medium text-slate-600 block mb-1">Code ISO 3166 *</label>
+                <label class="text-xs font-medium text-slate-600 block mb-1">{{ 'CREATE_CURRENCY.COUNTRY_CODE_LABEL' | translate }}</label>
                 <input [formControl]="$any(countryForm.get('codeIso'))"
-                       placeholder="ex: MA"
+                       [placeholder]="'CREATE_CURRENCY.COUNTRY_CODE_PH' | translate"
                        maxlength="2"
                        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm font-mono text-slate-800 uppercase bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                        (input)="countryForm.get('codeIso')?.setValue($any($event.target).value.toUpperCase())"/>
-                <p class="text-xs text-slate-400 mt-1">Code pays 2 lettres — MA, FR, SN, CI…</p>
+                <p class="text-xs text-slate-400 mt-1">{{ 'CREATE_CURRENCY.COUNTRY_CODE_HINT' | translate }}</p>
                 @if (countryForm.get('codeIso')?.invalid && countryForm.get('codeIso')?.touched) {
-                  <p class="text-xs text-danger mt-1">Code ISO requis — exactement 2 lettres</p>
+                  <p class="text-xs text-danger mt-1">{{ 'CREATE_CURRENCY.COUNTRY_CODE_ERR' | translate }}</p>
                 }
               </div>
 
               <div class="flex gap-2 pt-1">
                 <button type="button" (click)="addCountry()" [disabled]="countryForm.invalid"
                         class="flex-1 bg-primary text-white text-xs font-medium py-2 rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-                  Confirmer
+                  {{ 'CREATE_CURRENCY.CONFIRM' | translate }}
                 </button>
                 <button type="button" (click)="cancelCountryForm()"
                         class="flex-1 border border-slate-200 text-slate-600 text-xs font-medium py-2 rounded-lg hover:bg-white transition-colors">
@@ -126,18 +126,18 @@
 
         <!-- Alerte si pas de pays -->
         @if (pays.length === 0 && form.get('code')?.touched) {
-          <p class="text-xs text-danger">Veuillez ajouter au moins un pays avant de créer la devise.</p>
+          <p class="text-xs text-danger">{{ 'CREATE_CURRENCY.NO_COUNTRY_ERR' | translate }}</p>
         }
 
         <!-- Actions -->
         <div class="flex gap-3 pt-2">
           <button (click)="submit()" [disabled]="!canSubmit"
                   class="flex-1 bg-primary text-white text-sm font-medium py-2 rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-            {{ loading() ? 'Création...' : 'Créer la devise' }}
+            {{ loading() ? ('CREATE_CURRENCY.CREATING' | translate) : ('CREATE_CURRENCY.SUBMIT' | translate) }}
           </button>
           <a routerLink="/admin/currencies"
              class="flex-1 text-center border border-slate-200 text-slate-600 text-sm font-medium py-2 rounded-lg hover:bg-slate-50 transition-colors">
-            Annuler
+            {{ 'CREATE_CURRENCY.CANCEL' | translate }}
           </a>
         </div>
 
