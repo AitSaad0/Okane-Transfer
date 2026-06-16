@@ -47,6 +47,8 @@
                                     "/v3/api-docs/**"
                             ).permitAll()
                             .requestMatchers("/api/v1/clients/transfers/track").permitAll()
+                            .requestMatchers("/api/v1/clients/**").hasAnyRole("CLIENT")
+                            .requestMatchers("/api/v1/agent/**").hasAnyRole("AGENT")
                             .anyRequest().authenticated()
                     )
                     .authenticationProvider(authenticationProvider())

@@ -48,11 +48,18 @@ public class ClientTransfertServiceImpl implements ClientTransfertService {
     public PageResponseDto<TransfertResponseDTO> getTransfertsClient(String userEmail, Pageable pageable) {
         User user = findUserByEmail(userEmail);
 
-        // Récupérer le client associé à cet utilisateur
-        Client client = clientRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new BadRequestException("Aucun profil client associé"));
-        if (client == null) {
-            throw new BadRequestException("Aucun profil client associé à cet utilisateur");
+        // 1. Try by linked User object (most reliable)
+        // 2. Fallback to email
+        // 3. Fallback to telephone
+        Client client = clientRepository.findByUser(user)
+                .or(() -> clientRepository.findByEmail(userEmail))
+                .or(() -> clientRepository.findByTelephone(user.getTelephone()))
+                .orElseThrow(() -> new BadRequestException("Aucun profil client associé à cet utilisateur"));
+
+        // Auto-link: if found by email/phone but user is not linked, link it now
+        if (client.getUser() == null) {
+            client.setUser(user);
+            clientRepository.save(client);
         }
 
         Page<Transfert> page = transfertRepository.findByClient(client, pageable);
@@ -65,8 +72,15 @@ public class ClientTransfertServiceImpl implements ClientTransfertService {
         Transfert t = findTransfertById(id);
 
         // Vérification que le transfert appartient bien au client connecté
-        Client client = clientRepository.findByEmail(userEmail)
+        Client client = clientRepository.findByUser(user)
+                .or(() -> clientRepository.findByEmail(userEmail))
+                .or(() -> clientRepository.findByTelephone(user.getTelephone()))
                 .orElseThrow(() -> new BadRequestException("Aucun profil client associé à cet utilisateur"));
+
+        if (client.getUser() == null) {
+            client.setUser(user);
+            clientRepository.save(client);
+        }
         boolean isOwner = (t.getExpediteur() != null && client != null && t.getExpediteur().getId().equals(client.getId()))
                 || (t.getBeneficiaire() != null && client != null && t.getBeneficiaire().getId().equals(client.getId()));
 

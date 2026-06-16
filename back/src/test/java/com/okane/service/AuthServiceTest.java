@@ -1,11 +1,11 @@
 package com.okane.service;
 
 import com.okane.dto.requestDto.*;
+import com.okane.entity.enums.Role;
 import com.okane.dto.responseDto.AuthResponseDTO;
 import com.okane.dto.responseDto.UserResponseDTO;
 import com.okane.entity.Token;
 import com.okane.entity.User;
-import com.okane.entity.enums.Role;
 import com.okane.entity.enums.TypeToken;
 import com.okane.exception.*;
 import com.okane.repository.TokenRepository;
@@ -51,7 +51,6 @@ class AuthServiceTest {
         dto.setPassword("password123");
         dto.setNom("Doe");
         dto.setPrenom("John");
-        dto.setRole(Role.CLIENT);
 
         when(userRepository.existsByEmail("client@okane.com")).thenReturn(false);
         when(passwordEncoder.encode("password123")).thenReturn("encodedPassword");
@@ -72,7 +71,6 @@ class AuthServiceTest {
         dto.setPassword("password123");
         dto.setNom("Admin");
         dto.setPrenom("User");
-        dto.setRole(Role.ADMIN);
 
         when(userRepository.existsByEmail("admin@okane.com")).thenReturn(false);
         when(passwordEncoder.encode(any())).thenReturn("encoded");
@@ -92,7 +90,6 @@ class AuthServiceTest {
         dto.setPassword("password123");
         dto.setNom("Doe");
         dto.setPrenom("John");
-        dto.setRole(Role.CLIENT);
 
         when(userRepository.existsByEmail("client@okane.com")).thenReturn(true);
 

@@ -5,7 +5,7 @@ WORKDIR /app
 COPY pom.xml .
 RUN mvn dependency:go-offline -q
 COPY src ./src
-RUN mvn clean package -DskipTests
+RUN mvn clean package -Dmaven.test.skip=true
 
 # ── Stage 2 : Runtime ────────────────────────────────────────
 FROM tomcat:10.1-jre21-temurin-jammy

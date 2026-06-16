@@ -35,16 +35,32 @@ public class ClientProfileServiceImpl implements ClientProfileService{
         @Override
         @Transactional(readOnly = true)
         public ClientProfileResponseDto getMyProfile(Long userId) {
-            Client client = clientRepository.findByUserId(userId)
+            com.okane.entity.User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new EntityNotFoundException("Utilisateur introuvable"));
+            Client client = clientRepository.findByUser(user)
+                    .or(() -> clientRepository.findByEmail(user.getEmail()))
+                    .or(() -> clientRepository.findByTelephone(user.getTelephone()))
                     .orElseThrow(() -> new EntityNotFoundException("Profil client introuvable"));
+            if (client.getUser() == null) {
+                client.setUser(user);
+                clientRepository.save(client);
+            }
             return clientConverter.toProfileDto(client);
         }
 
         @Override
         @Transactional
         public ClientProfileResponseDto updateMyProfile(Long userId, UpdateClientProfileRequestDto request) {
-            Client client = clientRepository.findByUserId(userId)
+            com.okane.entity.User user2 = userRepository.findById(userId)
+                    .orElseThrow(() -> new EntityNotFoundException("Utilisateur introuvable"));
+            Client client = clientRepository.findByUser(user2)
+                    .or(() -> clientRepository.findByEmail(user2.getEmail()))
+                    .or(() -> clientRepository.findByTelephone(user2.getTelephone()))
                     .orElseThrow(() -> new EntityNotFoundException("Profil client introuvable"));
+            if (client.getUser() == null) {
+                client.setUser(user2);
+                clientRepository.save(client);
+            }
 
             // vérif téléphone unique si changé
             if (!client.getTelephone().equals(request.getTelephone())
@@ -101,4 +117,53 @@ public class ClientProfileServiceImpl implements ClientProfileService{
             );
         }
 
+
+    private Client findClientByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Utilisateur introuvable"));
+        return clientRepository.findByUser(user)
+                .or(() -> clientRepository.findByEmail(email))
+                .or(() -> clientRepository.findByTelephone(user.getTelephone()))
+                .map(c -> {
+                    if (c.getUser() == null) { c.setUser(user); clientRepository.save(c); }
+                    return c;
+                })
+                .orElseThrow(() -> new EntityNotFoundException("Profil client introuvable"));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ClientProfileResponseDto getMyProfileByEmail(String email) {
+        return clientConverter.toProfileDto(findClientByEmail(email));
+    }
+
+    @Override
+    @Transactional
+    public ClientProfileResponseDto updateMyProfileByEmail(String email, UpdateClientProfileRequestDto request) {
+        Client client = findClientByEmail(email);
+        if (!client.getTelephone().equals(request.getTelephone())
+                && clientRepository.existsByTelephone(request.getTelephone())) {
+            throw new IllegalArgumentException("Ce numéro de téléphone est déjà utilisé");
+        }
+        client.setNom(request.getNom());
+        client.setPrenom(request.getPrenom());
+        client.setTelephone(request.getTelephone());
+        clientRepository.save(client);
+        User user = client.getUser();
+        if (user != null) {
+            if (request.getNotificationEmail() != null) user.setNotificationEmail(request.getNotificationEmail());
+            if (request.getNotificationSms() != null) user.setNotificationSms(request.getNotificationSms());
+            if (request.getNotificationPush() != null) user.setNotificationPush(request.getNotificationPush());
+            userRepository.save(user);
+        }
+        return clientConverter.toProfileDto(client);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PageResponseDto<ClientActivityResponseDto> getMyActivityByEmail(String email, int page, int size) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Utilisateur introuvable"));
+        return getMyActivity(user.getId(), page, size);
+    }
 }

@@ -52,7 +52,6 @@ class AuthControllerTest {
         dto.setPassword("password123");
         dto.setNom("Doe");
         dto.setPrenom("John");
-        dto.setRole(Role.CLIENT);
 
         when(authService.register(any())).thenReturn(
                 AuthResponseDTO.builder().accessToken("access-token").refreshToken("refresh-token").build());
@@ -72,7 +71,6 @@ class AuthControllerTest {
         dto.setPassword("password123");
         dto.setNom("Admin");
         dto.setPrenom("User");
-        dto.setRole(Role.ADMIN);
 
         when(authService.register(any()))
                 .thenThrow(new UnauthorizedAccessException("Public registration is for clients only"));
@@ -90,7 +88,6 @@ class AuthControllerTest {
         dto.setPassword("password123");
         dto.setNom("Doe");
         dto.setPrenom("John");
-        dto.setRole(Role.CLIENT);
 
         when(authService.register(any()))
                 .thenThrow(new UserAlreadyExistsException("Email already in use"));

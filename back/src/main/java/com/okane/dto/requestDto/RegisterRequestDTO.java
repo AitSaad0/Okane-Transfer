@@ -11,5 +11,5 @@ public class RegisterRequestDTO {
     private String nom;
     private String prenom;
     private String telephone;
-    private Role role;
-}
+    private String numPieceIdentite;   // new
+    }

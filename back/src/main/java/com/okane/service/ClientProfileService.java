@@ -12,4 +12,8 @@ public interface ClientProfileService {
         ClientProfileResponseDto updateMyProfile(Long userId, UpdateClientProfileRequestDto request);
 
         PageResponseDto<ClientActivityResponseDto> getMyActivity(Long userId, int page, int size);
+
+    ClientProfileResponseDto getMyProfileByEmail(String email);
+    ClientProfileResponseDto updateMyProfileByEmail(String email, com.okane.dto.requestDto.UpdateClientProfileRequestDto request);
+    com.okane.pagination.PageResponseDto<com.okane.dto.responseDto.ClientActivityResponseDto> getMyActivityByEmail(String email, int page, int size);
 }

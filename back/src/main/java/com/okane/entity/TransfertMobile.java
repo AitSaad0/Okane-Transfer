@@ -3,6 +3,8 @@ package com.okane.entity;
 import com.okane.entity.enums.OperateurMobile;
 import jakarta.persistence.*;
 import lombok.*;
+import java.time.LocalDateTime;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "transfert_mobile")
@@ -23,6 +25,10 @@ public class TransfertMobile {
 
     @Column(name = "numero_destinataire", nullable = false)
     private String numeroDestinataire;
+
+    @CreationTimestamp
+    @Column(name = "date_envoi", nullable = false, updatable = false)
+    private LocalDateTime dateEnvoi;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "transfert_id", nullable = false, unique = true)
