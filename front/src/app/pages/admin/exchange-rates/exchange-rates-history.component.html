@@ -2,9 +2,9 @@
 
   <div class="flex items-center justify-between mb-6">
     <div>
-      <a routerLink="/admin/exchange-rates" class="text-sm text-secondary hover:text-primary transition-colors">← Retour aux taux</a>
-      <h1 class="text-2xl font-semibold text-slate-800 mt-2">Historique des taux</h1>
-      <p class="text-sm text-slate-500 mt-1">Toutes les variations avec date et source</p>
+      <a routerLink="/admin/exchange-rates" class="text-sm text-secondary hover:text-primary transition-colors">{{ 'EXCHANGE_RATES.BACK' | translate }}</a>
+      <h1 class="text-2xl font-semibold text-slate-800 mt-2">{{ 'EXCHANGE_RATES.HISTORY_TITLE' | translate }}</h1>
+      <p class="text-sm text-slate-500 mt-1">{{ 'EXCHANGE_RATES.HISTORY_SUBTITLE' | translate }}</p>
     </div>
   </div>
 
@@ -15,20 +15,32 @@
   <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
     <table class="w-full text-sm">
       <thead class="bg-slate-50 border-b border-slate-200">
+<<<<<<< Updated upstream
+      <tr>
+        <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Paire</th>
+        <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Taux</th>
+        <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Source</th>
+        <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Date</th>
+      </tr>
+=======
         <tr>
-          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Paire</th>
-          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Taux</th>
-          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Source</th>
-          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Date</th>
+          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'EXCHANGE_RATES.COL_PAIR' | translate }}</th>
+          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'EXCHANGE_RATES.COL_RATE' | translate }}</th>
+          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'EXCHANGE_RATES.COL_SOURCE' | translate }}</th>
+          <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'EXCHANGE_RATES.COL_DATE' | translate }}</th>
         </tr>
+>>>>>>> Stashed changes
       </thead>
       <tbody class="divide-y divide-slate-100">
         @if (loading()) {
-          <tr><td colspan="4" class="px-4 py-8 text-center text-slate-400">Chargement...</td></tr>
+          <tr><td colspan="4" class="px-4 py-8 text-center text-slate-400">{{ 'CURRENCIES.LOADING' | translate }}</td></tr>
         }
         @for (h of history(); track h.id) {
           <tr class="hover:bg-slate-50 transition-colors">
-            <td class="px-4 py-3 font-mono font-medium text-slate-800">{{ h.fromCurrency }} → {{ h.toCurrency }}</td>
+            <td class="px-4 py-3 font-medium text-slate-800">
+              {{ h.paysOrigineNom }} → {{ h.paysDestinationNom }}
+              <span class="text-xs text-slate-400 ml-1">({{ h.fromCurrency }}/{{ h.toCurrency }})</span>
+            </td>
             <td class="px-4 py-3 font-mono text-slate-800">{{ h.rate | number:'1.4-4' }}</td>
             <td class="px-4 py-3">
               @if (h.source === 'API') {
@@ -37,7 +49,7 @@
                 <span class="bg-amber-50 text-warning border border-amber-200 rounded-full px-3 py-1 text-xs font-medium">MANUEL</span>
               }
             </td>
-            <td class="px-4 py-3 text-slate-500 text-xs">{{ h.recordedAt | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td class="px-4 py-3 text-slate-500 text-xs">{{ h.updatedAt | javaDate }}</td>
           </tr>
         }
         @empty {

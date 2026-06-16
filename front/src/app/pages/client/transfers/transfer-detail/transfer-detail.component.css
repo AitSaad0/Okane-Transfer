@@ -1,0 +1,26 @@
+/* client-transfer-detail.component.css */
+:host {
+  display: block;
+}
+
+.detail-card {
+  transition: box-shadow 0.15s ease;
+}
+
+.back-link {
+  transition: color 0.1s ease;
+}
+
+.back-link:hover {
+  color: #3730a3;
+}
+
+/* Timeline steps connector */
+.step-connector {
+  height: 2px;
+  flex: 1;
+}
+
+.step-dot-done   { background: #10b981; border-color: #10b981; color: #fff; }
+.step-dot-active { background: #f59e0b; border-color: #f59e0b; color: #fff; }
+.step-dot-idle   { background: #fff;    border-color: #cbd5e1; color: #94a3b8; }

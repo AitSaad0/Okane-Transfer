@@ -1,0 +1,33 @@
+/* track.component.css */
+:host {
+  display: block;
+}
+
+/* Public page – no sidebar, centered layout */
+.track-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+}
+
+.search-box {
+  box-shadow: 0 4px 24px rgba(55, 48, 163, 0.07);
+  transition: box-shadow 0.2s ease;
+}
+
+.search-box:focus-within {
+  box-shadow: 0 8px 32px rgba(55, 48, 163, 0.12);
+}
+
+/* Progress bar connector */
+.step-line-done { background: #10b981; }
+.step-line-idle { background: #e2e8f0; }
+
+/* Pulsing indicator for active step */
+@keyframes pulse-amber {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
+}
+
+.step-active-pulse {
+  animation: pulse-amber 1.6s ease-in-out infinite;
+}

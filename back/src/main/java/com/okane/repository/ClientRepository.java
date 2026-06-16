@@ -28,4 +28,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
         )
     """)
     List<Client> searchClients(@Param("q") String query);
+
+    Optional<Client> findByEmail(String email);
+
 }

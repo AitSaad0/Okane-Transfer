@@ -1,6 +1,18 @@
 <div class="threshold-container">
   <div class="threshold-card">
+<<<<<<< Updated upstream
+
     <h2>AML Threshold Settings</h2>
+=======
+    <h2>{{ 'COMPLIANCE.TH_TITLE' | translate }}</h2>
+>>>>>>> Stashed changes
+
+    <div class="threshold-info">
+      <span class="threshold-label">Current Threshold</span>
+      <span class="threshold-value">
+        {{ form.sarThreshold | number:'1.2-2' }}
+      </span>
+    </div>
 
     <div *ngIf="errorMessage" class="alert error">
       {{ errorMessage }}
@@ -12,7 +24,13 @@
 
     <form (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="sarThreshold">Threshold Amount</label>
+<<<<<<< Updated upstream
+        <label for="sarThreshold">
+          New Threshold Amount
+        </label>
+=======
+        <label for="sarThreshold">{{ 'COMPLIANCE.TH_LABEL' | translate }}</label>
+>>>>>>> Stashed changes
 
         <input
           id="sarThreshold"
@@ -26,15 +44,21 @@
       </div>
 
       <button
-        type="button"
+        type="submit"
         class="submit-btn"
-        [class.saved]="saved"
-        (click)="onSubmit()"
+        [disabled]="loading"
       >
         <span *ngIf="loading">Saving...</span>
         <span *ngIf="saved">✓ Saved</span>
-        <span *ngIf="!loading && !saved">Update Threshold</span>
+<<<<<<< Updated upstream
+        <span *ngIf="!loading && !saved">
+          Update Threshold
+        </span>
+=======
+        <span *ngIf="!loading && !saved">{{ 'COMPLIANCE.BTN_UPDATE_TH' | translate }}</span>
+>>>>>>> Stashed changes
       </button>
     </form>
+
   </div>
 </div>

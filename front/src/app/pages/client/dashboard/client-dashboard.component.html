@@ -1,0 +1,100 @@
+<div class="min-h-screen bg-slate-50 p-6">
+
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-2xl font-semibold text-slate-800">
+      {{ 'DASHBOARD.GREETING' | translate }}
+      <span *ngIf="clientName()"> {{ clientName() }}</span>
+      <span *ngIf="!clientName()" class="inline-block w-32 h-6 bg-slate-200 rounded animate-pulse align-middle ml-1"></span>
+    </h1>
+    <p class="text-sm text-slate-500 mt-1">{{ 'DASHBOARD.SUBTITLE' | translate }}</p>
+  </div>
+
+  <!-- Stats cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+    <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+      <p class="text-sm font-medium text-slate-500">{{ 'DASHBOARD.STAT_TOTAL' | translate }}</p>
+      <p *ngIf="!loading()" class="text-3xl font-semibold text-slate-800 mt-1">{{ totalTransferts() }}</p>
+      <div *ngIf="loading()" class="h-8 w-16 bg-slate-200 rounded animate-pulse mt-1"></div>
+    </div>
+    <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+      <p class="text-sm font-medium text-slate-500">{{ 'DASHBOARD.STAT_PENDING' | translate }}</p>
+      <p *ngIf="!loading()" class="text-3xl font-semibold text-amber-600 mt-1">{{ transfertsEnCours() }}</p>
+      <div *ngIf="loading()" class="h-8 w-12 bg-slate-200 rounded animate-pulse mt-1"></div>
+    </div>
+  </div>
+
+  <!-- Quick actions -->
+  <div class="flex flex-wrap gap-3 mb-8">
+
+    <a routerLink="/client/transfers"
+       class="inline-flex items-center gap-2 bg-white border border-slate-200 text-slate-700 px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">
+      {{ 'DASHBOARD.BTN_MY_TRANSFERS' | translate }}
+    </a>
+    <a routerLink="/track"
+       class="inline-flex items-center gap-2 bg-white border border-slate-200 text-slate-700 px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">
+      {{ 'DASHBOARD.BTN_TRACK' | translate }}
+    </a>
+  </div>
+
+  <!-- Recent transfers -->
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+      <h2 class="text-lg font-medium text-slate-700">{{ 'DASHBOARD.RECENT_TITLE' | translate }}</h2>
+      <a routerLink="/client/transfers" class="text-sm text-indigo-600 hover:underline font-medium">
+        {{ 'DASHBOARD.SEE_ALL' | translate }} &rarr;
+      </a>
+    </div>
+
+    <!-- Loading skeleton -->
+    <div *ngIf="loading()" class="p-6 space-y-3">
+      <div *ngFor="let _ of [1,2,3]" class="h-10 bg-slate-100 rounded-lg animate-pulse"></div>
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="!loading() && errorTransfers()"
+         class="p-8 text-center text-rose-500 text-sm">
+      {{ 'DASHBOARD.ERROR_TRANSFERS' | translate }}
+    </div>
+
+    <!-- Empty -->
+    <div *ngIf="!loading() && !errorTransfers() && recentTransfers().length === 0"
+         class="p-8 text-center text-slate-400 text-sm">
+      {{ 'DASHBOARD.NO_TRANSFERS' | translate }}
+    </div>
+
+    <!-- Table -->
+    <table *ngIf="!loading() && !errorTransfers() && recentTransfers().length > 0" class="w-full text-sm">
+      <thead class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wide">
+      <tr>
+        <th class="text-left px-6 py-3 font-medium">{{ 'DASHBOARD.COL_REF' | translate }}</th>
+        <th class="text-left px-6 py-3 font-medium">{{ 'DASHBOARD.COL_BENEFICIARY' | translate }}</th>
+        <th class="text-left px-6 py-3 font-medium">{{ 'DASHBOARD.COL_AMOUNT' | translate }}</th>
+        <th class="text-left px-6 py-3 font-medium">{{ 'DASHBOARD.COL_STATUS' | translate }}</th>
+        <th class="text-left px-6 py-3 font-medium">{{ 'DASHBOARD.COL_DATE' | translate }}</th>
+        <th class="px-6 py-3"></th>
+      </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100">
+      <tr *ngFor="let t of recentTransfers()" class="hover:bg-slate-50 transition-colors">
+        <td class="px-6 py-4 font-mono text-slate-800 text-xs">{{ t.reference }}</td>
+        <td class="px-6 py-4 text-slate-700">{{ t.beneficiaire.prenom }} {{ t.beneficiaire.nom }}</td>
+        <td class="px-6 py-4 font-mono text-slate-800">{{ t.montantEnvoye | number:'1.2-2' }} {{ t.deviseEnvoi }}</td>
+        <td class="px-6 py-4">
+            <span [class]="'rounded-full px-3 py-1 text-xs font-medium ' + statusClass(t.statut)">
+              {{ statusLabel(t.statut) }}
+            </span>
+        </td>
+        <td class="px-6 py-4 text-slate-500 text-xs">{{ t.dateCreation | date:'dd/MM/yyyy' }}</td>
+        <td class="px-6 py-4">
+          <a [routerLink]="['/client/transfers', t.id]"
+             class="text-indigo-600 hover:underline text-xs font-medium">
+            {{ 'DASHBOARD.COL_DETAIL' | translate }}
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

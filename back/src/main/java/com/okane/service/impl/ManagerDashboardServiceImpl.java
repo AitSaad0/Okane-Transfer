@@ -1,5 +1,10 @@
 package com.okane.service.impl;
 
+import com.lowagie.text.*;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+
+import java.io.ByteArrayOutputStream;
 import com.okane.dto.responseDto.ManagerDashboardResponseDTO;
 import com.okane.entity.Agence;
 import com.okane.entity.Caisse;
@@ -17,6 +22,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -24,6 +30,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -120,13 +127,30 @@ public class ManagerDashboardServiceImpl implements ManagerDashboardService {
                 : 0.0;
 
         // Caisses ouvertes du jour - Correction: utiliser findByAgenceIdAndDateOuverture
-        List<Caisse> caissesJour = caisseRepository.findByAgentOrderByDateOuvertureDesc(manager);
-        long agentsActifs = caissesJour.stream()
-                .filter(c -> c.getStatut() == StatutCaisse.OUVERTE)
-                .count();
+        // Toutes les caisses ouvertes de l'agence aujourd'hui
+        List<Caisse> caissesJour =
+                caisseRepository.findByAgenceIdAndDateAndStatut(
+                        agenceId,
+                        date,
+                        StatutCaisse.OUVERTE
+                );
+
+
+        for (Caisse c : caissesJour) {
+            System.out.println(
+                    "Caisse ID=" + c.getId()
+                            + " solde=" + c.getSoldeCourant()
+                            + " statut=" + c.getStatut()
+                            + " agence=" + c.getAgence().getId()
+            );
+        }
+
+        long agentsActifs = caissesJour.size();
 
         BigDecimal soldeCaisseTotal = caissesJour.stream()
-                .map(c -> c.getSoldeCourant() != null ? c.getSoldeCourant() : BigDecimal.ZERO)
+                .map(c -> c.getSoldeCourant() != null
+                        ? c.getSoldeCourant()
+                        : BigDecimal.ZERO)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         // Top agents (par volume traité)
@@ -183,48 +207,122 @@ public class ManagerDashboardServiceImpl implements ManagerDashboardService {
     }
 
     private byte[] buildCsvBytes(ManagerDashboardResponseDTO data) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Agence;Volume du jour;Commissions;Taux de succès;Agents actifs;Transferts;En attente;Solde caisse\n");
-        sb.append(String.format("%s;%s;%s;%.1f%%;%d;%d;%d;%s\n",
-                data.getAgenceNom(),
-                data.getVolumeJour(),
-                data.getCommissionsJour(),
-                data.getTauxSucces(),
-                data.getNombreAgentsActifs(),
-                data.getNombreTransfertsJour(),
-                data.getNombreTransfertsEnAttente(),
-                data.getSoldeCaisseTotal()));
 
-        sb.append("\nTop Agents\n");
-        sb.append("Nom;Prénom;Transferts;Volume;Commissions\n");
+        StringBuilder sb = new StringBuilder();
+
+        sb.append('\uFEFF');
+        sb.append("sep=;\r\n");
+
+        // Header row
+        sb.append("Agence;Ville;Pays;Volume du jour;Commissions;Taux de succes (%);Agents actifs;Nombre transferts;En attente;Solde caisse\r\n");
+
+        // Values row
+        sb.append(csv(data.getAgenceNom())).append(";")
+                .append(csv(data.getAgenceVille())).append(";")
+                .append(csv(data.getAgencePays())).append(";")
+                .append(csv(data.getVolumeJour())).append(";")
+                .append(csv(data.getCommissionsJour())).append(";")
+                .append(data.getTauxSucces()).append(";")
+                .append(data.getNombreAgentsActifs()).append(";")
+                .append(data.getNombreTransfertsJour()).append(";")
+                .append(data.getNombreTransfertsEnAttente()).append(";")
+                .append(csv(data.getSoldeCaisseTotal()))
+                .append("\r\n");
+
+        sb.append("\r\n");
+
+        // Top agents table
+        sb.append("Nom;Prenom;Nombre transferts;Volume traite;Commissions generees\r\n");
+
         if (data.getTopAgents() != null) {
-            for (var a : data.getTopAgents()) {
-                sb.append(String.format("%s;%s;%d;%s;%s\n",
-                        a.getAgentNom(),
-                        a.getAgentPrenom(),
-                        a.getNombreTransferts(),
-                        a.getVolumeTraite(),
-                        a.getCommissionsGenerees()));
+            for (ManagerDashboardResponseDTO.AgentStatDTO agent : data.getTopAgents()) {
+                sb.append(csv(agent.getAgentNom())).append(";")
+                        .append(csv(agent.getAgentPrenom())).append(";")
+                        .append(agent.getNombreTransferts()).append(";")
+                        .append(csv(agent.getVolumeTraite())).append(";")
+                        .append(csv(agent.getCommissionsGenerees()))
+                        .append("\r\n");
             }
         }
+
         return sb.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8);
+    }
+    private String csv(Object value) {
+
+        if (value == null) {
+            return "";
+        }
+
+        String text = value.toString();
+
+        text = text.replace("\"", "\"\"");
+
+        return "\"" + text + "\"";
     }
 
     private byte[] buildPdfBytes(ManagerDashboardResponseDTO data) {
-        // Pour PDF, on retourne un CSV pour l'instant
-        // Implémentez la génération PDF avec iText ou OpenPDF si nécessaire
-        String pdfContent = "PDF Report\n" +
-                "==========\n" +
-                "Agence: " + data.getAgenceNom() + "\n" +
-                "Volume du jour: " + data.getVolumeJour() + "\n" +
-                "Commissions: " + data.getCommissionsJour() + "\n" +
-                "Taux de succès: " + data.getTauxSucces() + "%\n" +
-                "Agents actifs: " + data.getNombreAgentsActifs() + "\n" +
-                "Transferts: " + data.getNombreTransfertsJour() + "\n" +
-                "En attente: " + data.getNombreTransfertsEnAttente() + "\n" +
-                "Solde caisse: " + data.getSoldeCaisseTotal();
 
-        return pdfContent.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+            Document document = new Document(PageSize.A4);
+            PdfWriter.getInstance(document, baos);
+
+            document.open();
+
+            Font titleFont = new Font(Font.HELVETICA, 18, Font.BOLD);
+            Font sectionFont = new Font(Font.HELVETICA, 14, Font.BOLD);
+            Font normalFont = new Font(Font.HELVETICA, 12);
+
+            document.add(new Paragraph("Rapport Journalier - OKANE", titleFont));
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph("Agence : " + data.getAgenceNom(), normalFont));
+            document.add(new Paragraph("Ville : " + data.getAgenceVille(), normalFont));
+            document.add(new Paragraph("Pays : " + data.getAgencePays(), normalFont));
+            document.add(new Paragraph(" "));
+
+            document.add(new Paragraph("Indicateurs", sectionFont));
+            document.add(new Paragraph("Volume du jour : " + data.getVolumeJour(), normalFont));
+            document.add(new Paragraph("Commissions : " + data.getCommissionsJour(), normalFont));
+            document.add(new Paragraph("Taux de succès : " + data.getTauxSucces() + "%", normalFont));
+            document.add(new Paragraph("Agents actifs : " + data.getNombreAgentsActifs(), normalFont));
+            document.add(new Paragraph("Nombre de transferts : " + data.getNombreTransfertsJour(), normalFont));
+            document.add(new Paragraph("Transferts en attente : " + data.getNombreTransfertsEnAttente(), normalFont));
+            document.add(new Paragraph("Solde caisse total : " + data.getSoldeCaisseTotal(), normalFont));
+
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph("Top Agents", sectionFont));
+
+            if (data.getTopAgents() != null) {
+
+                PdfPTable table = new PdfPTable(5);
+                table.setWidthPercentage(100);
+
+                table.addCell("Nom");
+                table.addCell("Prénom");
+                table.addCell("Transferts");
+                table.addCell("Volume");
+                table.addCell("Commissions");
+
+                for (ManagerDashboardResponseDTO.AgentStatDTO agent : data.getTopAgents()) {
+
+                    table.addCell(agent.getAgentNom());
+                    table.addCell(agent.getAgentPrenom());
+                    table.addCell(String.valueOf(agent.getNombreTransferts()));
+                    table.addCell(String.valueOf(agent.getVolumeTraite()));
+                    table.addCell(String.valueOf(agent.getCommissionsGenerees()));
+                }
+
+                document.add(table);
+            }
+
+            document.close();
+
+            return baos.toByteArray();
+
+        } catch (Exception e) {
+            throw new RuntimeException("Erreur lors de la génération du PDF", e);
+        }
     }
 
     private User findManager(String email) {

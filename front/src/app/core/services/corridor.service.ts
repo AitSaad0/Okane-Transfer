@@ -37,19 +37,19 @@ export class CorridorService {
 }
 
   getActive(): Observable<Corridor[]> {
-    return this.http.get<any[]>('/api/v1/corridors/active').pipe(
-      map((list) =>
-        list.map((c) => ({
-          id: c.id,
-          sourceCountry: c.paysOrigine?.nom || '',
-          destinationCountry: c.paysDestination?.nom || '',
-          sourceCurrencyCode: c.deviseSource?.code || '',
-          destinationCurrencyCode: c.deviseDestination?.code || '',
-          active: c.actif ?? true,
-        })),
-      ),
-    );
-  }
+  return this.http.get<any[]>('/api/v1/admin/corridors').pipe(
+    map((list) =>
+  list.map((c) => ({
+  id: c.id,
+  sourceCountry: c.paysOrigineNom || '-',
+  destinationCountry: c.paysDestinationNom || '-',
+  sourceCurrencyCode: c.deviseSourceCode || '-',
+  destinationCurrencyCode: c.deviseDestinationCode || '-',
+  active: c.actif ?? true,
+})),
+),
+);
+}
 
   create(dto: CorridorCreateDTO): Observable<Corridor> {
     return this.http.post<any>(`${this.base}/by-code`, dto).pipe(

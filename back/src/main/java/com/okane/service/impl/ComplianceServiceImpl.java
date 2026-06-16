@@ -134,4 +134,15 @@ public class ComplianceServiceImpl implements ComplianceService {
                 .createdAt(sar.getCreatedAt())
                 .build();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public BigDecimal getLatestThreshold() {
+
+        return thresholdRepository.findAll()
+                .stream()
+                .findFirst()
+                .map(ComplianceThreshold::getSarThreshold)
+                .orElse(BigDecimal.ZERO);
+    }
 }

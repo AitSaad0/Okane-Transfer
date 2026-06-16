@@ -7,7 +7,7 @@ import { AgenceResponseDto, StatutAgence, PaysResponseDTO } from '../models/agen
 import { PageResponseDto } from '../models/page-response.model';
 import { StatusBadgeComponent } from '../../../shared/status-badge/status-badge.component';
 import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-agency-list',
@@ -33,16 +33,19 @@ export class AgencyListComponent implements OnInit {
   showStatusDialog = false;
   agencyToToggle: AgenceResponseDto | null = null;
 
-  readonly statuses: { value: StatutAgence | ''; label: string }[] = [
-    { value: '',          label: 'Tous les statuts' },
-    { value: 'ACTIVE',    label: 'Active'           },
-    { value: 'SUSPENDUE', label: 'Suspendue'        },
-  ];
+  get statuses(): { value: StatutAgence | ''; label: string }[] {
+    return [
+      { value: '',          label: this.translate.instant('AGENCIES.ALL_STATUSES') },
+      { value: 'ACTIVE',    label: this.translate.instant('AGENCIES.STATUS.ACTIVE') },
+      { value: 'SUSPENDUE', label: this.translate.instant('AGENCIES.STATUS.SUSPENDED') },
+    ];
+  }
 
   constructor(
     private agenceService: AgenceService,
     private router: Router,
     private cdr: ChangeDetectorRef,
+    private translate: TranslateService,
   ) {}
 
   ngOnInit(): void {

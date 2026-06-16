@@ -1,39 +1,37 @@
 <div class="audit-log-container">
-
   <div class="audit-log-header">
-    <h2>Journaux d'audit</h2>
+    <h2>{{ 'AUDIT_LOGS.TITLE' | translate }}</h2>
     @if (isLoading()) {
       <span class="spinner"></span>
     }
   </div>
-
   @if (errorMessage()) {
     <div class="error-banner">{{ errorMessage() }}</div>
   }
-
   <div class="table-wrapper">
     <table class="audit-log-table">
       <thead>
       <tr>
         <th (click)="sortBy('timestamp')">
-          Date / Heure {{ sortIcon('timestamp') }}
+          {{ 'AUDIT_LOGS.COL_DATE' | translate }} {{ sortIcon('timestamp') }}
         </th>
         <th (click)="sortBy('action')">
-          Action {{ sortIcon('action') }}
+          {{ 'AUDIT_LOGS.COL_ACTION' | translate }} {{ sortIcon('action') }}
         </th>
         <th (click)="sortBy('type')">
-          Type {{ sortIcon('type') }}
+          {{ 'AUDIT_LOGS.COL_TYPE' | translate }} {{ sortIcon('type') }}
         </th>
-        <th>Utilisateur</th>
-        <th>Adresse IP</th>
-        <th>Transfert</th>
-        <th>Détails</th>
+        <th>{{ 'AUDIT_LOGS.COL_USER' | translate }}</th>
+        <th>{{ 'AUDIT_LOGS.COL_IP' | translate }}</th>
+        <th>{{ 'AUDIT_LOGS.COL_TRANSFER' | translate }}</th>
+        <th>{{ 'AUDIT_LOGS.COL_DETAILS' | translate }}</th>
       </tr>
       </thead>
       <tbody>
         @for (log of logs(); track log.id) {
           <tr>
-            <td>{{ formatTimestamp(log.timestamp) | date:'dd/MM/yyyy HH:mm:ss' }}</td>            <td>{{ log.action }}</td>
+            <td>{{ formatTimestamp(log.timestamp) | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+            <td>{{ log.action }}</td>
             <td><span [class]="getTypeClass(log.type)">{{ log.type }}</span></td>
             <td>
               <div class="user-cell">
@@ -54,20 +52,18 @@
         } @empty {
           @if (!isLoading()) {
             <tr>
-              <td colspan="7" class="no-data-cell">Aucun journal d'audit trouvé.</td>
+              <td colspan="7" class="no-data-cell">{{ 'AUDIT_LOGS.EMPTY' | translate }}</td>
             </tr>
           }
         }
       </tbody>
     </table>
   </div>
-
   <div class="pagination">
-    <button (click)="previousPage()" [disabled]="pageIndex === 0">← Précédent</button>
+    <button (click)="previousPage()" [disabled]="pageIndex === 0">{{ 'AUDIT_LOGS.PREV' | translate }}</button>
     <span class="page-info">
-      Page {{ pageIndex + 1 }} / {{ totalPages() }} ({{ totalElements() }} entrées)
+      {{ 'AUDIT_LOGS.PAGE_INFO' | translate:{ page: pageIndex + 1, total: totalPages(), entries: totalElements() } }}
     </span>
-    <button (click)="nextPage()" [disabled]="pageIndex + 1 >= totalPages()">Suivant →</button>
+    <button (click)="nextPage()" [disabled]="pageIndex + 1 >= totalPages()">{{ 'AUDIT_LOGS.NEXT' | translate }}</button>
   </div>
-
 </div>

@@ -1,0 +1,119 @@
+<div class="min-h-screen bg-slate-50 p-6">
+  <div class="mb-6">
+    <h1 class="text-2xl font-semibold text-slate-800">Administration — Transferts</h1>
+    <p class="text-sm text-slate-500 mt-1">{{ totalElements() }} transfert(s) au total</p>
+  </div>
+
+  <!-- Filters -->
+  <div class="bg-white rounded-xl border border-slate-200 p-4 mb-6 flex flex-wrap gap-3 items-end shadow-sm">
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1">Référence</label>
+      <input [(ngModel)]="referenceFilter" placeholder="TRF-..."
+             class="border border-slate-300 rounded-lg px-3 py-2 text-sm font-mono w-40 focus:outline-none focus:ring-2 focus:ring-primary" />
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1">Statut</label>
+      <select [(ngModel)]="statutFilter"
+              class="border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+        <option *ngFor="let s of statuts" [value]="s.value">{{ s.label }}</option>
+      </select>
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1">Du</label>
+      <input type="date" [(ngModel)]="dateDebut"
+             class="border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary" />
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1">Au</label>
+      <input type="date" [(ngModel)]="dateFin"
+             class="border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary" />
+    </div>
+    <button (click)="search()"
+            class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-800 transition-colors">
+      Filtrer
+    </button>
+  </div>
+
+  <!-- Table -->
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm">
+    <div *ngIf="loading()" class="p-8 text-center text-slate-400 text-sm">Chargement...</div>
+    <div *ngIf="!loading() && transfers().length === 0" class="p-8 text-center text-slate-400 text-sm">
+      Aucun transfert trouvé.
+    </div>
+
+    <table *ngIf="!loading() && transfers().length > 0" class="w-full text-sm">
+      <thead class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wide">
+      <tr>
+        <th class="text-left px-6 py-3 font-medium">Référence</th>
+        <th class="text-left px-6 py-3 font-medium">Expéditeur</th>
+        <th class="text-left px-6 py-3 font-medium">Bénéficiaire</th>
+        <th class="text-left px-6 py-3 font-medium">Montant</th>
+        <th class="text-left px-6 py-3 font-medium">Corridor</th>
+        <th class="text-left px-6 py-3 font-medium">Statut</th>
+        <th class="text-left px-6 py-3 font-medium">Date</th>
+        <th class="px-6 py-3">Actions</th>
+      </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100">
+      <tr *ngFor="let t of transfers()" class="hover:bg-slate-50 transition-colors">
+        <td class="px-6 py-4 font-mono text-slate-800 text-xs">{{ t.reference }}</td>
+        <td class="px-6 py-4 text-slate-700 text-xs">{{ t.expediteur.prenom }} {{ t.expediteur.nom }}</td>
+        <td class="px-6 py-4 text-slate-700 text-xs">{{ t.beneficiaire.prenom }} {{ t.beneficiaire.nom }}</td>
+        <td class="px-6 py-4 font-mono text-slate-800 text-xs">{{ t.montantEnvoye | number:'1.2-2' }} {{ t.deviseEnvoi }}</td>
+        <td class="px-6 py-4 text-slate-600 text-xs">{{ t.corridor }}</td>
+        <td class="px-6 py-4">
+            <span [class]="'rounded-full px-2.5 py-0.5 text-xs font-medium ' + statusClass(t.statut)">
+              {{ statusLabel(t.statut) }}
+            </span>
+        </td>
+        <td class="px-6 py-4 text-slate-500 text-xs">{{ t.dateCreation | date:'dd/MM/yyyy' }}</td>
+        <td class="px-6 py-4">
+          <div class="flex gap-2">
+            <button *ngIf="t.statut === 'EN_ATTENTE'" (click)="openCancelModal(t)"
+                    class="text-rose-600 hover:underline text-xs font-medium">Annuler</button>
+            <button *ngIf="t.statut === 'PAYE'" (click)="downloadReceipt(t.id)"
+                    class="text-indigo-600 hover:underline text-xs font-medium">Reçu ↓</button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div *ngIf="totalPages() > 1" class="flex justify-center gap-1 py-4 border-t border-slate-100">
+      <button *ngFor="let p of pages"
+              (click)="goToPage(p)"
+              [class]="p === filters.page
+                ? 'bg-primary text-white px-3 py-1.5 rounded-lg text-xs font-medium'
+                : 'text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg text-xs font-medium'">
+        {{ p + 1 }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Force Cancel Modal -->
+<div *ngIf="showCancelModal()" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+    <h2 class="text-lg font-semibold text-slate-800 mb-1">Annuler le transfert</h2>
+    <p class="text-sm text-slate-500 mb-4 font-mono">{{ selectedTransfer()?.reference }}</p>
+
+    <div class="mb-4">
+      <label class="block text-sm font-medium text-slate-600 mb-1">Motif d'annulation <span class="text-rose-500">*</span></label>
+      <textarea [(ngModel)]="cancelMotif" rows="3"
+                placeholder="Motif obligatoire..."
+                class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-rose-400"></textarea>
+    </div>
+
+    <div class="flex gap-3">
+      <button (click)="confirmCancel()" [disabled]="!cancelMotif.trim() || cancellingId() !== null"
+              class="flex-1 bg-rose-500 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-rose-600 disabled:opacity-50 transition-colors">
+        {{ cancellingId() !== null ? 'Annulation…' : 'Confirmer l\'annulation' }}
+      </button>
+      <button (click)="showCancelModal.set(false)"
+              class="flex-1 bg-white border border-slate-200 text-slate-700 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-50">
+        Fermer
+      </button>
+    </div>
+  </div>
+</div>

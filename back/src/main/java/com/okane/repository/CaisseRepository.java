@@ -57,6 +57,17 @@ public interface CaisseRepository extends JpaRepository<Caisse, Long> {
             @Param("agenceId") Long agenceId,
             @Param("date") LocalDate date
     );
+    @Query("""
+SELECT c
+FROM Caisse c
+WHERE c.agence.id = :agenceId
+AND c.dateCaisse = :date
+AND c.statut = :statut
+""")
+    List<Caisse> findByAgenceIdAndDateAndStatut(
+            @Param("agenceId") Long agenceId,
+            @Param("date") LocalDate date,
+            @Param("statut") StatutCaisse statut);
 
     /** History of all cash registers for an agent, most recent first. */
     List<Caisse> findByAgentOrderByDateOuvertureDesc(User agent);

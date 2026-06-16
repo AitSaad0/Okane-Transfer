@@ -1,0 +1,89 @@
+<div class="min-h-screen bg-slate-50 p-6">
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h1 class="text-2xl font-semibold text-slate-800">Ma caisse</h1>
+      <p class="text-sm text-slate-500 mt-1" *ngIf="caisse()">
+        {{ caisse()!.agenceNom }} · Ouverte le {{ caisse()!.dateOuverture | date:'dd/MM/yyyy à HH:mm' }}
+      </p>
+    </div>
+    <div class="flex gap-3" *ngIf="caisse()?.statut === 'OUVERTE'">
+      <a routerLink="/agent/cash-register/discrepancy"
+         class="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">
+        ⚠️ Déclarer un écart
+      </a>
+      <a routerLink="/agent/cash-register/close"
+         class="bg-rose-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-rose-600 transition-colors">
+        Clôturer la caisse
+      </a>
+    </div>
+  </div>
+
+  <div *ngIf="loading()" class="text-center text-slate-400 py-20">Chargement...</div>
+
+  <ng-container *ngIf="caisse() as c">
+    <!-- KPIs -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+        <p class="text-sm font-medium text-slate-500">Solde courant</p>
+        <p class="text-2xl font-semibold font-mono text-slate-800 mt-1">{{ c.soldeCourant | number:'1.2-2' }}</p>
+        <p class="text-xs text-slate-400 mt-0.5">{{ c.devise }}</p>
+      </div>
+      <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+        <p class="text-sm font-medium text-slate-500">Solde d'ouverture</p>
+        <p class="text-2xl font-semibold font-mono text-slate-700 mt-1">{{ c.soldeOuverture | number:'1.2-2' }}</p>
+        <p class="text-xs text-slate-400 mt-0.5">{{ c.devise }}</p>
+      </div>
+      <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+        <p class="text-sm font-medium text-slate-500">Total payé</p>
+        <p class="text-2xl font-semibold font-mono text-emerald-600 mt-1">{{ c.totalPaie | number:'1.2-2' }}</p>
+        <p class="text-xs text-slate-400 mt-0.5">{{ c.devise }}</p>
+      </div>
+      <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+        <p class="text-sm font-medium text-slate-500">Transferts</p>
+        <p class="text-2xl font-semibold text-slate-800 mt-1">{{ c.nombreTransferts }}</p>
+        <p class="text-xs text-slate-400 mt-0.5">opérations</p>
+      </div>
+    </div>
+
+    <!-- Statut badge -->
+    <div class="mb-6">
+      <span [class]="c.statut === 'OUVERTE'
+        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full px-4 py-1.5 text-sm font-medium'
+        : 'bg-slate-100 text-slate-500 border border-slate-200 rounded-full px-4 py-1.5 text-sm font-medium'">
+        Caisse {{ c.statut === 'OUVERTE' ? 'ouverte' : 'fermée' }}
+      </span>
+    </div>
+
+    <!-- Operations table -->
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm">
+      <div class="px-6 py-4 border-b border-slate-100">
+        <h2 class="text-lg font-medium text-slate-700">Opérations de la journée</h2>
+      </div>
+      <div *ngIf="operations().length === 0" class="p-8 text-center text-slate-400 text-sm">Aucune opération enregistrée.</div>
+      <table *ngIf="operations().length > 0" class="w-full text-sm">
+        <thead class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wide">
+        <tr>
+          <th class="text-left px-6 py-3 font-medium">Type</th>
+          <th class="text-left px-6 py-3 font-medium">Description</th>
+          <th class="text-left px-6 py-3 font-medium">Référence</th>
+          <th class="text-right px-6 py-3 font-medium">Montant</th>
+          <th class="text-left px-6 py-3 font-medium">Heure</th>
+        </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+        <tr *ngFor="let op of operations()" class="hover:bg-slate-50">
+          <td class="px-6 py-3">
+            <span [class]="'font-medium text-xs ' + opTypeClass(op.type)">{{ opTypeLabel(op.type) }}</span>
+          </td>
+          <td class="px-6 py-3 text-slate-600">{{ op.description }}</td>
+          <td class="px-6 py-3 font-mono text-slate-500 text-xs">{{ op.reference ?? '—' }}</td>
+          <td class="px-6 py-3 text-right font-mono font-semibold" [class]="opTypeClass(op.type)">
+            {{ op.montant | number:'1.2-2' }} {{ op.devise }}
+          </td>
+          <td class="px-6 py-3 text-slate-400 text-xs">{{ op.dateOperation | date:'HH:mm' }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+</div>

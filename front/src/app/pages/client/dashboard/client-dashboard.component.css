@@ -1,0 +1,25 @@
+/* client-dashboard.component.css */
+:host {
+  display: block;
+}
+
+.stat-card {
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.stat-card:hover {
+  box-shadow: 0 4px 16px rgba(55, 48, 163, 0.08);
+  transform: translateY(-1px);
+}
+
+.transfer-row:hover {
+  background-color: #f8fafc;
+}
+
+.quick-action {
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.quick-action:hover {
+  box-shadow: 0 2px 8px rgba(55, 48, 163, 0.12);
+}

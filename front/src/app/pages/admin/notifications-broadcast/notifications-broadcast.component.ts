@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { NotificationService } from './service/notification.service';
 import {
   TypeNotification,
@@ -11,7 +12,7 @@ import {
 @Component({
   selector: 'app-broadcast-notification',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './notifications-broadcast.component.html',
   styleUrls: ['./notifications-broadcast.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -87,5 +88,14 @@ export class BroadcastNotificationComponent implements OnInit {
         this.cdr.markForCheck();
       }
     });
+  }
+  toDate(value: any): Date | null {
+    if (!value) return null;
+    if (Array.isArray(value)) {
+      // [year, month, day, hour, min, sec] — month est 1-based côté Java
+      const [year, month, day, hour = 0, min = 0, sec = 0] = value;
+      return new Date(year, month - 1, day, hour, min, sec);
+    }
+    return new Date(value); // string ISO ou timestamp
   }
 }

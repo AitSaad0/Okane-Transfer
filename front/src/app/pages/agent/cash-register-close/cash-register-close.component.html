@@ -1,0 +1,55 @@
+<div class="min-h-screen bg-slate-50 p-6">
+  <a routerLink="/agent/cash-register" class="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700 mb-6">
+    ← Retour à la caisse
+  </a>
+  <h1 class="text-2xl font-semibold text-slate-800 mb-6">Clôturer la caisse</h1>
+
+  <div class="max-w-lg bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+    <div *ngIf="caisse() as c" class="mb-6 space-y-2 text-sm">
+      <div class="flex justify-between">
+        <span class="text-slate-500">Solde système</span>
+        <span class="font-mono font-semibold text-slate-800">{{ c.soldeCourant | number:'1.2-2' }} {{ c.devise }}</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-slate-500">Opérations</span>
+        <span class="text-slate-700">{{ c.nombreTransferts }}</span>
+      </div>
+    </div>
+
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-slate-600 mb-1">Solde physique compté <span class="text-rose-500">*</span></label>
+        <input type="number" [(ngModel)]="soldeDeclare" step="0.01"
+               class="w-full border border-slate-300 rounded-lg px-3 py-2.5 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary" />
+      </div>
+
+      <!-- Écart indicator -->
+      <div *ngIf="soldeDeclare !== null" [class]="'rounded-lg px-4 py-3 text-sm font-medium ' +
+        (ecart === 0 ? 'bg-emerald-50 text-emerald-700' :
+         ecart > 0 ? 'bg-amber-50 text-amber-700' : 'bg-rose-50 text-rose-700')">
+        Écart : {{ ecart > 0 ? '+' : '' }}{{ ecart | number:'1.2-2' }}
+        {{ ecart === 0 ? '— Aucun écart ✓' : ecart > 0 ? '— Excédent' : '— Manquant' }}
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-600 mb-1">Commentaire</label>
+        <textarea [(ngModel)]="commentaire" rows="3"
+                  class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+                  placeholder="Observations éventuelles..."></textarea>
+      </div>
+
+      <div *ngIf="error()" class="text-rose-600 text-sm">{{ error() }}</div>
+
+      <div class="flex gap-3 pt-2">
+        <button (click)="submit()" [disabled]="loading() || soldeDeclare === null"
+                class="flex-1 bg-rose-500 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-rose-600 disabled:opacity-50 transition-colors">
+          {{ loading() ? 'Clôture en cours…' : 'Confirmer la clôture' }}
+        </button>
+        <a routerLink="/agent/cash-register"
+           class="flex-1 bg-white border border-slate-200 text-slate-700 py-2.5 rounded-lg text-sm font-medium text-center hover:bg-slate-50 transition-colors">
+          Annuler
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

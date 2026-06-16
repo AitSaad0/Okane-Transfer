@@ -1,0 +1,46 @@
+/* admin-transfers.component.css */
+:host {
+  display: block;
+}
+
+/* Sticky table header */
+thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #f8fafc;
+}
+
+/* Row hover */
+tr.data-row {
+  transition: background-color 0.1s ease;
+}
+
+/* Force-cancel modal overlay */
+.modal-overlay {
+  backdrop-filter: blur(2px);
+}
+
+/* Pagination active button */
+.page-btn-active {
+  background: #3730a3;
+  color: #fff;
+  font-weight: 600;
+}
+
+.page-btn-idle {
+  color: #475569;
+  transition: background-color 0.1s ease;
+}
+
+.page-btn-idle:hover {
+  background: #f1f5f9;
+}
+
+/* Reference monospace badge */
+.ref-badge {
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  color: #334155;
+}
