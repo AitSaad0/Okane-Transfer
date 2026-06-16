@@ -257,6 +257,7 @@
     "VIEW_DETAIL": "عرض التفاصيل",
     "ACTION": "الإجراء"
   },
+  "CHATBOT_LABEL": "المساعد",
   "CHATBOT": {
     "TITLE": "مساعد أوكان",
     "WELCOME": "مرحباً! أنا مساعد أوكان. كيف يمكنني مساعدتك؟",
@@ -290,7 +291,8 @@
     "UNREAD_BADGE": "{{count}} غير مقروء"
   },
   "COMMON": {
-    "EMPTY": "—"
+    "EMPTY": "—",
+    "DELETE": "حذف"
   },
   "AGENCIES": {
     "TITLE": "إدارة الوكالات",
@@ -315,7 +317,18 @@
     "NO_AGENCIES_SUB": "عدّل الفلاتر أو أنشئ وكالة جديدة.",
     "LOADING": "جارٍ التحميل…",
     "ACTIONS": {
-      "DASHBOARD": "لوحة القيادة",
+      "DASHBOARD": {
+    "GREETING": "مرحباً",
+    "SUBTITLE": "إليك ملخص نشاطك",
+    "STAT_TOTAL": "إجمالي التحويلات",
+    "STAT_PENDING": "التحويلات المعلقة",
+    "BTN_MY_TRANSFERS": "تحويلاتي",
+    "BTN_TRACK": "تتبع تحويل",
+    "RECENT_TITLE": "التحويلات الأخيرة",
+    "SEE_ALL": "عرض الكل",
+    "NO_TRANSFERS": "لا توجد تحويلات بعد",
+    "ERROR_TRANSFERS": "تعذّر تحميل التحويلات"
+  },
       "AGENTS": "إدارة الوكلاء",
       "EDIT": "تعديل",
       "SUSPEND": "إيقاف",
@@ -569,7 +582,20 @@
       "EXPORT_CSV": "تصدير CSV",
       "EXPORT_PDF": "تصدير PDF"
     },
-    "DASHBOARD": "لوحة القيادة",
+    "DASHBOARD": {
+    "GREETING": "مرحباً",
+    "SUBTITLE": "إليك ملخص نشاطك",
+    "STAT_TOTAL": "إجمالي التحويلات",
+    "STAT_PENDING": "التحويلات المعلقة",
+    "BTN_MY_TRANSFERS": "تحويلاتي",
+    "BTN_TRACK": "تتبع تحويل",
+    "RECENT_TITLE": "التحويلات الأخيرة",
+    "SEE_ALL": "عرض الكل",
+    "NO_TRANSFERS": "لا توجد تحويلات بعد",
+    "ERROR_TRANSFERS": "تعذّر تحميل التحويلات"
+  },
+    "MGR_DASHBOARD": "لوحة التحكم",
+    "MGR_TRANSFERS": "التحويلات",
     "MGR_REPORTS": "التقارير",
     "NEW_TRANSFER": "تحويل جديد",
     "CASH_REGISTER": "الصندوق",
@@ -717,8 +743,21 @@
     "COL_CONTENT": "المحتوى"
   },
   "TRANSFERS": "التحويلات",
-  "DASHBOARD": "لوحة القيادة",
-  "MGR_REPORTS": "التقارير",
+  "DASHBOARD": {
+    "GREETING": "مرحباً",
+    "SUBTITLE": "إليك ملخص نشاطك",
+    "STAT_TOTAL": "إجمالي التحويلات",
+    "STAT_PENDING": "التحويلات المعلقة",
+    "BTN_MY_TRANSFERS": "تحويلاتي",
+    "BTN_TRACK": "تتبع تحويل",
+    "RECENT_TITLE": "التحويلات الأخيرة",
+    "SEE_ALL": "عرض الكل",
+    "NO_TRANSFERS": "لا توجد تحويلات بعد",
+    "ERROR_TRANSFERS": "تعذّر تحميل التحويلات"
+  },
+  "MGR_DASHBOARD": "لوحة التحكم",
+    "MGR_TRANSFERS": "التحويلات",
+    "MGR_REPORTS": "التقارير",
   "NEW_TRANSFER": "تحويل جديد",
   "CASH_REGISTER": "الصندوق",
   "MY_DASHBOARD": "لوحتي",
@@ -773,7 +812,11 @@
     "COL_REC_CURRENCY": "عملة الاستلام",
     "COL_SEND_CURRENCY": "عملة الإرسال",
     "COL_DEST": "الوجهة",
-    "COL_SOURCE": "المصدر"
+    "COL_SOURCE": "المصدر",
+    "ACTIVE": "نشط",
+    "INACTIVE": "غير نشط",
+    "ACTIVATE": "تفعيل",
+    "DEACTIVATE": "تعطيل"
   },
   "EXCHANGE_RATES": {
     "TITLE": "أسعار الصرف",
@@ -811,7 +854,8 @@
     "AGENCE_PCT": "الوكالة %",
     "FIXED_FEES": "الرسوم الثابتة (MAD)",
     "CANCEL": "إلغاء",
-    "SUBMIT": "إنشاء القائمة"
+    "SUBMIT": "إنشاء القائمة",
+    "PERCENTAGE_FEE": "% الرسوم"
   },
   "COMPLIANCE_MENU": "الامتثال",
   "SIDEBAR_COMPLIANCE": "الامتثال",
@@ -862,7 +906,13 @@
     "FIELD_SOURCE": "المصدر",
     "FIELD_REASON": "السبب",
     "BTN_ADD": "إضافة",
-    "BTN_CANCEL": "إلغاء"
+    "BTN_CANCEL": "إلغاء",
+    "FIELD_NAME_PH": "أدخل الاسم الكامل",
+    "FIELD_ID_PH": "أدخل رقم الهوية",
+    "REASON_PH": "أدخل السبب",
+    "REASON_PH_EXISTING": "أدخل السبب للعميل الحالي",
+    "FIELD_ADDED_AT": "تاريخ الإضافة",
+    "FIELD_ADDED_BY": "أضيف بواسطة"
   },
   "REPORTS_PAGE": {
     "TITLE": "لوحة تقارير المسؤول",
