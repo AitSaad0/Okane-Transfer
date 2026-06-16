@@ -257,6 +257,7 @@
     "VIEW_DETAIL": "View details",
     "ACTION": "Action"
   },
+  "CHATBOT_LABEL": "Chatbot",
   "CHATBOT": {
     "TITLE": "Okane Assistant",
     "WELCOME": "Hello! I'm the Okane assistant. How can I help you?",
@@ -290,7 +291,8 @@
     "UNREAD_BADGE": "{{count}} unread"
   },
   "COMMON": {
-    "EMPTY": "—"
+    "EMPTY": "—",
+    "DELETE": "Delete"
   },
   "AGENCIES": {
     "TITLE": "Agency Management",
@@ -315,7 +317,18 @@
     "NO_AGENCIES_SUB": "Adjust your filters or create a new agency.",
     "LOADING": "Loading…",
     "ACTIONS": {
-      "DASHBOARD": "Dashboard",
+      "DASHBOARD": {
+    "GREETING": "Welcome",
+    "SUBTITLE": "Here is a summary of your activity",
+    "STAT_TOTAL": "Total transfers",
+    "STAT_PENDING": "Pending transfers",
+    "BTN_MY_TRANSFERS": "My Transfers",
+    "BTN_TRACK": "Track a transfer",
+    "RECENT_TITLE": "Recent transfers",
+    "SEE_ALL": "See all",
+    "NO_TRANSFERS": "No transfers yet",
+    "ERROR_TRANSFERS": "Unable to load transfers"
+  },
       "AGENTS": "Manage agents",
       "EDIT": "Edit",
       "SUSPEND": "Suspend",
@@ -569,7 +582,20 @@
       "EXPORT_CSV": "Export CSV",
       "EXPORT_PDF": "Export PDF"
     },
-    "DASHBOARD": "Dashboard",
+    "DASHBOARD": {
+    "GREETING": "Welcome",
+    "SUBTITLE": "Here is a summary of your activity",
+    "STAT_TOTAL": "Total transfers",
+    "STAT_PENDING": "Pending transfers",
+    "BTN_MY_TRANSFERS": "My Transfers",
+    "BTN_TRACK": "Track a transfer",
+    "RECENT_TITLE": "Recent transfers",
+    "SEE_ALL": "See all",
+    "NO_TRANSFERS": "No transfers yet",
+    "ERROR_TRANSFERS": "Unable to load transfers"
+  },
+    "MGR_DASHBOARD": "Dashboard",
+    "MGR_TRANSFERS": "Transfers",
     "MGR_REPORTS": "Reports",
     "NEW_TRANSFER": "New Transfer",
     "CASH_REGISTER": "Cash Register",
@@ -717,8 +743,21 @@
     "COL_CONTENT": "Content"
   },
   "TRANSFERS": "Transfers",
-  "DASHBOARD": "Dashboard",
-  "MGR_REPORTS": "Reports",
+  "DASHBOARD": {
+    "GREETING": "Welcome",
+    "SUBTITLE": "Here is a summary of your activity",
+    "STAT_TOTAL": "Total transfers",
+    "STAT_PENDING": "Pending transfers",
+    "BTN_MY_TRANSFERS": "My Transfers",
+    "BTN_TRACK": "Track a transfer",
+    "RECENT_TITLE": "Recent transfers",
+    "SEE_ALL": "See all",
+    "NO_TRANSFERS": "No transfers yet",
+    "ERROR_TRANSFERS": "Unable to load transfers"
+  },
+  "MGR_DASHBOARD": "Dashboard",
+    "MGR_TRANSFERS": "Transfers",
+    "MGR_REPORTS": "Reports",
   "NEW_TRANSFER": "New Transfer",
   "CASH_REGISTER": "Cash Register",
   "MY_DASHBOARD": "My Dashboard",
@@ -811,7 +850,8 @@
     "AGENCE_PCT": "Agency %",
     "FIXED_FEES": "Fixed fees (MAD)",
     "CANCEL": "Cancel",
-    "SUBMIT": "Create grid"
+    "SUBMIT": "Create grid",
+    "PERCENTAGE_FEE": "% Fee"
   },
   "COMPLIANCE_MENU": "Compliance",
   "SIDEBAR_COMPLIANCE": "Compliance",
@@ -862,7 +902,13 @@
     "FIELD_SOURCE": "Source",
     "FIELD_REASON": "Reason",
     "BTN_ADD": "Add",
-    "BTN_CANCEL": "Cancel"
+    "BTN_CANCEL": "Cancel",
+    "FIELD_NAME_PH": "Enter full name",
+    "FIELD_ID_PH": "Enter ID number",
+    "REASON_PH": "Enter reason",
+    "REASON_PH_EXISTING": "Enter reason for existing client",
+    "FIELD_ADDED_AT": "Added At",
+    "FIELD_ADDED_BY": "Added By"
   },
   "REPORTS_PAGE": {
     "TITLE": "Admin Reports Dashboard",
