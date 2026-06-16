@@ -13,8 +13,6 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class ComplianceSarComponent implements OnInit {
   sars = signal<any[]>([]);
-  
-  // Signaux réclamés par le template HTML
   loadingList = signal<boolean>(false);
   loadingDetail = signal<boolean>(false);
   selectedSar = signal<any | null>(null);
@@ -28,12 +26,12 @@ export class ComplianceSarComponent implements OnInit {
 
   loadSarReports(): void {
     this.loadingList.set(true);
-    this.http.get<any[]>('/api/compliance/sars').subscribe({
+    this.http.get<any[]>('/api/v1/admin/compliance/sar').subscribe({
       next: (data: any[]) => {
         this.sars.set(data || []);
         this.loadingList.set(false);
       },
-      error: (err: any) => {
+      error: () => {
         this.error.set('Erreur lors du chargement des rapports SAR');
         this.loadingList.set(false);
       }
@@ -42,12 +40,12 @@ export class ComplianceSarComponent implements OnInit {
 
   viewSar(id: any): void {
     this.loadingDetail.set(true);
-    this.http.get<any>(`/api/compliance/sars/${id}`).subscribe({
+    this.http.get<any>(`/api/v1/admin/compliance/sar/${id}`).subscribe({
       next: (data: any) => {
         this.selectedSar.set(data);
         this.loadingDetail.set(false);
       },
-      error: (err: any) => {
+      error: () => {
         this.error.set('Erreur lors du chargement du détail du rapport');
         this.loadingDetail.set(false);
       }
@@ -60,18 +58,11 @@ export class ComplianceSarComponent implements OnInit {
   }
 
   processSar(id: any): void {
-    this.http.post(`/api/compliance/sars/${id}/process`, {}).subscribe({
-      next: () => {
-        // Si on est en mode détail, on rafraîchit le détail, sinon la liste
-        if (this.selectedSar() && this.selectedSar().id === id) {
-          this.viewSar(id);
-        } else {
-          this.loadSarReports();
-        }
-      },
-      error: (err: any) => {
-        this.error.set('Erreur lors du traitement du rapport');
-      }
-    });
+    // No /process endpoint exists — just reload the list
+    if (this.selectedSar() && this.selectedSar().id === id) {
+      this.viewSar(id);
+    } else {
+      this.loadSarReports();
+    }
   }
 }

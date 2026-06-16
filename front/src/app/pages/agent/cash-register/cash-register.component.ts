@@ -15,17 +15,31 @@ export class CashRegisterComponent implements OnInit {
   caisse = signal<Caisse | null>(null);
   operations = signal<OperationCaisse[]>([]);
   loading = signal(true);
+  noCaisse = signal(false);
+  error = signal('');
 
   constructor(private cashService: CashRegisterService) {}
 
   ngOnInit(): void {
-    this.cashService.getMyCaisse().subscribe((c: Caisse) => {
-      this.caisse.set(c);
-      this.loading.set(false);
+    this.cashService.getMyCaisse().subscribe({
+      next: (c: Caisse) => {
+        this.caisse.set(c);
+        this.loading.set(false);
+      },
+      error: (err) => {
+        this.loading.set(false);
+        if (err.status === 404) {
+          this.noCaisse.set(true);
+        } else {
+          this.error.set('Erreur lors du chargement de la caisse');
+        }
+      }
     });
-    this.cashService.getOperations().subscribe((ops: OperationCaisse[]) =>
-      this.operations.set(ops)
-    );
+
+    this.cashService.getOperations().subscribe({
+      next: (ops: OperationCaisse[]) => this.operations.set(ops),
+      error: () => {}
+    });
   }
 
   opTypeLabel(type: string): string {

@@ -30,7 +30,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let t of transferts">
-        <td>{{ t.reference }}</td>
+        <td>{{ t.codeRetrait }}</td>
         <td>{{ t.expediteurNom }} {{ t.expediteurPrenom }}</td>
         <td>{{ t.beneficiaireNom }} {{ t.beneficiairePrenom }}</td>
         <td>{{ t.montantEnvoye | number:'1.2-2' }} MAD</td>

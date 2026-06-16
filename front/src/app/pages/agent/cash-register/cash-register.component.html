@@ -20,6 +20,13 @@
 
   <div *ngIf="loading()" class="text-center text-slate-400 py-20">Chargement...</div>
 
+  <div *ngIf="error()" class="text-center text-red-500 py-20">{{ error() }}</div>
+
+  <div *ngIf="noCaisse()" class="text-center py-20">
+    <p class="text-slate-500 text-lg mb-4">⚠️ Vous n'avez pas encore de caisse ouverte.</p>
+    <p class="text-slate-400 text-sm">Contactez votre administrateur pour ouvrir une caisse.</p>
+  </div>
+
   <ng-container *ngIf="caisse() as c">
     <!-- KPIs -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">

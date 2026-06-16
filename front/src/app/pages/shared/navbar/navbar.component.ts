@@ -35,14 +35,18 @@ export class NavbarComponent implements OnInit {
     this.auth.me().subscribe({
       next: (user) => {
         // Mapper tous les cas possibles sans changer la structure
-        this.user = {
-          prenom: user?.prenom ?? user?.firstName ?? '',
-          nom:    user?.nom    ?? user?.lastName  ?? user?.name ?? '',
-          role:   user?.role   ?? user?.roles?.[0] ?? '',
-        };
+        setTimeout(() => {
+          this.user = {
+            prenom: user?.prenom ?? user?.firstName ?? '',
+            nom:    user?.nom    ?? user?.lastName  ?? user?.name ?? '',
+            role:   user?.role   ?? user?.roles?.[0] ?? '',
+          };
+        });
       },
       error: () => {
-        this.user = { nom: 'User', prenom: '', role: this.auth.getRole() || 'UNKNOWN' };
+        setTimeout(() => {
+          this.user = { nom: 'User', prenom: '', role: this.auth.getRole() || 'UNKNOWN' };
+        });
       }
     });
   }

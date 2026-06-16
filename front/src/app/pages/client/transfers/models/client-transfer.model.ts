@@ -2,32 +2,33 @@ export type TransferStatus = 'EN_ATTENTE' | 'PAYE' | 'ANNULE' | 'EXPIRE';
 
 export interface Transfer {
   id: number;
-  reference: string;
+  codeRetrait: string;
   montantEnvoye: number;
   montantRecu: number;
-  deviseEnvoi: string;
-  deviseReception: string;
+  deviseSource: string;
+  deviseDestination: string;
   tauxChange: number;
   frais: number;
   statut: TransferStatus;
-  dateCreation: string;
-  dateModification?: string;
-  expediteur: PersonInfo;
-  beneficiaire: PersonInfo;
-  corridor: string;
-  agence?: string;
-  agent?: string;
+  dateCreation: any;
+  datePaiement?: any;
+  expediteurNom: string;
+  expediteurPrenom: string;
+  expediteurTelephone: string;
+  expediteurEmail: string;
+  beneficiaireNom: string;
+  beneficiairePrenom: string;
+  beneficiaireTelephone: string;
+  beneficiaireEmail: string;
+  corridorId?: number;
+  corridorDescription?: string;
+  agenceId?: number;
+  agenceNom?: string;
+  agentId?: number;
+  agentNom?: string;
+  agentPrenom?: string;
+  flagged?: boolean;
   motif?: string;
-}
-
-export interface PersonInfo {
-  nom: string;
-  prenom: string;
-  telephone: string;
-  email?: string;
-  adresse?: string;
-  numeroPiece?: string;
-  typePiece?: string;
 }
 
 export interface PageResponse<T> {

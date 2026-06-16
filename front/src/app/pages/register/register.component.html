@@ -3,40 +3,64 @@
   <p class="text-sm text-slate-500 mb-6">{{ 'REGISTER.SUBTITLE' | translate }}</p>
 
   <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4">
+
     <div class="grid grid-cols-2 gap-4">
       <div>
         <label class="text-sm font-medium text-slate-600">{{ 'FIELDS.NOM' | translate }}</label>
         <input formControlName="nom" type="text"
-          class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary" />
+          class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary"
+          [class.border-red-400]="form.get('nom')?.invalid && form.get('nom')?.touched" />
       </div>
       <div>
         <label class="text-sm font-medium text-slate-600">{{ 'FIELDS.PRENOM' | translate }}</label>
         <input formControlName="prenom" type="text"
-          class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary" />
+          class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary"
+          [class.border-red-400]="form.get('prenom')?.invalid && form.get('prenom')?.touched" />
       </div>
     </div>
+
     <div>
       <label class="text-sm font-medium text-slate-600">{{ 'FIELDS.EMAIL' | translate }}</label>
       <input formControlName="email" type="email"
-        class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary" />
+        class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary"
+        [class.border-red-400]="form.get('email')?.invalid && form.get('email')?.touched" />
     </div>
+
     <div>
       <label class="text-sm font-medium text-slate-600">{{ 'FIELDS.PHONE' | translate }}</label>
       <input formControlName="telephone" type="tel"
-        class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary" />
+        class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary"
+        [class.border-red-400]="form.get('telephone')?.invalid && form.get('telephone')?.touched" />
     </div>
+
+    <div>
+      <label class="text-sm font-medium text-slate-600">{{ 'FIELDS.CIN' | translate }}</label>
+      <input formControlName="numPieceIdentite" type="text"
+        class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary"
+        [class.border-red-400]="form.get('numPieceIdentite')?.invalid && form.get('numPieceIdentite')?.touched" />
+      @if (form.get('numPieceIdentite')?.invalid && form.get('numPieceIdentite')?.touched) {
+        <p class="text-xs text-red-500 mt-1">{{ 'VALIDATION.CIN_REQUIRED' | translate }}</p>
+      }
+    </div>
+
     <div>
       <label class="text-sm font-medium text-slate-600">{{ 'FIELDS.PASSWORD' | translate }}</label>
       <input formControlName="password" type="password"
-        class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary" />
+        class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary"
+        [class.border-red-400]="form.get('password')?.invalid && form.get('password')?.touched" />
+      @if (form.get('password')?.hasError('minlength') && form.get('password')?.touched) {
+        <p class="text-xs text-red-500 mt-1">{{ 'VALIDATION.PASSWORD_MIN' | translate }}</p>
+      }
     </div>
 
     @if (error) {
-      <div class="text-xs text-danger">{{ error }}</div>
+      <div class="text-xs text-red-500 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+        {{ error | translate }}
+      </div>
     }
 
     <button type="submit" [disabled]="loading"
-      class="w-full bg-primary text-white text-sm font-medium py-2 rounded-lg hover:opacity-90 disabled:opacity-50">
+      class="w-full bg-primary text-white text-sm font-medium py-2 rounded-lg hover:opacity-90 disabled:opacity-50 transition-opacity">
       {{ loading ? ('ACTIONS.LOADING' | translate) : ('REGISTER.SUBMIT' | translate) }}
     </button>
   </form>

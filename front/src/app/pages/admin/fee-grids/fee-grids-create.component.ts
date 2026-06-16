@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { FeeGridService, FeeGridCreateDTO } from '../../../core/services/fee-grid.service';
 import { CorridorService, Corridor } from '../../../core/services/corridor.service';
@@ -30,7 +30,32 @@ export class FeeGridsCreateComponent implements OnInit {
     fraisFixe: [0, Validators.required],
     pourcentageFrais: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
     partAgence: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
+    slices: this.fb.array([this.createSliceGroup()]),
   });
+
+  get slices(): FormArray<FormGroup> {
+    return this.form.get('slices') as FormArray<FormGroup>;
+  }
+
+  createSliceGroup(): FormGroup {
+    return this.fb.group({
+      minAmount: [0, Validators.required],
+      maxAmount: [0, Validators.required],
+      fixedFee: [0, Validators.required],
+      agencyShare: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
+      centralShare: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
+    });
+  }
+
+  addSlice(): void {
+    this.slices.push(this.createSliceGroup());
+  }
+
+  removeSlice(index: number): void {
+    if (this.slices.length > 1) {
+      this.slices.removeAt(index);
+    }
+  }
 
   ngOnInit(): void {
     this.corridorSvc.getActive().subscribe({ next: (r) => this.corridors.set(r) });

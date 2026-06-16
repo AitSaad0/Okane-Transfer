@@ -1,4 +1,3 @@
-// manager-dashboard.component.ts
 import {
   Component,
   OnInit,
@@ -19,6 +18,7 @@ export class ManagerDashboardComponent implements OnInit {
   dashboard: ManagerDashboardResponseDTO | null = null;
   loading = true;
   error: string | null = null;
+  noAgence = false;
 
   constructor(
     private managerService: ManagerService,
@@ -32,6 +32,7 @@ export class ManagerDashboardComponent implements OnInit {
   loadDashboard(): void {
     this.loading = true;
     this.error = null;
+    this.noAgence = false;
     this.cdr.markForCheck();
 
     this.managerService.getDashboard().subscribe({
@@ -41,10 +42,13 @@ export class ManagerDashboardComponent implements OnInit {
         this.cdr.markForCheck();
       },
       error: (err) => {
-        this.error = 'Erreur lors du chargement du dashboard';
         this.loading = false;
+        if (err.status === 400) {
+          this.noAgence = true;
+        } else {
+          this.error = 'Erreur lors du chargement du dashboard';
+        }
         this.cdr.markForCheck();
-        console.error(err);
       }
     });
   }

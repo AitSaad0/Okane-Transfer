@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { CorridorService } from '../../../core/services/corridor.service';
 import { CurrencyService, Currency } from '../../../core/services/currency.service';
+import { CountryService, Country } from '../../../core/services/country.service';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -17,19 +18,14 @@ export class CorridorsCreateComponent implements OnInit {
   private fb = inject(FormBuilder);
   private svc = inject(CorridorService);
   private currSvc = inject(CurrencyService);
+  private countrySvc = inject(CountryService);
   private router = inject(Router);
 
   loading = signal(false);
   error = signal('');
   currencies = signal<Currency[]>([]);
 
-  // Liste des pays (code ISO 3166)
-  countries = [
-    { code: 'MA', name: 'Maroc' },
-    { code: 'FR', name: 'France' },
-    { code: 'SN', name: 'Sénégal' },
-    { code: 'CI', name: "Côte d'Ivoire" },
-  ];
+  countries = signal<Country[]>([]);
 
   form = this.fb.group({
     sourceCountryCode: ['', Validators.required],
@@ -41,6 +37,9 @@ export class CorridorsCreateComponent implements OnInit {
   ngOnInit(): void {
     this.currSvc.getAll(0, 100, true).subscribe({
       next: (r) => this.currencies.set(r.content),
+    });
+    this.countrySvc.getAll().subscribe({
+      next: (countries) => this.countries.set(countries),
     });
   }
 

@@ -83,6 +83,7 @@ export const routes: Routes = [
         canActivate: [roleGuard],
         data: { roles: ['ADMIN'] },
         children: [
+          { path: '', redirectTo: 'fee-grids', pathMatch: 'full' },
           {
             path: 'reports',
             loadComponent: () =>
@@ -113,6 +114,7 @@ export const routes: Routes = [
             loadComponent: () =>
               import('./pages/admin/compliance/compliance-threshold/compliance-threshold.component').then(
                 (m) => m.ComplianceThresholdComponent,
+
               ),
             canActivate: [roleGuard],
             data: { roles: ['ADMIN'] },

@@ -31,26 +31,22 @@
         <div class="flex items-center justify-between px-5 py-4 border-b border-slate-100">
           <div>
             <span class="text-sm font-medium text-slate-800">{{ g.corridorLabel }}</span>
-<<<<<<< Updated upstream
-            <span class="ml-3 text-xs text-slate-400">1 tranche</span>
-=======
             <span class="ml-3 text-xs text-slate-400">{{ g.slices.length }} {{ 'FEE_GRIDS.SLAB_NAME' | translate }}(s)</span>
->>>>>>> Stashed changes
           </div>
           <div class="flex items-center gap-3">
-            <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full px-3 py-1 text-xs font-medium">ACTIF</span>
-            <button (click)="delete(g.id)" class="text-xs font-medium px-3 py-1 rounded-lg border border-rose-200 text-danger hover:bg-rose-50 transition-colors">Supprimer</button>
+            <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full px-3 py-1 text-xs font-medium">{{ 'CURRENCIES.ACTIVE' | translate }}</span>
+            <button (click)="delete(g.id)" class="text-xs font-medium px-3 py-1 rounded-lg border border-rose-200 text-danger hover:bg-rose-50 transition-colors">{{ 'COMMON.DELETE' | translate }}</button>
           </div>
         </div>
         <table class="w-full text-sm">
           <thead class="bg-slate-50">
           <tr>
-            <th class="text-left px-4 py-2 text-xs font-medium text-slate-600">Min</th>
-            <th class="text-left px-4 py-2 text-xs font-medium text-slate-600">Max</th>
-            <th class="text-left px-4 py-2 text-xs font-medium text-slate-600">Frais fixes</th>
-            <th class="text-left px-4 py-2 text-xs font-medium text-slate-600">% Frais</th>
-            <th class="text-left px-4 py-2 text-xs font-medium text-slate-600">Part agence</th>
-            <th class="text-left px-4 py-2 text-xs font-medium text-slate-600">Part centrale</th>
+            <th class="text-left px-4 py-2 text-xs font-medium text-slate-600">{{ 'FEE_GRIDS.MIN_AMOUNT' | translate }}</th>
+            <th class="text-left px-4 py-2 text-xs font-medium text-slate-600">{{ 'FEE_GRIDS.MAX_AMOUNT' | translate }}</th>
+            <th class="text-left px-4 py-2 text-xs font-medium text-slate-600">{{ 'FEE_GRIDS.FIXED_FEES' | translate }}</th>
+            <th class="text-left px-4 py-2 text-xs font-medium text-slate-600">{{ 'FEE_GRIDS.PERCENTAGE_FEE' | translate }}</th>
+            <th class="text-left px-4 py-2 text-xs font-medium text-slate-600">{{ 'FEE_GRIDS.AGENCE_PCT' | translate }}</th>
+            <th class="text-left px-4 py-2 text-xs font-medium text-slate-600">{{ 'FEE_GRIDS.CENTRALE_PCT' | translate }}</th>
           </tr>
           </thead>
           <tbody class="divide-y divide-slate-100">
