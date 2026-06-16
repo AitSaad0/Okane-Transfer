@@ -15,6 +15,7 @@
 
   <div *ngIf="loading" class="loading">Chargement...</div>
   <div *ngIf="error" class="error-message">{{ error }}</div>
+  <div *ngIf="noAgence" class="info-message" style="padding:2rem;text-align:center;color:#6b7280;">⚠️ Ce compte manager n'est pas encore affecté à une agence. Veuillez contacter l'administrateur.</div>
 
   <div *ngIf="dashboard && !loading" class="kpi-grid">
 
@@ -57,7 +58,7 @@
 
   <div *ngIf="dashboard && !loading" class="top-agents-section">
     <h3>Top Agents</h3>
-    <table class="data-table" *ngIf="dashboard.topAgents?.length; else noAgents">
+    <table class="data-table" *ngIf="dashboard.topAgents.length; else noAgents">
       <thead>
       <tr>
         <th>Nom</th>

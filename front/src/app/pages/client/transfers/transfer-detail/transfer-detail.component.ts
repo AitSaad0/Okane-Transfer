@@ -33,7 +33,7 @@ export class ClientTransferDetailComponent implements OnInit {
     if (!t) return;
     this.transferService.downloadReceipt(t.id).subscribe(blob => {
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href = url; a.download = `recu-${t.reference}.pdf`; a.click();
+      const a = document.createElement('a'); a.href = url; a.download = `recu-${t.codeRetrait}.pdf`; a.click();
       URL.revokeObjectURL(url);
     });
   }

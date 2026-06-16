@@ -56,11 +56,11 @@
       </thead>
       <tbody class="divide-y divide-slate-100">
       <tr *ngFor="let t of transfers()" class="hover:bg-slate-50 transition-colors">
-        <td class="px-6 py-4 font-mono text-slate-800 text-xs">{{ t.reference }}</td>
-        <td class="px-6 py-4 text-slate-700 text-xs">{{ t.expediteur.prenom }} {{ t.expediteur.nom }}</td>
-        <td class="px-6 py-4 text-slate-700 text-xs">{{ t.beneficiaire.prenom }} {{ t.beneficiaire.nom }}</td>
-        <td class="px-6 py-4 font-mono text-slate-800 text-xs">{{ t.montantEnvoye | number:'1.2-2' }} {{ t.deviseEnvoi }}</td>
-        <td class="px-6 py-4 text-slate-600 text-xs">{{ t.corridor }}</td>
+        <td class="px-6 py-4 font-mono text-slate-800 text-xs">{{ t.codeRetrait }}</td>
+        <td class="px-6 py-4 text-slate-700 text-xs">{{ t.expediteurPrenom }} {{ t.expediteurNom }}</td>
+        <td class="px-6 py-4 text-slate-700 text-xs">{{ t.beneficiairePrenom }} {{ t.beneficiaireNom }}</td>
+        <td class="px-6 py-4 font-mono text-slate-800 text-xs">{{ t.montantEnvoye | number:'1.2-2' }} {{ t.deviseSource }}</td>
+        <td class="px-6 py-4 text-slate-600 text-xs">{{ t.corridorDescription }}</td>
         <td class="px-6 py-4">
             <span [class]="'rounded-full px-2.5 py-0.5 text-xs font-medium ' + statusClass(t.statut)">
               {{ statusLabel(t.statut) }}
@@ -96,7 +96,7 @@
 <div *ngIf="showCancelModal()" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
   <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
     <h2 class="text-lg font-semibold text-slate-800 mb-1">Annuler le transfert</h2>
-    <p class="text-sm text-slate-500 mb-4 font-mono">{{ selectedTransfer()?.reference }}</p>
+    <p class="text-sm text-slate-500 mb-4 font-mono">{{ selectedTransfer()?.codeRetrait }}</p>
 
     <div class="mb-4">
       <label class="block text-sm font-medium text-slate-600 mb-1">Motif d'annulation <span class="text-rose-500">*</span></label>

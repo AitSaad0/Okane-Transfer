@@ -15,21 +15,12 @@
   <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
     <table class="w-full text-sm">
       <thead class="bg-slate-50 border-b border-slate-200">
-<<<<<<< Updated upstream
-      <tr>
-        <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Paire</th>
-        <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Taux</th>
-        <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Source</th>
-        <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">Date</th>
-      </tr>
-=======
         <tr>
           <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'EXCHANGE_RATES.COL_PAIR' | translate }}</th>
           <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'EXCHANGE_RATES.COL_RATE' | translate }}</th>
           <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'EXCHANGE_RATES.COL_SOURCE' | translate }}</th>
           <th class="text-left px-4 py-3 text-xs font-medium text-slate-600 uppercase tracking-wide">{{ 'EXCHANGE_RATES.COL_DATE' | translate }}</th>
         </tr>
->>>>>>> Stashed changes
       </thead>
       <tbody class="divide-y divide-slate-100">
         @if (loading()) {
@@ -53,7 +44,7 @@
           </tr>
         }
         @empty {
-          <tr><td colspan="4" class="px-4 py-8 text-center text-slate-400">Aucun historique.</td></tr>
+          <tr><td colspan="4" class="px-4 py-8 text-center text-slate-400">{{ 'EXCHANGE_RATES.EMPTY_HISTORY' | translate }}</td></tr>
         }
       </tbody>
     </table>

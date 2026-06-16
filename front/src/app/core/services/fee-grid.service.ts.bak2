@@ -67,7 +67,7 @@ export class FeeGridService {
   montantMax: g.montantMax,
   fraisFixe: g.fraisFixe,
   pourcentageFrais: g.pourcentageFrais,
-    partAgence: g.partAgence,
+  partAgence: g.partAgence,
     partCentrale: 100 - (g.partAgence || 0),
     slices: g.slices || []
 })))
@@ -85,8 +85,7 @@ create(dto: FeeGridCreateDTO): Observable<FeeGrid> {
       fraisFixe: g.fraisFixe,
       pourcentageFrais: g.pourcentageFrais,
       partAgence: g.partAgence,
-      partCentrale: 100 - (g.partAgence || 0),
-      slices: g.slices || []
+      partCentrale: 100 - (g.partAgence || 0)
     }))
   );
 }
@@ -102,8 +101,7 @@ update(id: number, dto: Partial<FeeGridCreateDTO>): Observable<FeeGrid> {
       fraisFixe: g.fraisFixe,
       pourcentageFrais: g.pourcentageFrais,
       partAgence: g.partAgence,
-      partCentrale: 100 - (g.partAgence || 0),
-      slices: g.slices || []
+      partCentrale: 100 - (g.partAgence || 0)
     }))
   );
 }

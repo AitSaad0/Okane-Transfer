@@ -22,16 +22,20 @@ export class RegisterComponent {
     private cdr: ChangeDetectorRef
   ) {
     this.form = this.fb.group({
-      nom:       ['', Validators.required],
-      prenom:    ['', Validators.required],
-      email:     ['', [Validators.required, Validators.email]],
-      telephone: ['', Validators.required],
-      password:  ['', [Validators.required, Validators.minLength(8)]]
+      nom:              ['', Validators.required],
+      prenom:           ['', Validators.required],
+      email:            ['', [Validators.required, Validators.email]],
+      telephone:        ['', Validators.required],
+      numPieceIdentite: ['', Validators.required],
+      password:         ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 
   submit(): void {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
     this.loading = true;
     this.error = '';
     this.authService.register(this.form.value).subscribe({

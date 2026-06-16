@@ -34,6 +34,7 @@ export interface TransfertResponseDTO {
   statut: string;
   dateCreation: string;
   agentEnvoiNom?: string;
+  codeRetrait?: string;
 }
 
 export interface PageResponseDto<T> {
