@@ -3,11 +3,15 @@ package com.okane.service.impl;
 import com.okane.dto.requestDto.*;
 import com.okane.dto.responseDto.AuthResponseDTO;
 import com.okane.dto.responseDto.UserResponseDTO;
+import com.okane.entity.Client;
+import com.okane.entity.Pays;
 import com.okane.entity.Token;
 import com.okane.entity.User;
 import com.okane.entity.enums.Role;
 import com.okane.entity.enums.TypeToken;
 import com.okane.exception.*;
+import com.okane.repository.ClientRepository;
+import com.okane.repository.PaysRepository;
 import com.okane.repository.TokenRepository;
 import com.okane.repository.UserRepository;
 import com.okane.security.JwtUtil;
@@ -24,33 +28,55 @@ import java.util.Random;
 public class AuthServiceImpl {
 
     @Autowired private UserRepository userRepository;
+    @Autowired private PaysRepository paysRepository;
     @Autowired private JwtUtil        jwtUtil;
     @Autowired private PasswordEncoder passwordEncoder;
     @Autowired private EmailService emailService;
     @Autowired private TokenRepository tokenRepository;
+    @Autowired private ClientRepository clientRepository;
+
 
     @Transactional
-    public AuthResponseDTO register(RegisterRequestDTO dto) {
+    public AuthResponseDTO register(RegisterRequestDTO request) {
 
-        if (userRepository.existsByEmail(dto.getEmail()))
-            throw new UserAlreadyExistsException(
-                    "Email already in use: " + dto.getEmail()
-            );
+        if (userRepository.existsByEmail(request.getEmail()))
+            throw new UserAlreadyExistsException("Email already in use");
 
+        if (clientRepository.existsByNumPieceIdentite(request.getNumPieceIdentite()))
+            throw new UserAlreadyExistsException("Pièce d'identité déjà enregistrée");
+
+        // 1. Create User
         User user = User.builder()
-                .email(dto.getEmail())
-                .password(passwordEncoder.encode(dto.getPassword()))
-                .nom(dto.getNom())
-                .prenom(dto.getPrenom())
-                .telephone(dto.getTelephone())
+                .nom(request.getNom())
+                .prenom(request.getPrenom())
+                .email(request.getEmail())
+                .telephone(request.getTelephone())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.CLIENT)
                 .active(true)
+                .deleted(false)
                 .build();
+        user = userRepository.save(user);
 
+        // 2. Create Client (no pays required at register)
+        Client client = Client.builder()
+                .nom(request.getNom())
+                .prenom(request.getPrenom())
+                .email(request.getEmail())
+                .telephone(request.getTelephone())
+                .numPieceIdentite(request.getNumPieceIdentite())
+                .pays(null)
+                .estSurListeSurveillance(false)
+                .deleted(false)
+                .user(user)
+                .build();
+        client = clientRepository.save(client);
+
+        user.setClient(client);
         userRepository.save(user);
+
         return buildTokens(user);
     }
-
 
     @Transactional
     public AuthResponseDTO login(AuthRequestDTO dto) {

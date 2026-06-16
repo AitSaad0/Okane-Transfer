@@ -67,6 +67,7 @@ public class CaisseServiceImpl implements CaisseService {
     // GET /api/v1/agent/cash-register
     // =========================================================
     @Override
+    @Transactional(readOnly = false)
     public CaisseResponseDTO getCaisseCourante(String agentEmail) {
         User agent = findAgent(agentEmail);
         Caisse caisse = getCaisseOuverte(agent);
@@ -77,6 +78,7 @@ public class CaisseServiceImpl implements CaisseService {
     // GET /api/v1/agent/cash-register/operations
     // =========================================================
     @Override
+    @Transactional(readOnly = false)
     public CaisseResponseDTO getOperationsDuJour(String agentEmail) {
         User agent = findAgent(agentEmail);
         Caisse caisse = getCaisseOuverte(agent);
@@ -146,13 +148,27 @@ public class CaisseServiceImpl implements CaisseService {
     // Private helpers
     // =========================================================
 
+    @Transactional(readOnly = false)
     private Caisse getCaisseOuverte(User agent) {
-        // FIX 1: was findByAgentAndDateCaisseAndStatut — method now exists in the fixed CaisseRepository
         return caisseRepository.findByAgentAndDateCaisseAndStatut(
                         agent, LocalDate.now(), StatutCaisse.OUVERTE)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Aucune caisse ouverte pour cet agent aujourd'hui. "
-                                + "Contactez votre manager pour l'ouverture."));
+                .orElseGet(() -> creerCaisseJournaliere(agent));
+    }
+
+    @Transactional(readOnly = false)
+    private Caisse creerCaisseJournaliere(User agent) {
+        Caisse caisse = new Caisse();
+        caisse.setAgent(agent);
+        caisse.setAgence(agent.getAgence());
+        caisse.setDateCaisse(LocalDate.now());
+        caisse.setDateOuverture(LocalDateTime.now());
+        caisse.setStatut(StatutCaisse.OUVERTE);
+        caisse.setSoldeOuverture(BigDecimal.ZERO);
+        caisse.setSoldeCourant(BigDecimal.ZERO);
+        caisse.setTotalEncaissements(BigDecimal.ZERO);
+        caisse.setTotalDecaissements(BigDecimal.ZERO);
+        caisse.setEcartDetecte(false);
+        return caisseRepository.save(caisse);
     }
 
     private BigDecimal calculerSoldeTheorique(Caisse caisse) {

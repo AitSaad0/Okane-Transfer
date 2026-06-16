@@ -9,7 +9,43 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5d0b6b24-9853-4a25-9490-2799f2096f20" name="Changes" comment="added interface that shows all notifications and update notifications preferences based on client need" />
+    <list default="true" id="5d0b6b24-9853-4a25-9490-2799f2096f20" name="Changes" comment="added interface that shows all notifications and update notifications preferences based on client need">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/dto/requestDto/RegisterRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/dto/requestDto/RegisterRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/entity/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/entity/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/entity/TransfertMobile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/entity/TransfertMobile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/repository/ClientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/repository/ClientRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/service/ClientProfileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/service/ClientProfileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/AuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/AuthServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/CaisseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/CaisseServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/ClientProfileServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/ClientProfileServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/ClientTransfertServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/ClientTransfertServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/NotificationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/okane/service/impl/NotificationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/okane/controller/AuthControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/okane/controller/AuthControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/okane/service/AuthServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/okane/service/AuthServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/proxy.conf.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front/proxy.conf.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/app.routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/core/services/fee-grid.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/core/services/fee-grid.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/admin/compliance/compliance-sar/compliance-sar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/compliance/compliance-sar/compliance-sar.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/admin/compliance/compliance-threshold/compliance-threshold.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/compliance/compliance-threshold/compliance-threshold.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/admin/compliance/compliance-threshold/compliance-threshold.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/compliance/compliance-threshold/compliance-threshold.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/admin/corridors/corridors-create.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/corridors/corridors-create.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/admin/corridors/corridors-create.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/corridors/corridors-create.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/admin/corridors/corridors.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/corridors/corridors.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/admin/exchange-rates/exchange-rates-history.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/exchange-rates/exchange-rates-history.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/admin/fee-grids/fee-grids-create.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/fee-grids/fee-grids-create.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/admin/fee-grids/fee-grids-create.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/fee-grids/fee-grids-create.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/admin/fee-grids/fee-grids.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/admin/fee-grids/fee-grids.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/agent/cash-register/cash-register.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/agent/cash-register/cash-register.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/agent/cash-register/cash-register.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/agent/cash-register/cash-register.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/manager/manager-dashboard/manager-dashboard.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/manager/manager-dashboard/manager-dashboard.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/manager/manager-dashboard/manager-dashboard.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/manager/manager-dashboard/manager-dashboard.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/manager/manager-reports/manager-reports.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/manager/manager-reports/manager-reports.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/shared/navbar/navbar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/shared/navbar/navbar.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/app/pages/shared/sidebar/sidebar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/app/pages/shared/sidebar/sidebar.component.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -75,7 +111,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "Tomcat Server.Tomcat 10.1.52.executor": "Run",
     "Tomcat Server.Tomcat 11.0.18.executor": "Run",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "fix/project__fix",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/User/Desktop/Okane-Transfer-develop/Okane-Transfer/back",
     "node.js.detected.package.eslint": "true",
@@ -203,8 +239,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
-        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.32098.37" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.32098.37" />
       </set>
     </attachedChunks>
   </component>
@@ -226,6 +262,7 @@
       <workItem from="1780737881493" duration="6979000" />
       <workItem from="1780758501012" duration="13713000" />
       <workItem from="1781451409682" duration="348000" />
+      <workItem from="1781572703804" duration="14486000" />
     </task>
     <servers />
   </component>

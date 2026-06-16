@@ -31,4 +31,8 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     Optional<Client> findByEmail(String email);
 
+    Optional<Client> findByUser(com.okane.entity.User user);
+
+    Optional<Client> findByTelephone(String telephone);
+
 }

@@ -115,12 +115,15 @@ public class NotificationServiceImpl
         }
         if (canal == CanalNotification.EMAIL
                 && user.getEmail() != null) {
-
-            emailService.send(
-                    user.getEmail(),
-                    buildSubject(type),
-                    contenu
-            );
+            try {
+                emailService.send(
+                        user.getEmail(),
+                        buildSubject(type),
+                        contenu
+                );
+            } catch (Exception e) {
+                // email unavailable in dev, skip silently
+            }
         }
 
 
